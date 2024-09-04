@@ -1,0 +1,145 @@
+<HTML>
+<HEAD>
+
+<TITLE>Add Sub Point</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function AUCheck(txt) {
+	if (txt == "") { return true; }
+	var res=1;
+	coma=txt.indexOf(",");
+	left=txt.substring(0,coma);
+	right=txt.substring(coma+1,txt.length);
+	coma2=right.indexOf(",");
+	space=right.indexOf(" ");
+	if ((coma==-1)||(left=="")||(right=="")||(space!=0)||(coma2!=-1))
+	{
+		res=0;
+	}
+	if (res == 0){
+		alert("The speaker's name must be written in the correct format: Put a comma (,) between the name and the firstname initial letters, and a space after the comma. \012The name is going first, followed by the firstname initial letters.\012\012Example \: Put\012\012Le Meur, J Y \012\012for\012\012Jean-Yves Le Meur");
+		return false;
+	}	
+	return true;	
+}
+
+      function tester()
+      {
+	      	if (document.newtalk.ttitle.value=="")
+	      	{
+		      	alert("Please fill the 'Title' field");
+		      	return false;
+			
+	      	}
+	      	else
+		{
+		    return true;
+
+		}
+	
+      }
+
+    </SCRIPT>
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM name=newtalk action="agendaFactory.php" method=POST target="{addSubTalk_target}">
+
+<TR><TD colspan=2 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR>
+<TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/add.gif" alt="add sub point" align=right></TD>
+<TD width="1%"><A HREF="../guide/english/add_subtalk.php" target="top">
+<IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD><B>
+<SMALL>&nbsp;[Add Sub Point]
+
+<FONT color=white> to <I>{addSub_TITLE}</I></FONT>
+
+</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="ADD SUB TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CLOSE onClick="window.close();return false;"></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Title:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=ttitle></SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><SMALL><B>Speaker:</B><BR>(The recommended format is:<BR>Name, Initial(s))</SMALL></TD><TD><SMALL><INPUT size=50 name=tspeaker></SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Affiliation:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=affiliation></SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Email:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=temail></SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Duration:</SMALL></B></TD><TD><SMALL>
+<SELECT name=durationh>
+<OPTION VALUE="00" selected>0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="durationm">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION selected>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT> minutes</SMALL></TD></TR>
+
+<INPUT name=ttype type=hidden value=1>
+<INPUT type=hidden name=position value='{addSub_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{addSub_STYLESHEET}'>
+{addSubTalk_reportNoStart}
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>report number:</SMALL></B><BR><SMALL>(optional)</SMALL></TD>
+	<TD><SMALL>
+		<INPUT size=20 name=repno></SMALL>
+	</TD>
+</TR>
+{addSubTalk_reportNoEnd}
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>Description:</SMALL></B><BR><BR>
+	<FONT color=white><SMALL>(This text will be displayed exactly the way it appears in the input box. If you cut&paste your text, please get rid of any extra newline.)</SMALL></font>
+	</TD><SMALL>
+	<TD><TEXTAREA wrap rows=20 cols=50 name=tcomment></TEXTAREA>
+	</SMALL></TD>
+</TR>
+
+<INPUT type=hidden name=ids value='{addSub_IDS}'>
+<INPUT type=hidden name=fidt value='{addSub_IDT}'>
+<INPUT type=hidden name=ida value='{addSub_IDA}'>
+<INPUT type=hidden name=AN value='{addSub_AN}'>
+
+<TR bgcolor=white>
+<TD align=right colspan=2 class=header><SMALL><SMALL>
+<INPUT type=submit name=request value="ADD SUB TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CLOSE onClick="window.close();return false;"></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+</BODY>
+</HTML>

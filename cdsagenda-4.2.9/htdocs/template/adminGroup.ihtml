@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS Agenda</TITLE>
+  <link rel="stylesheet" href="{images}/style.css">
+        <SCRIPT>
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+</HEAD>
+<BODY class=list>
+
+  <form name="form1" method="post">
+  <input type=hidden name=request>
+  <input type=hidden name=item>
+  <input type=hidden name=groupid value="{groupid}">
+  <input type=hidden name=nextpage value="{nextpage}">
+  <input type=hidden name=nextquery value="{nextquery}">
+  </form>
+  <center>
+    <table bgcolor=#555555 cellspacing=2 cellpadding=5>
+	<tr>
+        <td> 
+	<font size=+2 color=white>
+          "{name}" Group Management
+	</font>
+	<font color=white>
+	({numusers} users)
+	</font>
+        </td>
+      </tr>
+      <tr bgcolor=white> 
+        <td colspan="2" height="35" valign="top"> 
+
+	<table bgcolor=#888888 cellspacing=1 width=100%>
+	<tr><td><font color=#eeeeee size=+1>group type</font></td></tr>
+	<tr bgcolor=white>
+	   <td>
+	   <small>
+	   <font color=green>
+	   {type}
+	   </font>
+	   </small>
+	   </td>
+	</tr>
+	</table>
+<br>
+	<table bgcolor=#888888 cellspacing=1 width=100%>
+	<tr><td><font color=#eeeeee size=+1>group members</font></td></tr>
+	<tr bgcolor=white>
+	   <td>
+	   <small>
+	   {listmembers}
+	   </small>
+	   </td>
+	</tr>
+	</table>
+<br>
+	<table bgcolor=#888888 cellspacing=1 width=100%>
+	<tr><td><font color=#eeeeee size=+1>members can modify the
+	following agendas</font></td></tr>
+	<tr bgcolor=white>
+	   <td>
+	   <small>
+	   {listagendas}
+	   </small>
+	   </td>
+	</tr>
+	</table>
+<br>
+	<table bgcolor=#888888 cellspacing=1 width=100%>
+	<tr><td><font color=#eeeeee size=+1>members can manage the
+	following categories</font></td></tr>
+	<tr bgcolor=white>
+	   <td>
+	   <small>
+	   {listcategories}
+	   </small>
+	   </td>
+	</tr>
+	</table>
+	  <br>
+	  <A href="" onclick="document.forms[0].request.value='cancel';document.forms[0].submit();return false;"><IMG SRC="{images}/back.gif" border=0 width=100 height=15 align=right></A>
+        </td>
+      </tr>
+    </table>
+ </center>
+ </form>
+</body>
+</html>

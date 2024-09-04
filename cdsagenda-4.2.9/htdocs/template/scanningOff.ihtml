@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<TITLE>Talk Scanning Request</TITLE>
+<SCRIPT>
+
+function tester()
+{
+	ok=true;
+	if (document.SCAN.requester.value=="") { ok=false; }
+	if (document.SCAN.email.value=="") { ok=false; }
+	if (document.SCAN.tel.value=="") { ok=false; }
+	if (document.SCAN.back.value=="") { ok=false; }
+	if (document.SCAN.bcode.value=="") { ok=false; }
+	if (document.SCAN.bholder.value=="") { ok=false; }
+	if ( ok == false)
+	{
+		alert("Please fill in all the fields");
+		return false;
+	}
+	else 
+	{	
+		return true;
+	}
+}
+</SCRIPT>
+  <link rel="stylesheet" href="{images}/stylemodify.css">
+
+
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+We are sorry but the scanning service is not active, please <A HREF="mailto:{scanningOff_contactus}">contact us</A> to have 
+more datail about that 
+</BODY>
+</HTML>

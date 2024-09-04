@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS Agenda</TITLE>
+  <link rel="stylesheet" href="{images}/style.css">
+        <SCRIPT TYPE="text/javascript" LANGUAGE="Javascript1.2">
+	var minH = {timetableedit_minh};
+	var maxH = {timetableedit_maxh};
+        var bgmenucolor = "#9cf";
+	var changed = 0;
+	var DRAGtype = 1;
+	var sessions = new Array();
+	var numtalks = new Array();
+	var numsession = 0;
+	</SCRIPT>
+
+	{timetableedit_jsmenutools}
+	{timetableedit_jsmenutoolsadd}
+</HEAD>
+<BODY class=list
+      onMouseMove = "DRAG_dragTTE(event);"
+      onMouseUp = "DRAG_enddragTTE(event);"
+      onDragStart = "return false;">
+
+<FORM action="TimeTableEdit.php" method=POST>
+<INPUT type=hidden name=ida value="{timetableedit_ida}">
+<INPUT type=hidden name=ids value="{timetableedit_ids}">
+<INPUT type=hidden name=fid value="{timetableedit_fid}">
+<INPUT type=hidden name=level value="{timetableedit_level}">
+<INPUT type=hidden name=header value="full">
+<INPUT type=hidden name=AN value="">
+<INPUT type=hidden name=sizefactor value="{timetableedit_sizefactor}">
+<INPUT type=hidden name=todo value="">
+
+<TABLE bgcolor=black width=100% cellspacing=0 cellpadding=0 border=0>
+<TR>
+   <TD>
+   <A HREF="" onClick="if (changed) { if (confirm('Changes have not been saved\nAre you sure you want to quit?')) {document.forms[0].action='displayAgenda.php';document.forms[0].submit();}} else {document.forms[0].action='displayAgenda.php';document.forms[0].submit();};return false;"><font size=-1 color=white>quit</font></A>
+   </TD>
+   <TD>
+   <A HREF="" onClick="InitializeAll();return false;"><font size=-1
+   color=white>initialize</font></A><font size=-1
+   color=white>&nbsp;|&nbsp;</font><A HREF=""
+   onClick="document.forms[0].todo.value='save';document.forms[0].submit();return false;"><font size=-1 color=white>save&nbsp;changes</font></A><font size=-1 color=white>&nbsp;|&nbsp;</font><a href="../guide/english/edit_time_table.php" target=top><IMG SRC="<?print $IMAGES_WWW;?>/smallhelp.gif" border=0 hspace=0 vspace=0 valign=middle></A>
+   </TD>
+   <TD width=20 align=right>
+
+{timetableedit_body}
+
+<script type="text/javascript" language="JavaScript1.2">
+{timetableedit_jsfunctions}
+</script>
+
+
+</BODY>
+</HTML>

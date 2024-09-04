@@ -1,0 +1,30 @@
+CDS AGENDA SOFTWARE () README
+====================================
+
+Revision: $Id: README,v 1.1.1.1.4.1 2002/10/23 08:56:19 tbaron Exp $
+
+CDS Agenda Software () is a software developed by,
+maintained by, and used at, the CERN Document Server.  It enables you
+to create and manage your own online library of conferences. It also
+includes several useful features for managing a conference or a simple
+meeting.
+
+The CDS Agenda Software is free software licenced under terms of GNU General
+Public Licence (GPL).  It is provided on an "as is" basis.  However,
+please note that a support contract can be arranged with the CDS
+Development Group in which we, the developers, can help you to
+install, configure, and maintain the system (featuring email and
+telnet support throughout the year), including development of new
+local features should a need arise.  If you are interested in
+concluding a support contract with us, please contact the CDS
+Development Group at <cds.support@cern.ch>.
+
+The CDS software runs on top of MySQL database server and Apache/PHP
+web application server.  To install the CDS Software, please consult
+the INSTALL file.
+
+Good luck, and thanks for choosing the CDS Agenda Software.  
+
+       - CDS Development Group
+         <cds.support@cern.ch>
+         <http://cdsware.cern.ch/>

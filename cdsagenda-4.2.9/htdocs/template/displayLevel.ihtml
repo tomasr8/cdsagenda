@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS Agendas - Browse</TITLE>
+  <link rel="stylesheet" href="images/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+
+{displaylevel_alerttext}
+
+{displaylevel_jsmenutools}
+
+{displaylevel_topmenubar}
+
+<TABLE border=0 width="100%" cellspacing=0>
+<TR>
+   <TD class=results colspan=2>
+   <font size=-1>
+
+{displaylevel_category}
+
+   </font>
+
+{displaylevel_description}
+
+   </TD>
+   <TD class="results" align="right">
+{displaylevel_manager}
+   <a href="
+
+{displaylevel_topurl}
+
+   "><font size=-1
+   color=#666666>up&nbsp;</font><IMG SRC="images/up.gif" border=0
+   hspace=0 vspace=0></a>
+   </TD>
+</TR>
+<TR>
+   <TD valign=bottom>
+   <font class=headline>
+   <BR>
+
+   {displaylevel_maincell}
+
+   <BR>
+   </font>
+   </TD>
+</TR>
+</TABLE>
+
+  {displaylevel_menus}
+  {AGEfooter_template}
+</BODY>
+</HTML>

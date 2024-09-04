@@ -1,0 +1,678 @@
+<HTML>
+<HEAD>
+<TITLE>Modify Agenda</TITLE>
+<SCRIPT>
+              function changeMonth()
+              {
+                      document.modage.endm.selectedIndex=document.modage.stdm.selectedIndex;
+              }
+
+              function changeDay()
+              {
+                      document.modage.endd.selectedIndex=document.modage.stdd.selectedIndex;
+              }
+
+              function changeYear()
+              {
+                      document.modage.endy.selectedIndex=document.modage.stdy.selectedIndex;
+              }
+
+        function AUCheck(txt) {
+                if (txt == "") { return true; }
+                var res=1;
+                coma=txt.indexOf(",");
+                left=txt.substring(0,coma);
+                right=txt.substring(coma+1,txt.length);
+                coma2=right.indexOf(",");
+                space=right.indexOf(" ");
+                if ((coma==-1)||(left=="")||(right=="")||(space!=0)||(coma2!=-1))
+                {
+                        res=0;
+                }
+                if (res == 0){
+                        alert("The chairperson's name must be written in the correct format: Put a comma (,) between the name and the firstname initial letters, and a space after the comma. \012The name is going first, followed by the firstname initial letters.\012\012Example \: Put\012\012Le Meur, J Y \012\012for\012\012Jean-Yves Le Meur");
+                        return false;
+                }
+                return true;
+        }
+
+      function tester()
+      {
+              if (document.modage.agenda.value=="")
+              {
+                      alert("Please fill the 'title' field");
+                      return false;
+              }
+             if (document.modage.confidentiality[2].checked==true)
+        {
+                if (document.modage.apassword.value=="")
+                {
+                              alert("Please enter an access password!");
+                              return false;
+                      }
+        }
+      }
+
+
+</SCRIPT>
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY BGCOLOR="#DDDDDD" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM name=modage action="agendaFactory.php" method=POST>
+
+<TR><TD colspan=2 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR><TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/edit.gif" alt="edit agenda data" align=right></TD><TD width="1%"><A HREF="../guide/english/modify_agenda.php" target="top"><IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD><B><SMALL>&nbsp;[Edit Agenda Data]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY AGENDA" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+
+<TR bgcolor=silver><TD align=right class=headerselected><B><SMALL>title:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}
+<textarea name=agenda cols=80 rows=4>{modifyAgenda_title}</textarea>
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_title}
+{modifyAgenda_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>chairperson:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=50 name=chairman value="{modifyAgenda_chairman}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_chairman}
+{modifyAgenda_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR bgcolor=silver><TD align=right class=headerselected><B><SMALL>contact e-mail:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=50 name=cem value="{modifyAgenda_cem}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_cem}
+{modifyAgenda_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<tr><td align=right class=headerselected><b>SMR:</b></td><td><small>
+{modifyAgenda_topicFieldsOnStart}
+<input size=7 name=smr maxlength="7" value="{modifyAgenda_smr}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_smr}
+{modifyAgenda_topicFieldsOffEnd}
+</small></td></tr>
+<TR><TD align=right class=headerselected><B><SMALL>starting date:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}<SELECT name=stdd>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+<A href="" onClick="javascript:window.open('calendar.php?daystring=stdd&monthstring=stdm&yearstring=stdy&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_stdate}&nbsp;
+{modifyAgenda_topicFieldsOffEnd}
+<SELECT name=startinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="startingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>
+</TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>ending date:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}<SELECT name=endd>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=endm>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=endy>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+<A href="" onClick="javascript:window.open('calendar.php?daystring=endd&monthstring=endm&yearstring=endy&month='+enmonth+'&year='+enyear,'calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A></SMALL>
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_endate}&nbsp;
+{modifyAgenda_topicFieldsOffEnd}
+<SELECT name=endinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="endingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>
+</TD></TR>
+<TR bgcolor=silver><TD align=right class=headerselected><B><SMALL>location:</SMALL></B></TD><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=50 name=location value={modifyAgenda_location}>
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_location}
+{modifyAgenda_topicFieldsOffEnd}
+</SMALL></TD></TR><TR><TD align=right class=headerselected><B><SMALL>room</B><BR>(only if at {modifyAgenda_runningAT}):</SMALL></TD><TD><SMALL>
+Bld:
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=4 name=bld value="{modifyAgenda_bld}" onFocus=document.forms[0].confRoom.selectedIndex=0;> 
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+'{modifyAgenda_bld}'
+{modifyAgenda_topicFieldsOffEnd}
+floor:
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=2 name=floor value="{modifyAgenda_floor}"> 
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+'{modifyAgenda_floor}'
+{modifyAgenda_topicFieldsOffEnd}
+room:
+{modifyAgenda_topicFieldsOnStart}
+<INPUT size=3 name=room value="{modifyAgenda_room}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+'{modifyAgenda_room}'
+{modifyAgenda_topicFieldsOffEnd}
+{modifyAgenda_topicFieldsOnStart}
+ or
+<SELECT name=confRoom>
+{modifyAgenda_roomList}
+</SELECT>
+{modifyAgenda_topicFieldsOnEnd}
+</SMALL>
+</TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>status:</SMALL></B></TD><TD>
+        <TABLE border=0>
+                <TR>
+                        <TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}			
+                        <INPUT type=radio name=status value=open {modifyAgenda_open} >&nbsp;open<BR><INPUT type=radio name=status value=close {modifyAgenda_close} >&nbsp;close
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+                        <INPUT type=radio name=status value=open {modifyAgenda_open} >&nbsp;open<BR><INPUT type=radio name=status value=close {modifyAgenda_close} >&nbsp;close
+{modifyAgenda_topicFieldsOffEnd}
+</SMALL>
+                        </TD>
+                        <TD class=header><SMALL>If you close this agenda, you will not be able to modify it anymore unless you open it again.</SMALL>
+                        </TD>
+                </TR>
+        </TABLE>
+</TD></TR>
+<TR bgcolor=silver>
+<TD align=right class=headerselected><B><SMALL>format:</SMALL></B></TD><TD>
+<TABLE border=0><TR><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}
+<INPUT type=radio name=format value=timetable {modifyAgenda_timetable}>&nbsp;time table<BR><INPUT type=radio name=format value=olist {modifyAgenda_olist}>&nbsp;ordered list</SMALL></TD>
+<TD  class=header><SMALL>The "<B>time-table</B>" format is the classical agenda. If you choose the "<B>ordered list</B>" format, this agenda will be a succession of points, the hours you enter for each talk will not be meaningfull anymore (they will only indicate the order of the list).</SMALL></TD></TR></TABLE>
+</TD></TR>
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+<INPUT type=radio name=format value=timetable {modifyAgenda_timetable}>&nbsp;time table<BR><INPUT type=radio name=format value=olist {modifyAgenda_olist}>&nbsp;ordered list</SMALL></TD>
+<TD  class=header><SMALL>The "<B>time-table</B>" format is the classical agenda. If you choose the "<B>ordered list</B>" format, this agenda will be a succession of points, the hours you enter for each talk will not be meaningfull anymore (they will only indicate the order of the list).</SMALL></TD></TR></TABLE>
+</TD></TR>
+{modifyAgenda_topicFieldsOffEnd}
+<TR>
+        <TD align=right class=headerselected><B><SMALL>Modify Key:</SMALL></B><BR>
+        (this is the password you will use to modify your agenda)</TD>
+        <TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}	
+	<INPUT type=text size=15 name=an value="{modifyAgenda_AN}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_AN}
+{modifyAgenda_topicFieldsOffEnd}	
+	</SMALL></TD>
+</TR>
+
+<TR bgcolor=silver>
+        <TD align=right class=headerselected><B><SMALL>Confidentiality level:</SMALL></B><BR>(set the confidentiality for the visualisation of the meeting)</TD>
+        <TD>
+                <TABLE border=0><TR><TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}		
+                        <INPUT type=radio name=confidentiality value='open' {modifyAgenda_confOpen}> open<BR>
+                        <INPUT type=radio name=confidentiality value='cern-only' {modifyAgenda_confCernonly}> {modifyAgenda_runningAT} only<BR>
+                        <INPUT type=radio name=confidentiality value='password' {modifyAgenda_confPassword}> password</SMALL>
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+                        <INPUT type=radio name=confidentiality value='open' {modifyAgenda_confOpen}> open<BR>
+                        <INPUT type=radio name=confidentiality value='cern-only' {modifyAgenda_confCernonly}> {modifyAgenda_runningAT} only<BR>
+                        <INPUT type=radio name=confidentiality value='password' {modifyAgenda_confPassword}> password</SMALL>
+{modifyAgenda_topicFieldsOffEnd}			
+                </TD><TD class=header><SMALL>
+                        <B>open</B>: accessible worldwide<BR>
+                        <B>{modifyAgenda_runningAT} only</B>: accessible only from a computer located at {modifyAgenda_runningAT}<BR>
+                        <B>password</B>: accessible only with the access password (username: <FONT color=red>agenda</FONT>)</SMALL>
+                </TD>
+                </TR>
+                <TR>
+                        <TD colspan=2><B><SMALL>access password:</SMALL></B>
+                        <SMALL>
+{modifyAgenda_topicFieldsOnStart}
+			<INPUT size=15 name=apassword value="{agendaModify_accessPassword}">
+{modifyAgenda_topicFieldsOnEnd}
+{modifyAgenda_topicFieldsOffStart}
+'{agendaModify_accessPassword}'
+{modifyAgenda_topicFieldsOffEnd}
+			</SMALL>
+                </TR>
+                </TABLE>
+        </TD>
+</TR>
+{modifyAgenda_reportNoStart}
+<TR bgcolor=silver>
+        <TD align=right class=headerselected><B><SMALL>report number:</SMALL></B><BR>(optional)</TD>
+        <TD><SMALL>
+                <INPUT size=20 name=repno></SMALL>
+        </TD>
+</TR>
+{modifyAgenda_reportNoEnd}
+<TR>
+        <TD align=right class=headerselected><B><SMALL>Comments:</SMALL></B>
+        <BR><FONT color=white><SMALL>(This text will be displayed exactly the way it appears in the input box. If you cut&paste your text, please get rid of any extra newline. You can also use HTML tags in this text.)</SMALL></font>
+        </TD>
+        <TD><SMALL>
+                <TEXTAREA rows=15 cols=80 name=acomment nowrap>{modifyAgenda_acomments}</TEXTAREA></SMALL>
+        </TD>
+</TR>
+<TR>
+        <TD align=right class=headerselected><B><SMALL>Default Stylesheet:</SMALL></B>
+        </TD>
+        <TD><SMALL>
+{modifyAgenda_topicFieldsOnStart}	
+                <SELECT name=newstylesheet>
+                        <OPTION value="standard">standard meeting
+                        <OPTION value="standard2">standard with inline minutes
+                        <OPTION value="minutes">all minutes in one file
+                        <OPTION value="administrative">administrative
+                        <OPTION value="nicecompact">compact
+                        <OPTION value="lecture">lecture
+                        <OPTION value="event">simple event
+                <SELECT>
+{modifyAgenda_topicFieldsOnEnd}
+        </SMALL>
+        </TD>
+</TR>
+
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">Specify fields for the calendar creation</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>  
+  <tr>
+    <td align=right class=headerselected><b>Still incomplete?</b> </td>
+    <td>
+      <input type=checkbox name=partialevent {modifyAgenda_stillPartial}>
+      (if checked hide the session/talk/subtalk structure to visitors)</td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Hosted?</b></td>
+    <td>
+{modifyAgenda_topicFieldsOnStart}    
+      <input type=checkbox name=hosted {modifyAgenda_hosted}> (check if hosted) </td>
+{modifyAgenda_topicFieldsOnEnd}      
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_hostedFlag}
+{modifyAgenda_topicFieldsOffEnd}
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>To be held outside {modifyAgenda_baselocation}?</b></td>
+    <td>
+{modifyAgenda_topicFieldsOnStart}    
+      <input type=checkbox name=outside {modifyAgenda_outside}> (check if this event is going to be held outside {modifyAgenda_baselocation}) </td>
+{modifyAgenda_topicFieldsOnEnd}      
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_outsideFlag}
+{modifyAgenda_topicFieldsOffEnd}
+  </tr>
+  <TR>
+    <TD align=right class=headerselected><b>Co-sponsored?</b></TD>
+    <TD>
+      <input type=checkbox name=cosponsored {modifyAgenda_cosponsored}>
+      (check if this event is co-sponsored)</TD>
+  </TR>    
+  <tr>
+    <td align=right class=headerselected><b>Show only in the internal version of the calendar?</b></td>
+    <td>
+{modifyAgenda_topicFieldsOnStart}    
+      <input type=checkbox name=internalOnly {modifyAgenda_internalOnly}>
+      (check to hide from the public version of the calendar)</td>
+{modifyAgenda_topicFieldsOnEnd}      
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_internalOnlyFlag}
+{modifyAgenda_topicFieldsOffEnd}      
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Specify a web site link here:</b>
+    <BR><small>(cut & paste here the link (with http:// ). If not specified the "common" link will be used)</small></td>
+    <td>
+      <input size=80 name=websiteLink maxlength="500" value="{modifyAgenda_websiteLink}">
+      </td>
+  </tr>  
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">The following 2 parametric fields will appear before the other fields in the calendar</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=topPersonal1title maxlength="80" value="{modifyAgenda_topPersonal1title}"><BR>Put above the title of the first parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=topPersonal1value cols=80 rows=2>{modifyAgenda_topPersonal1value}</textarea>
+      </small></TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=topPersonal2title maxlength="80" value="{modifyAgenda_topPersonal2title}"><BR>Put above the title of the second parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=topPersonal2value cols=80 rows=2>{modifyAgenda_topPersonal2value}</textarea>
+      </small></TD>
+  </TR>    
+  <tr>
+    <td align=right class=headerselected><b>Note about days during the meeting:</b>
+    <td><small>
+      <textarea name=daynote cols=80 rows=2>{modifyAgenda_daynote}</textarea>
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Co-sponsor(s):</b></td>
+    <td><small>
+      <textarea name=cosponsor cols=80 rows=2>{modifyAgenda_cosponsor}</textarea>
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Local organizer(s):</b></td>
+    <td><small>
+      <textarea name=localorganizers cols=80 rows=2>{modifyAgenda_localorganizers}</textarea>
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Director(s):</b></td>
+    <td><small>
+      <textarea name=directors cols=80 rows=2>{modifyAgenda_directors}</textarea>
+      </small></td>
+  </tr>  
+  <tr>
+    <td align=right class=headerselected><b>Organizer(s):</b></td>
+    <td><small>
+      <textarea name=organizers cols=80 rows=2>{modifyAgenda_organizers}</textarea>
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Director(s)/Organizer(s):</b></td>
+    <td><small>
+      <textarea name=directorsandorganizers cols=80 rows=2>{modifyAgenda_directorsandorganizers}</textarea>
+      </small></td>
+  </tr>  
+  <tr>
+    <td align=right class=headerselected><b>Collaboration(s):</b></td>
+    <td><small>
+      <textarea name=collaborations cols=80 rows=2>{modifyAgenda_collaborations}</textarea>
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Expected Participant(s):</b></td>
+    <td><small>
+      <input size=80 name=expparts maxlength="500" value="{modifyAgenda_expectedpartecipants}">
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Limited Participation:</b><small><br>(entering 'yes' here, in the calendar will appear<BR> "(Limited Participation)", instead of <BR>"Limited Participation: yes"</small></td>
+    <td><small>
+      <input size=80 name=limitedpartecipations maxlength="500" value="{modifyAgenda_limitedpartecipations}">
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Venue(s):</b></td>
+    <td><small>
+{modifyAgenda_topicFieldsOnStart}    
+      <input size=80 name=venues maxlength="500" value="{modifyAgenda_venues}" >
+{modifyAgenda_topicFieldsOnEnd}      
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_venues}&nbsp;
+{modifyAgenda_topicFieldsOffEnd}      
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Laboratory:</b><small><br>(entering 'yes' here, in the calendar will appear<BR> "Infolab.", instead of<BR>"Laboratory: yes"</small></td>
+    <td><small>
+      <input size=80 name=laboratories maxlength="500" value="{modifyAgenda_laboratories}">
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Secretary:</b></td>
+    <td><small>
+{modifyAgenda_topicFieldsOnStart}     
+      <input size=80 name=secretary maxlength="100" value="{modifyAgenda_secretary}">
+{modifyAgenda_topicFieldsOnEnd}      
+{modifyAgenda_topicFieldsOffStart}
+{modifyAgenda_secretary}&nbsp;
+{modifyAgenda_topicFieldsOffEnd}       
+      </small></td>
+  </tr>
+  <tr>
+    <td align=right class=headerselected><b>Deadline(s) for requesting participation:</b></td>
+    <td><small>
+      <textarea name='deadrequest' cols=80 rows=2>{modifyAgenda_deadrequest}</textarea>
+      </small></td>
+  </tr>
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">The following 2 parametric fields (in the calendar) will appear after the "common fields" but before the "activity information" link and the additional notes field</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=bottomPersonal3title maxlength="80" value="{modifyAgenda_bottomPersonal3title}"><BR>Put above the title of the first parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=bottomPersonal3value cols=80 rows=2>{modifyAgenda_bottomPersonal3value}</textarea>
+      </small></TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=bottomPersonal4title maxlength="80" value="{modifyAgenda_bottomPersonal4title}"><BR>Put above the title of the second parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=bottomPersonal4value cols=80 rows=2>{modifyAgenda_bottomPersonal4value}</textarea>
+      </small></TD>
+  </TR>
+  <tr>
+    <td align=right class=headerselected><b>Additional notes:</b><BR>(to appear after the activity information link, if present)</td>
+    <td><small>
+      <textarea name=additionalnotes cols=80 rows=2>{modifyAgenda_additionalnotes}</textarea>
+      </small></td>
+  </tr>
+
+
+<INPUT type=hidden name=ida value='{modAg_IDA}'>
+<INPUT type=hidden name=AN value='{modAg_AN}'>
+<INPUT type=hidden name=position value='{modAg_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{modAg_STYLESHEET}'>
+
+<TR>
+<TD align=right colspan=2 class=header><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY AGENDA" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL  onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+
+<SCRIPT>
+
+{str_help18bis}
+{str_help21}
+{str_help27}
+{str_help28}
+{modifyAgenda_JS_startingtime}
+{modifyAgenda_JS_endingtime}
+</SCRIPT>
+</BODY>
+</HTML>

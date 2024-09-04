@@ -1,0 +1,194 @@
+<HTML>
+<HEAD>
+<TITLE>Modify Sub Talk</TITLE>
+<SCRIPT>
+
+      function tester()
+      {
+	      	if (document.forms[0].title.value=="")
+	      	{
+		      	alert("Please fill the 'Title' field");
+		      	return false;
+			
+	      	}
+	      	else
+		{
+		    return true;
+
+		}
+      }
+
+      function changeMonth()
+      {
+      document.forms[0].endm.selectedIndex=document.forms[0].stdm.selectedIndex;
+      }
+
+	function AUCheck(txt) {
+		if (txt == "") { return true; }
+		var res=1;
+		coma=txt.indexOf(",");
+		left=txt.substring(0,coma);
+		right=txt.substring(coma+1,txt.length);
+		coma2=right.indexOf(",");
+		space=right.indexOf(" ");
+		if ((coma==-1)||(left=="")||(right=="")||(space!=0)||(coma2!=-1))
+		{
+			res=0;
+		}
+		if (res == 0){
+			alert("The speaker's name must be written in the correct format: Put a comma (,) between the name and the firstname initial letters, and a space after the comma. \012The name is going first, followed by the firstname initial letters.\012\012Example \: Put\012\012Le Meur, J Y \012\012for\012\012Jean-Yves Le Meur");
+			return false;
+		}	
+		return true;	
+	}
+
+
+    </SCRIPT>
+  <link rel="stylesheet" href="{images}/stylemodify.css">
+
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM action="agendaFactory.php" method=POST>
+
+<TR><TD colspan=2 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0>
+<TR><TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/edit.gif" alt="edit sub point data" align=right></TD>
+<TD width="1%"><A HREF="../guide/english/modify_subtalk.php" target="top">
+<IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD><B><SMALL>&nbsp;[Edit Sub Point Data]</SMALL></B></TD>
+<TD align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY SUB TALK" onClick="if (tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Title:</SMALL></B></TD><TD><SMALL>
+{modifySubTalk_topicFieldsOnStart}
+<INPUT size=50 name=title value="{modifySubTalk_title}" >
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_title}&nbsp;
+{modifySubTalk_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Speaker:</SMALL></B></TD><TD><SMALL>
+{modifySubTalk_topicFieldsOnStart}
+<INPUT size=50 name=tspeaker value="{modifySubTalk_tspeaker}" >
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_tspeaker}&nbsp;
+{modifySubTalk_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Affiliation:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=affiliation></SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Email:</SMALL></B></TD><TD><SMALL>
+{modifySubTalk_topicFieldsOnStart}
+<INPUT size=50 name=temail value="{modifySubTalk_temail}" >
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_temail}&nbsp;
+{modifySubTalk_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Duration:</SMALL></B></TD><TD><SMALL>
+{modifySubTalk_topicFieldsOnStart}
+<SELECT name=durationh>
+<OPTION VALUE="00" selected>0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_durationh}&nbsp;
+{modifySubTalk_topicFieldsOffEnd}
+{modifySubTalk_topicFieldsOnStart}
+<SELECT NAME="durationm">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION selected>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT>
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_durationm}
+{modifySubTalk_topicFieldsOffEnd}
+ minutes</SMALL></TD></TR>
+<INPUT type=hidden name=stdd>
+<INPUT type=hidden name=stdm>
+<INPUT type=hidden name=stdy>
+<INPUT type=hidden name=thstart>
+<INPUT type=hidden name=tmstart>
+<INPUT type=hidden name=location>
+<INPUT type=hidden name=bld>
+<INPUT type=hidden name=floor>
+<INPUT type=hidden name=room>
+<INPUT type=hidden name=ttype value=1>
+<INPUT type=hidden name=confRoom value="Select:">
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>report number:</SMALL></B><BR>(optional)</TD>
+	<TD><SMALL>
+{modifySubTalk_topicFieldsOnStart}	
+		<INPUT size=20 name=repno value="{modifySubTalk_repno}" >
+{modifySubTalk_topicFieldsOnEnd}
+{modifySubTalk_topicFieldsOffStart}
+{modifySubTalk_repno}&nbsp;
+{modifySubTalk_topicFieldsOffEnd}
+	</SMALL></TD>
+</TR>
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>Description:</SMALL></B><BR><BR>
+	<FONT color=white><SMALL>(If you use html, make sure to include &lt;br&gt;s for carriage returns)</SMALL></font>
+	</TD><SMALL>
+	<TD><TEXTAREA wrap rows=20 cols=50 name=tcomment></TEXTAREA>
+	</SMALL></TD>
+</TR>
+
+<INPUT type=hidden name=ids value='{modSub_IDS}'>
+<INPUT type=hidden name=idt value='{modSub_IDT}'>
+<INPUT type=hidden name=ida value='{modSub_IDA}'>
+<INPUT type=hidden name=AN value='{modSub_AN}'>
+<INPUT type=hidden name=position value='{modSub_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{modSub_STYLESHEET}'>
+
+<TR bgcolor=white>
+<TD colspan=2 class=header align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY SUB TALK" onClick="if (tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+{str_ifres}
+{str_help3}
+{str_help5}
+{str_help6}
+{str_help7}
+
+</BODY>
+</HTML>

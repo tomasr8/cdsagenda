@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDA MAP</TITLE>  
+  <link rel="stylesheet" href="images/style.css">
+	<SCRIPT TYPE="text/javascript">
+	var bgmenucolor = "#9cf";
+	</SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+{map_jsmenutools}
+{map_topmenubar}
+
+<BR><BR>
+<H1 class=headline>Map of the Hierarchical Structure:</H1>
+<CENTER>
+
+{map_core}
+
+</CENTER>
+
+{map_menus}
+{AGEfooter_template}
+
+</BODY>
+</HTML>

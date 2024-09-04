@@ -1,0 +1,68 @@
+<HTML>
+<HEAD>
+<TITLE>Attach file(s) to an agenda item</TITLE>
+
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<FORM method=POST action="file.php">
+<INPUT type=hidden name=ida value='{fileSes_IDA}'>
+<INPUT type=hidden name=ids value='{fileSes_IDS}'>
+<INPUT type=hidden name=idt value='{fileSes_IDT}'>
+<INPUT type=hidden name=AN value='{fileSes_AN}'>
+<INPUT type=hidden name=fileChange value=''>
+<INPUT type=hidden name=filetype value=''>
+<INPUT type=hidden name=fileID value=''>
+<INPUT type=hidden name=newfiletype value=''>
+<INPUT type=hidden name=from value='{file_from}'>
+<INPUT type=hidden name=position value='{fileSes_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{fileSes_STYLESHEET}'>
+
+<TABLE bgcolor=white border=0 align="center" width="75%" cellspacing=1>
+
+<TR><TD colspan=4 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR>
+<TD width="1%"><A HREF="../guide/english/list_of_files.php" target="top">
+<IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD width="1%">
+<IMG  hspace=0 vspace=0 border=0 SRC="{images}/files.gif" alt="list of files" align=right></TD><TD><B>
+<SMALL>&nbsp;[List of Attached Files]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT class=headerselected type=submit name=deleteall value="delete all" onClick="return confirm('Are you sure you want to delete all these files?');">
+<INPUT type=submit name=upload value="Upload File" onClick="document.forms[0].action='upload.php';">
+<INPUT type=submit name=link value="Link File" onClick="document.forms[0].action='link.php';">
+<INPUT type=submit name=request value="Back to Agenda" onClick="document.forms[0].action='displayAgenda.php';">
+
+</SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR> 
+<TD colspan=4 bgcolor=silver><SMALL>
+From this page, you have access to the list of all the files which are
+associated with the agenda item. The files can be locally stored files (transfered by upload...) or redirection files (<B>.link</B> created by file linkage). You can visualise or remove any file, as well as transfer or link new files.</SMALL>
+</TD>
+</TR>
+
+<TR>
+	<TD bgcolor=#eeeeee align=right><font size=-1
+	color=#888888>Single File Protection</font></TD>
+	<TD bgcolor=#eeeeee align=right><font size=-1 color=#888888>Material</font></TD>
+	<TD bgcolor=#eeeeee align=center><font size=-1 color=#888888>Action</font></TD>
+	<TD bgcolor=#eeeeee align=left><font size=-1 color=#888888>Type</font></TD>
+</TR>
+
+{str_help}
+{str_while}
+{str_help8}
+
+<TR class=header>
+<TD colspan=4 align=right valign=middle><font size=-1
+color=#666666>global file protection:</font>&nbsp;{file_eventprotection}</TD>
+</TR>
+
+<TR><TD bgcolor=white colspan=4 align=left>
+<br>
+<SMALL>
+{file_Message}
+</SMALL>
+</TD></TR></TABLE>
+
+</FORM>	
+</BODY>
+</HTML>

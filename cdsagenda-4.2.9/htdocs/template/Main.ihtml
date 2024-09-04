@@ -1,0 +1,46 @@
+<HTML>
+  <HEAD>
+    <TITLE>CDS Agenda Administrator</TITLE>
+  </HEAD>
+  
+<BODY background="{Main_IMAGES}/gray.gif">
+
+&nbsp;<TABLE border=0>
+<TR>
+<TD width=100% align=right valign=bottom>
+<FONT size=+4>
+CDS Agenda MANAGER<BR>
+BASES (level 1)
+</FONT>
+<BR>Please choose the base you want to access:
+</TD>
+</TR>
+</TABLE>
+<CENTER>
+<BR><BR><BR>
+
+<TABLE>
+
+{Main_for}
+
+</TABLE>
+
+<BR><BR><BR>
+<TABLE border=2 width=100%>
+<TR>
+<TD align=center bgcolor=cyan><H3>New<BR>Base</H3></TD>
+<TD>
+<TABLE border=2 width=100%>
+<FORM name=newbase>
+<TR><TD align=center><B>title:</B></TD><TD><INPUT size=60 name=title></TD></TR>
+<TR><TD align=center><B>description:</B></TD><TD><TEXTAREA cols=60 rows=6 name=description></TEXTAREA></TD></TR><TR><TD align=center><B>icon:</B></TD><TD><INPUT size=60 name=icon></TD></TR><TR><TD align=center><B>short title:</B></TD><TD><INPUT size=60 name=stitle></TD></TR>
+</TABLE>
+</TD>
+<TD align=center bgcolor=cyan>
+<INPUT type=submit name=add value=ADD>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,49 @@
+<HTML>
+  <HEAD>
+    <TITLE>Agenda:{age_ID}</TITLE></HEAD>
+
+<BODY background="{age_IMAGES}/gray.gif">
+
+<TABLE border=0>
+<TR>
+
+<TD width=100% align=right valign=bottom>
+<FONT size=+4>
+<A HREF='Main.php'>
+AGENDA MAKER MANAGER
+</A>
+</FONT>
+</TD>
+</TR>
+</TABLE>
+<CENTER>
+<FORM name='modage'>
+<INPUT type=hidden name=fid value='{age_FID}'>
+<INPUT type=hidden name=id value='{age_ID}'>
+
+<BR><BR>
+</CENTER>
+<BR><BR>
+<TABLE border=2 width=100%>
+<TR>
+<TD align=center bgcolor=cyan><H3>Modify Agenda</H3></TD>
+<TD>
+<TABLE border=2 width=100%>
+
+{age_for}
+
+</TABLE>
+</TD>
+<TD align=center bgcolor=cyan>
+<INPUT type=submit name=modify value=MODIFY>
+</FORM>
+<FORM name=access action={age_URLPATH}/modification/access.php>
+<INPUT type=hidden name=AN value='{age_AN}'>
+<INPUT type=hidden name=ida value='{age_ID}'>
+<INPUT type=submit name=modify value=ACCESS>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

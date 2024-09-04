@@ -1,0 +1,303 @@
+<HTML>
+<HEAD>
+   <TITLE>Add Session</TITLE>
+
+    <SCRIPT>
+
+
+	function createEmail()
+	{
+		if (document.forms[0].schairman.value != "" && document.forms[0].schairman.value.indexOf(",") == -1)
+		{
+			chairman = document.forms[0].schairman.value;
+			re = / /g;
+			cem = chairman.replace(re,".");
+			document.forms[0].scem.value = cem+"{addSes_domain}";
+		}
+	}
+
+	function AUCheck(txt) {
+		if (txt == "") { return true; }
+		var res=1;
+		coma=txt.indexOf(",");
+		left=txt.substring(0,coma);
+		right=txt.substring(coma+1,txt.length);
+		coma2=right.indexOf(",");
+		space=right.indexOf(" ");
+		if ((coma==-1)||(left=="")||(right=="")||(space!=0)||(coma2!=-1))
+		{
+			res=0;
+		}
+		if (res == 0){
+			alert("The chairperson's name must be written in the correct format: Put a comma (,) between the name and the firstname initial letters, and a space after the comma. \012The name is going first, followed by the firstname initial letters.\012\012Example \: Put\012\012Le Meur, J Y \012\012for\012\012Jean-Yves Le Meur");
+			return false;
+		}	
+		return true;	
+	}
+
+
+      function tester()
+      {
+      	if (document.newage.stitle.value=="")
+      	{
+      		alert("Please fill the 'session title' field");
+      		return false;
+      	}
+	else if (document.forms[0].startinghour.value > 23)
+	{
+		alert("Starting hour should be between 0 and 23");
+		return false;
+	}
+	else if (document.forms[0].startingminutes.value > 59)
+	{
+		alert("Starting minutes should be between 0 and 59");
+		return false;
+	}
+  	else
+	{
+		return true;
+	}
+      }
+    </SCRIPT>
+
+    <link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY  TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM name=newage action="agendaFactory.php" method=POST target="{addSession_target}">
+
+<TR>
+   <TD colspan=2 class=header align="left">
+   <TABLE width="100%" border=0 cellpadding=0 cellspacing=2>
+   <TR>
+      <TD width="1%">
+         <IMG  hspace=0 vspace=0 border=0 SRC="{images}/add.gif" alt="add
+      session" align=right>
+      </TD>
+      <TD width="1%">
+         <A HREF="../guide/english/add_session.php" target="top">
+         <IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A>
+      </TD>
+      <TD>
+         <B><SMALL>&nbsp;[Add Session]
+	 <FONT color=white> to <I>{addSes_TITLE}</I></FONT>
+	 </SMALL></B>
+      </TD>
+      <TD align=right>
+         <SMALL><SMALL>
+	 <INPUT type=submit name=request value="ADD SESSION"
+	 onClick="if (tester() == false) { return false; }">
+	 <INPUT type=submit name=request onClick="window.close();return false;"
+	 value=CLOSE></SMALL></SMALL>
+      </TD>
+   </TR>
+   </TABLE>
+   </TD>
+</TR>
+
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>session title:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=stitle></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>session chairperson:</B><BR>(The recommended format is:<BR>Name, Initial(s))</SMALL></TD><TD><SMALL><INPUT size=50 name=schairman onChange="createEmail();"></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>contact e-mail:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=scem></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>period:</SMALL></B></TD><TD><SMALL>start:
+<SELECT name=stdd onChange="changeDay();">
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm onChange="changeMonth();">
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy onChange="changeYear();">
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+<A href="" onClick="javascript:window.open('calendar.php?daystring=stdd&monthstring=stdm&yearstring=stdy&month='+month+'&year='+year,'calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0 VSPACE=0></A>
+<BR>
+from:
+<SELECT name=startinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09" selected>9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="startingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>to: 
+<SELECT name=endinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12" selected>12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="endingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>
+</SMALL>
+</TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>session location:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=slocation value={addSession_baselocation}></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>room</B><BR>(only if at {addSession_baselocation}):</SMALL></TD><TD><SMALL>Bld:<INPUT size=4 name=bld> floor:<INPUT size=2 name=floor> room:<INPUT size=3 name=room> or 
+<SELECT name=confRoom>
+<OPTION> Select:
+    {addSessionRooms}
+</SELECT></SMALL>
+</TD></TR>
+<INPUT type=hidden name=slink value=''>
+<!--
+<TR><TD align=right class=headerselected><B><SMALL>Session Type:</SMALL></TD><TD>
+<SELECT NAME="type">
+<OPTION value="Regular">Regular
+<OPTION value="Container">Container
+</SELECT>&nbsp;&nbsp;&nbsp;(Use Regular for <b>normal</b> sessions, use <b>Container</b> to store talks before to know the exact timing/speaker/title.
+</TD></TR>
+-->
+<TR><TD align=right class=headerselected><B><SMALL>Broadcast URL</SMALL><BR><SMALL>(Mbone session):</SMALL></B></TD><TD><SMALL><INPUT size=50 name=broadcasturl></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>Comments:</SMALL></B>
+<BR><FONT color=white><SMALL>(This text will be displayed exactly the way it appears in the input box. If you cut&paste your text, please get rid of any extra newline.)</SMALL></font>
+</TD><TD><SMALL><TEXTAREA rows=15 cols=50 name=scomment wrap></TEXTAREA></SMALL></TD></TR>
+
+<INPUT type=hidden name=ida value='{addSes_IDA}'>
+
+<INPUT type=hidden name=AN value='{addSes_AN}'>
+
+<INPUT type=hidden name=position value='{addSes_POSITION}'>
+
+<INPUT type=hidden name=stylesheet value='{addSes_STYLESHEET}'>
+
+<TR>
+<TD align=right colspan=2 class=header><SMALL><SMALL>
+<INPUT type=submit name=request value="ADD SESSION" onClick="if (tester() == false) { return false; }">
+<INPUT type=submit name=request onClick="window.close();return false;" value=CLOSE></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+{str_help}
+
+{str_help2}
+
+{str_help3}
+
+{str_help4}
+
+{str_help5}
+
+{str_help6}
+
+</SCRIPT>
+
+</BODY>
+</HTML>

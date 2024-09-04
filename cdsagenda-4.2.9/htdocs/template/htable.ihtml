@@ -1,0 +1,47 @@
+<html>
+<head>
+<script>
+function act(action){
+	document.forma.action=action;
+}
+</script>
+</head>
+<body bgcolor="{bgcolor}">
+
+{tabletit}
+<tr><td>
+<font size="{tsize}" color="{titcolor}">
+{tagtitolo}
+{titolo}
+{finetagtitolo}
+</font>
+</td></tr>
+</table>
+
+<br>
+{legenda}
+<table width="100%"><tr><td align="{close_align}"><form><input type="button" value="Close" onClick="self.close();"></form></td></tr>
+<tr><td>
+{table}
+
+<form name="forma" method='POST'>
+
+{caption}
+
+{header}
+
+{titoli}
+
+</tr>
+
+{riga}
+
+</form>
+
+</table></td></tr><tr><td>&nbsp;</td></tr>
+<tr><td align="{close_align}">
+<form><input type="button" value="Close" onClick="self.close();"></form></td></tr>
+</table>
+</body>
+
+</html>

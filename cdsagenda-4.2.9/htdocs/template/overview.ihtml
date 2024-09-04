@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+   <HEAD>
+   <TITLE>OVERVIEW</TITLE>  
+   <SCRIPT TYPE="text/javascript" LANGUAGE="Javascript1.2">
+var bgmenucolor = "#9cf";
+
+function SetDate(day,month,year)
+{
+    document.forms[0].selectedday.value=day;
+    document.forms[0].selectedmonth.selectedIndex=(month-1);
+    document.forms[0].selectedyear.selectedIndex=(year-1995);
+    document.forms[0].submit();
+}
+   </SCRIPT>
+	
+   <STYLE type="text/css">
+.empty { background-image: url(../images/empty.gif);
+         background-color: silver; }
+.emptytext { background: silver; 
+ color: #000; }
+   </STYLE>
+
+   <link rel="stylesheet" href="../images/style.css">
+   </HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000"
+onClick="closeOpened();"
+onLoad="allLoaded = 1"
+class=list>
+
+{overview_jsmenutools}
+{overview_topmenubar}
+
+<FORM action="overview.php">
+
+<TABLE border=0 width="100%">
+<TR>
+   <TD class=results>
+   <TABLE border=0 cellspacing=0 class=results>
+   <TR>
+      <TD class=results valign=top><IMG SRC="../images/okay.gif" ALT="hierarchy"></TD>
+      <TD class=results valign=top> 
+      <SMALL><B><A HREF="../List.php">CDS&nbsp;Agenda&nbsp;Home</A></B></SMALL> 
+      </TD>
+      <TD valign=top> <SMALL><B>></B></SMALL> </TD>
+
+{overview_categlist}
+
+      <TD valign=top>
+      <SMALL><B>Overview Display</B></SMALL>
+      </TD>
+   </TR>
+   </TABLE>
+   </TD>
+</TR>
+</TABLE>
+
+<TABLE border=0 CELLPADDING=10 CELLSPACING=1>
+<TR>
+   <TD valign=top rowspan=2>
+   <TABLE border="0" bgcolor="silver" cellspacing="3" cellpadding="1" width="100%">
+   <TR>
+      <TD>
+      <TABLE border="0" bgcolor="white" cellpadding="2" cellspacing="0" width="100%">
+      <TR>
+         <TD>
+	 <SMALL>
+	 <B><U>Select period:</U></B>
+
+{overview_periodselectorform}
+
+	 </SMALL><BR>
+
+{overview_timeselectorform}
+
+         </TD>
+      </TR>
+      </TABLE>
+      </TD>
+   </TR>
+   </TABLE>
+
+   <BR><BR>
+   <TABLE border="0" bgcolor="silver" cellspacing="3" cellpadding="1" width="100%">
+   <TR>
+      <TD>
+      <TABLE border="0" bgcolor="white" cellpadding="2" cellspacing="0" width="100%">
+      <TR>
+         <TD>
+	 <SMALL>
+	 <B><U>Key:</U></B><BR>
+	 <TABLE>
+	 <TR>
+	    <TD align=center>
+	    <IMG SRC="{overview_images}/private.gif" ALT="protected">
+	    </TD>
+	    <TD>
+	    <SMALL> protected meetings</SMALL>
+	    </TD>
+	 </TR>
+
+{overview_keytable}
+
+         </TABLE></SMALL>
+	 </TD>
+      </TR>
+      </TABLE>
+      </TD>
+   </TR>
+   </TABLE>
+
+{overview_displaylevel}
+
+   </TD>
+   <TD valign=top>
+
+{overview_maincell}
+
+   </TD>
+</TR>
+<TR>
+   <TD align=right valign=top>
+
+{overview_otherlinks}
+
+   </TD>
+</TR>
+</TABLE>
+
+</FORM>
+
+{overview_menus}
+
+</BODY>
+</HTML>

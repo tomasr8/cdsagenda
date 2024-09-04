@@ -1,0 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+<HEAD>
+  <TITLE>AGENDA SEARCH</TITLE>  
+  <link rel="stylesheet" href="images/style.css">
+	<SCRIPT TYPE="text/javascript">
+	var bgmenucolor = "#9cf";
+	</SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+{search_jsmenutools}
+{search_topmenubar}
+
+<BR><BR>
+
+{search_core}
+
+{search_menus}
+{AGEfooter_template}
+
+</BODY>
+</HTML>

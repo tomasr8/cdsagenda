@@ -1,0 +1,131 @@
+/* cds_user_guide.css -- CDS user guide style sheet */
+/* author: thomas baron using work from */
+/* tibor.simko@cern.ch, david.mcglashan@cern.ch */
+
+body { 
+   color: #000; 
+   background: #fff; 
+   font-family: helvetica, arial, sans-serif;
+}
+p,br,dl,strong,em,h1,h2,h3,td,blockquote,ol,ul {
+   font-family: helvetica, arial, sans-serif;
+}
+h1 {
+   font-size: 173%;
+   font-weight: 700;
+   margin-left: 0%;
+}
+h2 {
+   font-size: 144%;
+   font-weight: 650;
+   margin-left: 3%; 
+   margin-top: 6%;
+} 
+h3 {
+   font-size: 120%;
+   font-weight: 600;
+   font-style: italic;
+   margin-left: 6%; 
+}
+a:link { 
+   color: #00c;  
+   background: transparent;
+}
+a:visited { 
+   color: #006; 
+   background: transparent;
+}
+a:active { 
+   color: #fff; 
+   font-weight: bold; 
+   background: #006; 
+   text-decoration: none; 
+}
+a:hover { 
+   color: #fff; 
+   background: #006; 
+   text-decoration: underline;
+}
+a.img:hover { 
+   color: #00c; 
+   background: transparent;
+}
+a.img:active { 
+   color: #00c; 
+   background: transparent;
+   font-weight: normal; 
+}
+hr.invisible { 
+   height: 0; 
+   width: 0; 
+}
+.headline { 
+   color: #006;
+   background: transparent; 
+}
+.quicknote { 
+   color: #603;
+   background: transparent; 
+}
+.important { 
+   color: #f00;
+   background: transparent; 
+}
+.popupselected { 
+   color: #fff; 
+   background: #066; 
+}
+.results { 
+   color: #000; 
+   background: #fc9; 
+} 
+.header { 
+   color: #000; 
+   background: #fc9; 
+} 
+.headerselected { 
+   color: #fff; 
+   background: #006; 
+} 
+.headerselectedtext { 
+   color: #fff; 
+   background: #006; 
+}
+select.small { 
+   font-size: small; 
+}
+select.smallheadline { 
+   font-size: small; 
+   color: #006; 
+   background: transparent;
+}
+.faq { 
+   margin-left: 12%; 
+   margin-right: 3%; 
+}
+.faqq { 
+   margin-left: 18%; 
+   margin-right: 3%; 
+}
+.example {
+   color: #039; 
+   background: transparent;    
+}
+.blocknote {
+   color: #000; 
+   background: #ccc;    
+}
+.devel { 
+   margin-left: 6%; 
+   margin-right: 3%;
+   color: #600;
+   background: #fff;
+   border-color: #600;
+   border-left-width: medium;
+   border-left-style: solid;
+   font-size: 90%;
+} 
+.list {
+   background-image: url(http://localhost:5555/cdsagenda/images/audience7.gif);
+}
+/* end of cds_user_guide.css */

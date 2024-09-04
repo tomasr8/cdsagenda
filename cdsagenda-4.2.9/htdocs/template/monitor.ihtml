@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDAS Monitor</TITLE>
+  <link rel="stylesheet" href="images/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+	<link type="text/css" rel="stylesheet" href="{images}/xsftStyles.css">
+	<script language=javascript type="text/javascript" src="{images}/menu.js"></script>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+{list_jsmenutools}
+{list_topmenubar}
+
+<form name="calform">
+<input type="hidden" name="categories" value='{categories}'>
+<table width="95%" border="0" cellpadding="5" align="center" cellspacing="0">
+  <tr> 
+    <td> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td colspan="2" valign="top">
+            <table border="0" cellspacing="3" cellpadding="0">
+              <tr> 
+                <td nowrap class="calcell"><b><font color="#006699">Color coding:</font></b><br>[<a href="" onClick="document.calform.action='monitor_change.php';document.calform.submit();return false;">change</a>]&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                {list_colorcodes}
+                <td> 
+                  <table border="0" cellspacing="0" cellpadding="0">
+                    <tr> 
+                      <td width="30" bgcolor="#{colormultiple}">&nbsp;</td>
+                      <td class="calcell">&nbsp;Multiple</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+            <table border="0" cellspacing="3" cellpadding="0">
+              <tr> 
+                <td nowrap class="calcell"><b><font color="#006699" class="calcell">Display next:&nbsp;&nbsp;&nbsp;&nbsp;</font></b></td>
+                <td class="calcell">
+		   <SELECT name="nbofmonths" onChange="document.calform.submit();">
+                   {nbmonths}
+		   </SELECT> months
+		</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<br>
+<table width="95%" border="0" cellpadding="0" align="center" cellspacing="0">
+    {list_months}
+</table>
+ 
+</form>
+<br>
+<table width=100%>
+<tr>
+  <td align=right>
+      <small><address align=right>original code and design of the
+      monitoring functionality by <a href="http://ep-sft.web.cern.ch/ep-sft/default.html">EP-SFT</a></address></small>
+  </td>
+</tr>
+</table>
+{list_divs}
+{list_menus}
+{AGEfooter_template}
+
+</BODY>
+</HTML>

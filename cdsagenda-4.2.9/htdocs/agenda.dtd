@@ -1,0 +1,94 @@
+<!-- $Id: agenda.dtd,v 1.1.1.1.4.3 2003/03/28 10:35:49 tbaron Exp $ -->
+<!-- agenda.dtd -->
+
+<!-- First element is the  main object: the agenda -->
+<!ELEMENT agenda (session*|link*|minutes*)>
+<!ATTLIST agenda
+ title CDATA #REQUIRED
+ id CDATA #REQUIRED
+ stdate CDATA #REQUIRED
+ stime CDATA #REQUIRED
+ endate CDATA #REQUIRED
+ etime CDATA #REQUIRED
+ location CDATA #IMPLIED
+ chairperson CDATA #IMPLIED
+ chairpersonemail CDATA #IMPLIED
+ repno CDATA #IMPLIED
+ fid CDATA #IMPLIED
+ comments CDATA #IMPLIED
+ keyword CDATA #IMPLIED
+ modified CDATA #IMPLIED
+ category1 CDATA #IMPLIED
+ category2 CDATA #IMPLIED
+ category3 CDATA #IMPLIED
+ status CDATA #REQUIRED
+ type CDATA #REQUIRED
+ building CDATA #IMPLIED
+ floor CDATA #IMPLIED
+ room CDATA #REQUIRED
+>
+
+<!-- In the agenda can be nested several sessions -->
+<!ELEMENT session (talk*|link*|minutes*)>
+<!ATTLIST session
+  id CDATA #REQUIRED
+  title CDATA #REQUIRED
+  chairperson CDATA #IMPLIED
+  chairpersonemail CDATA #IMPLIED
+  sday CDATA #REQUIRED
+  stime CDATA #REQUIRED
+  eday CDATA #REQUIRED
+  etime CDATA #REQUIRED
+  location CDATA #IMPLIED
+  building CDATA #IMPLIED
+  floor CDATA #IMPLIED
+  room CDATA #REQUIRED
+  comments CDATA #IMPLIED
+  broadcasturl CDATA #IMPLIED
+>
+
+<!-- And in each session, several talks -->
+<!ELEMENT talk (subtalk*|link*|minutes*)>
+<!ATTLIST talk
+  id CDATA #REQUIRED
+  title CDATA #REQUIRED
+  category CDATA #IMPLIED
+  speaker CDATA #REQUIRED
+  affiliation CDATA #IMPLIED
+  day CDATA #REQUIRED
+  stime CDATA #REQUIRED
+  etime CDATA #REQUIRED
+  duration CDATA #REQUIRED
+  location CDATA #IMPLIED
+  building CDATA #IMPLIED
+  floor CDATA #IMPLIED
+  room CDATA #REQUIRED
+  type CDATA #REQUIRED
+  repno CDATA #IMPLIED
+  comments CDATA #IMPLIED
+  broadcasturl CDATA #IMPLIED
+  email CDATA #IMPLIED
+>
+
+<!-- possibly composed of subtalks -->
+<!ELEMENT subtalk (link*|minutes*)>
+<!ATTLIST subtalk
+  id CDATA #REQUIRED
+  title CDATA #REQUIRED
+  speaker CDATA #REQUIRED
+  affiliation CDATA #IMPLIED
+  repno CDATA #IMPLIED
+  duration CDATA #IMPLIED
+  comments CDATA #IMPLIED
+  email CDATA #IMPLIED
+>
+
+<!-- You can find links elements in an agenda, session or talk -->
+<!ELEMENT link (#PCDATA)>
+<!ATTLIST link
+  url CDATA #REQUIRED
+  type CDATA #REQUIRED
+>
+
+<!-- You can find minutes in an agenda, a session or a talk -->
+<!ELEMENT minutes (#PCDATA)>

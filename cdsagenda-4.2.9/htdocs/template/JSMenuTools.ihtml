@@ -1,0 +1,621 @@
+<!-- JSMenuTools.ihtml, T.Baron -->
+
+<SCRIPT TYPE="text/javascript" LANGUAGE="Javascript1.2">
+
+////////////////////////////////////////////////////////////////////////////
+//         needed variables
+////////////////////////////////////////////////////////////////////////////
+
+var DRAG_lastX, DRAG_lastY, DRAG_dragging, DRAGGED, DRAG_dragged;
+
+function Get_Scroll_Position() {
+        if (DOM && window.pageYOffset) {
+                return window.pageYOffset;
+        }
+        else if (NS4) {
+                return window.pageYOffset;
+        }
+        else
+        {
+                return document.body.scrollTop;
+        }
+}
+
+if (document.getElementById)
+{
+        var DOM = 1;
+}
+else
+{
+        var DOM = 0;
+}
+    
+var allLoaded = 0;
+var numevent = 0;
+var drobject;
+var windowOffset;
+var opened = "";
+subItems = new Array();
+var NS4 = (document.layers) ? 1 : 0;
+var closetimer = 500;
+var opentimer = 200;
+var timerID = 0;
+
+////////////////////////////////////////////////////////////////////////////
+//        Menu creation javascript functions
+////////////////////////////////////////////////////////////////////////////
+
+function addMenuItem(itemName,itemText,itemURL,itemImg,subItem,menuName,doc)
+{
+        var textImg;
+        if (itemImg != "")
+        {
+                textImg = "<IMG hspace=10 vspace=2 border=0 SRC=\"" + itemImg + "\" alt=\"\" HEIGHT=20 WIDTH=20 ALIGN=middle>";
+        }
+        else
+        {
+                textImg = "";
+        }
+        if (itemURL == "")
+        {
+                doc.write("<TR ID='" , itemName , "TR' class=empty><TD>" , textImg , "</TD><TD><font size='-1' color='#444444'>" , itemText , "</font></TD><TD>&nbsp;</TD></TR>");
+        }
+        else if (DOM == 1)
+        {
+                if (itemURL.indexOf('javascript') != -1)
+                {
+                        if (subItem == "")
+                        {
+                                doc.write("<TR onmouseover=\"this.style.backgroundColor='#006';document.getElementById('" , itemName , "').style.color='white';closeSubItems('" , menuName , "');\" onmouseout=\"this.style.backgroundColor='" , bgmenucolor , "';document.getElementById('" , itemName , "').style.color='#000';\" onclick=\"" , itemURL , "\" ID='" , itemName , "TR'><TD>" , textImg , "</TD><TD><font size='-1' color='#006'><SPAN ID='" , itemName , "'>" , itemText , "</SPAN></font></TD>");
+                        }
+                        else
+                        {
+                                if (!subItems[menuName])
+                                {
+                                        subItems[menuName] = new Array();
+                                }
+                                numSubItems = subItems[menuName].length;
+                                subItems[menuName][numSubItems] = subItem;
+                                doc.write("<TR onmouseover=\"this.style.backgroundColor='#006';document.getElementById('" , itemName , "').style.color='white';closeSubItems('" , menuName , "');javascript:popUpSubItem('", subItem ,"','" , itemName , "');\" onmouseout=\"this.style.backgroundColor='" , bgmenucolor , "';document.getElementById('" , itemName , "').style.color='#000';\" ID='" , itemName , "TR'><TD>" , textImg , "</TD><TD><font size='-1' color='#006'><SPAN ID='" , itemName , "'>" , itemText , "</SPAN></font></TD>");
+                        }
+                }
+                else
+                {
+                        doc.write("<TR onmouseover=\"this.style.backgroundColor='#006';document.getElementById('" , itemName , "').style.color='white';closeSubItems('" , menuName , "');\" onmouseout=\"this.style.backgroundColor='" , bgmenucolor , "';document.getElementById('" , itemName , "').style.color='#000';\" onclick=\"document.location='" , itemURL , "';\"><TD>" , textImg , "</TD><TD><font size='-1' color='#006'><SPAN ID='" , itemName , "'>" , itemText , "</SPAN></font></TD>");
+                }
+                if (subItem == "")
+                {
+                        doc.write("<TD>&nbsp;</TD></TR>");
+                }
+                else
+                {
+                        doc.write("<TD><IMG hspace=0 vspace=0 border=0 SRC=\"{images}/rightArrow.gif\" alt=\"\" align=right valign=middle></TD></TR>");
+                }
+        }
+        else
+        {
+                if (itemURL.indexOf('javascript') != -1)
+                {
+                        doc.write("<TR><TD class=header>" , textImg , "</TD><TD class=header><A HREF='' onClick=\"" , itemURL , "\">" , itemText , "</A>&nbsp;<BR></TD>");
+                }
+                else
+                {
+                        doc.write("<TR><TD class=header>" , textImg , "</TD><TD class=header><A HREF=\"" , itemURL , "\">" , itemText , "</A>&nbsp;<BR></TD>");
+                }
+                if (subItem == "")
+                {
+                        doc.write("<TD class=header>&nbsp;</TD></TR>");
+                }
+                else
+                {
+                        doc.write("<TD class=header><A HREF='' onClick=\"" , itemURL , "\"><IMG  hspace=4 vspace=1 border=0 SRC=\"{images}/rightArrow.gif\" alt=\"\" align=right valign=middle></A></TD></TR>");
+                }
+        }
+
+        return true;
+}
+
+
+
+
+function addStaticMenuItem(menuName,menuText,menuURL,doc)
+{
+        if (DOM == 1)
+        {
+
+                if (menuURL.indexOf('javascript') != -1)
+                {
+                        document.write("<DIV onmouseover=\"this.style.backgroundColor='#006';document.getElementById('" , menuName , "').style.color='white';document.getElementById('" , menuName , "Img').src='{images}/select_highlight.gif';\" onmouseout=\"this.style.backgroundColor='" , bgmenucolor , "';document.getElementById('" , menuName , "').style.color='#000';document.getElementById('" , menuName , "Img').src='{images}/select.gif';\" onclick=\"" , menuURL , "\"><font size='-1' color='#006'>&nbsp;&nbsp;<IMG SRC='{images}/select.gif' width=4 height=7 ID='" , menuName , "Img'>&nbsp;&nbsp;<SPAN ID='" , menuName , "'>" , menuText , "</SPAN></font></DIV>");
+                }
+                else
+                {
+                        document.write("<DIV onmouseover=\"this.style.backgroundColor='#006';document.getElementById('" , menuName , "').style.color='white';document.getElementById('" , menuName , "Img').src='{images}/select_highlight.gif';\" onmouseout=\"this.style.backgroundColor='" , bgmenucolor , "';document.getElementById('" , menuName , "').style.color='#000';document.getElementById('" , menuName , "Img').src='{images}/select.gif';\" onclick=\"document.location='" , menuURL , "';\"><font size='-1' color='#006'>&nbsp;&nbsp;<IMG SRC='{images}/select.gif' width=4 height=7 ID='" , menuName , "Img'>&nbsp;&nbsp;<SPAN ID='" , menuName , "'>" , menuText , "</SPAN></font></DIV>");
+                }
+        }
+        else
+        {
+                if (menuURL.indexOf('javascript') != -1)
+                {
+                        doc.write("<BR><font size=-1 color='#006'>&nbsp;&nbsp;&nbsp;&nbsp;<A HREF='' onClick=\"",menuURL,";return false;\">",menuText,"</A></font>");
+                }
+                else
+                {
+                        doc.write("<BR><font size=-1 color='#006'>&nbsp;&nbsp;&nbsp;&nbsp;<A HREF='",menuURL,"'>",menuText,"</A></font>");
+                }
+        }
+        return true;
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+//        Menu positioning and moving javascript functions
+////////////////////////////////////////////////////////////////////////////
+
+
+function center(menuName,on)
+{
+        if (allLoaded)
+        {
+                menu = getObject(menuName);
+                if (on) {
+                        if (!isVisible(menu))
+                        {
+                                closeOpened();
+
+                                widthmenu = getWidth(menu);
+                                heightmenu = getHeight(menu);
+
+                                if (window.innerWidth)
+                                {
+                                        newX = (parseInt(window.innerWidth) / 2) - (parseInt(widthmenu) / 2);
+                                        newY = (parseInt(window.innerHeight) / 2) - (parseInt(heightmenu) / 2);
+                                }
+                                else
+                                {
+                                        newX = (parseInt(document.body.offsetWidth) / 2) - (parseInt(widthmenu) / 2);
+                                        newY = (parseInt(document.body.offsetHeight) / 2) - (parseInt(heightmenu) / 2);
+                                }
+                                setLeft(menu,newX);
+                                setTop(menu,newY);
+                                setVisible(menu);
+                        }
+                }
+        }
+        return true;
+}
+
+
+function DRAG_drag(e) {
+        if (e == null) { e = window.event; }
+
+        if (DRAG_dragging) {
+                menu = getObject(DRAG_dragged);
+
+                oldX = getLeft(menu);
+                oldY = getTop(menu);
+
+                if (e.clientX != null && e.pageX == null) {
+                        scX = parseInt(e.clientX);
+                        scY = parseInt(e.clientY);
+                }
+                else {
+                        scX = parseInt(e.pageX);
+                        scY = parseInt(e.pageY);
+                }
+
+                if (document.body && document.body.scrollLeft)
+                {
+                        leftOffset = parseInt(document.body.scrollLeft);
+                        topOffset = parseInt(document.body.scrollTop);
+                }
+                else
+                {
+                        leftOffset = 0;
+                        topOffset = 0;
+                }
+
+                       setLeft(menu,oldX + scX - DRAG_lastX + leftOffset);
+                setTop(menu,oldY + scY - DRAG_lastY + topOffset);
+
+                if (e.clientX != null && e.pageX == null) {
+                        DRAG_lastX = parseInt(e.clientX);
+                        DRAG_lastY = parseInt(e.clientY);
+                }
+                else {
+                        DRAG_lastX = parseInt(e.pageX);
+                        DRAG_lastY = parseInt(e.pageY);
+                }
+                return true;
+        }
+        else {
+                return true;
+        }
+}
+
+function DRAG_begindrag(e,menuName) {
+        if (menuName == "") { menuName = e; e = this.event; }
+        menu = getObject(menuName);
+
+        if (e.which == 1 || e.button == 1)
+        {
+                if (document.all)
+                {
+                                menu.onmousemove=DRAG_drag;
+                        DRAG_dragged = menuName;
+                }
+                else if (DOM) {
+                                menu.onmousemove=DRAG_drag;
+                        DRAG_dragged = menuName;
+                }
+                else if (NS4)
+                {
+                        DRAG_dragged = this.name;
+                        this.captureEvents(Event.MOUSEMOVE);
+                                this.onmousemove=DRAG_drag;
+                }
+
+                DRAG_dragging = true;
+
+                if (e.clientX != null && e.pageX == null) {
+                        DRAG_lastX = parseInt(e.clientX);
+                        DRAG_lastY = parseInt(e.clientY);
+                }
+                else {
+                        DRAG_lastX = parseInt(e.pageX);
+                        DRAG_lastY = parseInt(e.pageY);
+                }
+
+                return true;
+        }
+        else
+        {
+                     /*Do any right mouse button processing here*/
+                     return true;
+        }
+
+}
+
+
+function DRAG_enddrag() {
+    DRAG_dragging=false;
+    DRAG_dragged = '';
+    return true;
+}
+
+
+function PlaceLayers(e,menuName) {
+        menu = getObject(menuName);
+
+        if (e.clientX && !e.pageX) {
+                scX = parseInt(e.clientX);
+                scY = parseInt(e.clientY);
+        }
+        else {
+                scX = parseInt(e.pageX);
+                scY = parseInt(e.pageY);
+        }
+
+        if (document.body && (document.body.scrollLeft || document.body.scrollTop) && navigator.userAgent.indexOf("MSIE") != -1)
+        {
+                leftOffset = parseInt(document.body.scrollLeft);
+                topOffset = parseInt(document.body.scrollTop);
+        }
+        else
+        {
+                leftOffset = 0;
+                topOffset = 0;
+        }
+
+        newX = scX + leftOffset;
+        newY = scY + topOffset;
+
+        setLeft(menu,newX);
+        setTop(menu,newY);
+}
+
+function PlaceSubItem(subItem,menuName) {
+        menu = getObject(subItem);
+        menuTR = getObject(menuName + 'TR');
+        leftSubItem = parseInt(getLeft(menuTR)) + parseInt(getWidth(menuTR));
+        topSubItem = parseInt(getTop(menuTR));
+        setLeft(menu,leftSubItem);
+        setTop(menu,topSubItem);
+}
+
+
+
+
+function popUp(menuName,on,e) {
+   if (allLoaded)
+   {
+      if (on) {
+         PlaceLayers(e,menuName);
+	 setVisible(getObject(menuName));
+      }
+      else {
+         setInvisible(getObject(menuName));
+      }
+   }
+}
+
+function popUpSubItem(subItem,menuName) {
+        if (allLoaded)
+        {
+                       PlaceSubItem(subItem,menuName);
+                setVisible(getObject(subItem));
+        }
+}
+
+
+function popStaticMenuUp(menuName,on) {
+        if (allLoaded)
+        {
+                menu = getObject(menuName);
+                menuTip = getObject(menuName + 'Tip');
+                mainMenuTip = getObject('MainMenuTip');
+
+                       if (on) {
+                        if (!isVisible(menu))
+                        {
+                                closeOpened();
+                                widthmenu = getWidth(menu);
+                                lefttip = getLeft(menuTip);
+                                toptip = getTop(menuTip);
+                                heighttip = getHeight(menuTip);
+                                widthtip = getWidth(menuTip);
+
+                                       setLeft(menu,lefttip);
+                                if (window.innerWidth)
+                                {
+                                        if (lefttip + widthmenu > parseInt(window.innerWidth))
+                                        {
+                                                setLeft(menu,(lefttip + widthtip - widthmenu));
+                                        }
+                                }
+                                else
+                                {
+                                        if (lefttip + widthmenu > parseInt(getWidth(document.body)))
+                                        {
+                                                setLeft(menu,(lefttip + widthtip - widthmenu));
+                                        }
+                                }
+
+                                setTop(menu,toptip + heighttip);
+                                 setVisible(menu);
+                                opened = menuName;
+                        }
+
+                       }
+                else
+                {
+                        setInvisible(menu);
+                }
+        }
+        return true;
+}
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////
+//        Multibrowser positioning javascript functions
+////////////////////////////////////////////////////////////////////////////
+
+
+function getStyle(object)
+{
+        if (object.left)
+        {
+                return object;
+        }
+        else if(object.style)
+        {
+                return object.style;
+        }
+        else if (document.defaultView)
+        {
+                return document.defaultView.getComputedStyle(object,null);
+        }
+}
+
+function getWidth(object)
+{
+        if (object.clip) { return parseInt(object.clip.width); }
+        if (object.children && object.tagName == 'DIV')
+        {
+                styleobject = getStyle(object.children[0]);
+        }
+        else
+        {
+                styleobject = getStyle(object);
+        }
+        if (object.offsetWidth)
+        {
+                return parseInt(object.offsetWidth);
+        }
+        else if (styleobject)
+        {
+                return parseInt(styleobject.pixelWidth);
+        }
+}
+
+
+function getHeight(object)
+{
+        if (object.clip) { return parseInt(object.clip.height); }
+        if (object.children && object.tagName == 'DIV')
+        {
+                styleobject = getStyle(object.children[0]);
+        }
+        else
+        {
+                styleobject = getStyle(object);
+        }
+        if (object.offsetHeight)
+        {
+                return parseInt(object.offsetHeight);
+        }
+        else if (object.style)
+        {
+                return parseInt(object.style.pixelHeight);
+        }
+}
+
+function getTop(object)
+{
+        if (object.pageY) { return parseInt(object.pageY); }
+         if (object.offsetTop != null)
+        {
+                val = object.offsetTop;
+                    while ((object = object.offsetParent )!=null) {
+                        val += object["offsetTop"];
+                }
+                return parseInt(val);
+        }
+        return 0;
+}
+
+function setTop(object,topvalue)
+{
+        if (object.pageY) { object.pageY = parseInt(topvalue); return; }
+        styleobject = getStyle(object);
+        styleobject.top = parseInt(topvalue);
+}
+
+function getLeft(object)
+{
+        if (object.pageX) { return parseInt(object.pageX); }
+        if (object.offsetLeft != null)
+        {
+                val = object.offsetLeft;
+                    while ((object = object.offsetParent ) != null) {
+                        val += object["offsetLeft"];
+                }
+                return parseInt(val);
+        }
+}
+
+function setLeft(object,leftvalue)
+{
+        if (object.pageX) { object.pageX = parseInt(leftvalue); return; }
+        styleobject = getStyle(object);
+        styleobject.left = parseInt(leftvalue);
+}
+
+function isVisible(object)
+{
+        if (object.style && object.style.visibility == "visible")
+        {
+                return true;
+        }
+        else if (object.visibility && object.visibility == "show")
+        {
+                return true;
+        }
+        else
+        {
+                return false;
+        }
+}
+
+function setVisible(object)
+{
+        if (object.style)
+        {
+                 object.style.visibility = "visible";
+        }
+        else if (object.visibility)
+        {
+                object.visibility = "show";
+        }
+}
+
+function setInvisible(object)
+{
+        if (object.style)
+        {
+                 object.style.visibility = "HIDDEN";
+        }
+        else if (object.visibility)
+        {
+                object.visibility = "hide";
+        }
+}
+
+function getObject(menuName)
+{
+        if (document.all) {
+                return document.all[menuName];
+        }
+        else if (DOM == 1 && menuName) {
+                return document.getElementById(menuName);
+        }
+        else if (document.layers && menuName && document.layers[menuName] != null)
+        {
+                return document.layers[menuName];
+        }
+        else
+        {
+                return 0;
+        }
+}
+
+
+////////////////////////////////////////////////////////////////////////////
+//        Menu closing javascript functions
+////////////////////////////////////////////////////////////////////////////
+
+function closeName(menuName)
+{
+        if (menuName)
+        {
+                popUp(menuName,false);
+
+		if (document.getElementById)
+		{
+			if (document.getElementById(menuName + 'Tip'))
+			{
+				document.getElementById(menuName + 'Tip').style.backgroundColor=bgmenucolor;
+			}
+			if (document.getElementById(menuName + 'TipText'))
+			{
+				document.getElementById(menuName + 'TipText').style.color='black';
+			}
+		}
+        }
+        return true;
+}
+
+function closeOpened()
+{
+        if (opened != "")
+	{
+		closeName(opened);
+		opened = "";
+        }
+        return true;
+}
+
+function closeSubItems(menuName)
+{
+        var i = 0;
+        if (subItems[menuName])
+        {
+                while (subItems[menuName][i])
+                {
+                        closeSubItems(subItems[menuName][i]);
+                        popUp(subItems[menuName][i],false,0,0);
+                        i = i+1;
+                }
+        }
+}
+
+</SCRIPT>
+
+<!-- End JSMenuTools.ihtml -->

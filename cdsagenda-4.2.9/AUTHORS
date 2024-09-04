@@ -1,0 +1,28 @@
+CDS AGENDA SOFTWARE AUTHORS
+===============================================
+
+Revision: $Id: AUTHORS,v 1.1.1.1.4.3 2002/10/28 15:15:56 tbaron Exp $
+
+The CDS Agenda Development Group consists of several people:
+
+ - Jean-Yves Le Meur <jean-yves.le.meur@cern.ch> (CERN)
+   Head of the team.
+  
+ - Thomas Baron <thomas.baron@cern.ch> (CERN)
+   Original programming
+
+ - Simone Grassi (from Ci S.B.i.C for ICTP) <sgrassi@ictp.trieste.it>
+   Additional programming (Database, Log and Authorisation modules)
+
+ - Hector Sanchez <hector.sanchez@cern.ch> (CERN)
+   Administrative module
+
+ - Erik Simon <erik.simon@cern.ch> (CERN)
+   Recurrent meetings creation module
+
+Moreover, several students have worked on the project, including
+Julie Gonzalez and others.
+
+       - CDS Agenda Development Group
+         <cds.support@cern.ch>
+         <http://agenda.cern.ch/>

@@ -1,0 +1,557 @@
+<HTML>
+<HEAD>
+
+	<TITLE>Clone Agenda</TITLE>
+
+        <!-- $Id: cloneAgenda.ihtml,v 1.2.2.4 2004/07/29 10:06:12 tbaron Exp $ -->
+
+    <link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+{alertText}
+
+<TABLE border="0" align="center" cellpadding=0 cellspacing=0 width=75%>
+<FORM action="agendaFactory.php" method=POST>
+<TR class=header>
+   <TD colspan=3 align="left">
+      <TABLE width="100%" border=0 cellpadding=0 cellspacing=2>
+      <TR>
+         <TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/clone.gif" alt="clone agenda" align=right></TD>
+         <TD width="1%"><a href="../guide/english/clone_agenda.php"
+	 target=top><img src="{images}/help.gif" border=0 ALT="help!"></a></TD>
+	 <TD><B><SMALL>[Clone agenda]
+	    <FONT color=white><I>{clAg_TITLE}</I></FONT></SMALL></B></TD>
+	 <TD align=right><SMALL><SMALL>
+	    <INPUT type=submit name=request value="Clone Agenda">
+	    <INPUT type=submit name=submit value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL></TD>
+      </TR>
+      </TABLE>
+   </TD>
+</TR>
+
+<tr>
+   <td colspan="3">
+   <p class="clone-description">Clone the agenda only once at the specified date:</p>
+   </td>
+</tr>
+
+<tr>
+<td align="center">
+  <input type="radio" name="sel" value="once" checked></input>
+</td>
+<td class="headerselected" align="right">
+  <b><small>&nbsp;once:&nbsp;</small></b>
+</td>
+<TD>
+<SMALL>
+<SELECT name=stdd onFocus='javascript:document.forms[0].sel[0].click();'>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm onFocus='javascript:document.forms[0].sel[0].click();'>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy onFocus='javascript:document.forms[0].sel[0].click();'>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+
+<A href=""
+onClick="javascript:open('calendar.php?daystring=stdd&monthstring=stdm&yearstring=stdy&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');
+document.forms[0].sel[0].click(); return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>
+</TD>
+</tr>
+
+<tr><td colspan="3"><hr></hr></td></tr>
+
+<tr>
+<td colspan="3">
+<p class="clone-description">Clone the agenda with a fixed interval:</p>
+</td>
+</tr>
+
+<TR>
+<TD align="center">
+  <input type="radio" name="sel" value="fixed">
+</td>
+<td class="headerselected" align="right">
+  <B><SMALL>&nbsp;every&nbsp;</small></b>
+</td>
+<td>
+<small>
+<input type="text" size="3" name=period value="1" onFocus='javascript:document.forms[0].sel[1].click();'>
+</input>
+</small>
+<SMALL><SELECT name=freq onFocus='javascript:document.forms[0].sel[1].click();'>
+<OPTION VALUE="day">day(s)
+<OPTION	VALUE="week">week(s)
+<OPTION VALUE="month">month(s)
+<OPTION VALUE="year">year(s)
+</SELECT>
+</SMALL>
+</td>
+
+</TR>
+
+
+<tr>
+<td>&nbsp;</td>
+<TD>
+<b><small>starting&nbsp;</small></b>
+</td>
+<td>
+<SELECT name=indd2
+onFocus='javascript:document.forms[0].sel[1].click();'>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=indm2 onFocus='javascript:document.forms[0].sel[1].click();'>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=indy2 onFocus='javascript:document.forms[0].sel[1].click();'>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+
+<A href=""
+onClick="javascript:open('calendar.php?daystring=indd2&monthstring=indm2&yearstring=indy2&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');
+document.forms[0].sel[1].click(); document.forms[0].func2[0].click(); return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>
+</TD>
+
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td align="center">
+  <input type="radio" name="func2" value="until" checked onFocus='javascript:document.forms[0].sel[1].click();'>
+</td>
+<TD>
+<b><small>until&nbsp;</small></b>
+<SELECT name=stdd2
+onFocus='javascript:document.forms[0].sel[1].click(); document.forms[0].func2[0].click();'>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm2 onFocus='javascript:document.forms[0].sel[1].click(); document.forms[0].func2[0].click();'>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy2 onFocus='javascript:document.forms[0].sel[1].click(); document.forms[0].func2[0].click();'>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+
+<A href=""
+onClick="javascript:open('calendar.php?daystring=stdd2&monthstring=stdm2&yearstring=stdy2&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');
+document.forms[0].sel[1].click(); document.forms[0].func2[0].click(); return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>
+<small><i>&nbsp (inclusive)</i></small>
+</TD>
+
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td align="center">
+<input type="radio" name="func2" value="ntimes" onFocus='javascript:document.forms[0].sel[1].click();'>
+</input>
+</td>
+<td>
+<input type="text" name="num2" size="3" value="1" onFocus='javascript:document.forms[0].sel[1].click(); document.forms[0].func2[1].click();'>
+</input>
+<b><small>
+&nbsp;time(s)</small></b>
+</td>
+</tr>
+
+<tr><td colspan="3"><hr></hr></td></tr>
+
+<tr>
+<td colspan="3">
+<p class="clone-description">Clone the agenda on given days:</p>
+</td>
+</tr>
+
+<tr>
+<td align="center">
+  <input type="radio" name="sel" value="relative">
+</td>
+<td class="headerselected" align="right">
+  <B><SMALL>&nbsp;on the&nbsp;</small></b>
+</td>
+<td>
+<small>
+<select name=order onFocus='javascript:document.forms[0].sel[2].click();'>
+<option value="1">first
+<option value="2">second
+<option value="3">third
+<option value="4">fourth
+<option value="5">last
+</select>
+<select name=day onFocus='javascript:document.forms[0].sel[2].click();'>
+<option value="Monday">Monday
+<option value="Tueday">Tuesday
+<option value="Wednesday">Wednesday
+<option value="Thursday">Thursday
+<option value="Friday">Friday
+<option value="Saturday">Saturday
+<option value="Sunday">Sunday
+<option value="NOVAL" disabled>---------------
+<option value="OpenDay">Open Day
+</select>
+&nbsp;<b>every&nbsp;</b>
+<input type="text" size="3" name=monthPeriod value="1" onFocus='javascript:document.forms[0].sel[2].click();'>
+</input>
+<b>&nbsp;month(s)</b>
+</small>
+</td>
+
+</TR>
+
+
+<tr>
+<td>&nbsp;</td>
+<TD>
+<b><small>starting&nbsp;</small></b>
+</td>
+<td>
+<SELECT name=indd3
+onFocus='javascript:document.forms[0].sel[2].click();'>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=indm3 onFocus='javascript:document.forms[0].sel[2].click();'>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=indy3 onFocus='javascript:document.forms[0].sel[2].click();'>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+
+<A href=""
+onClick="javascript:open('calendar.php?daystring=indd3&monthstring=indm3&yearstring=indy3&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');
+document.forms[0].sel[1].click(); document.forms[0].func2[0].click(); return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>
+</TD>
+
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td align="center">
+  <input type="radio" name="func3" value="until" checked onFocus='javascript:document.forms[0].sel[2].click();'>
+</td>
+<TD>
+<b><small>until&nbsp;</small></b>
+<SELECT name=stdd3
+onFocus='javascript:document.forms[0].func3[0].click(); document.forms[0].sel[2].click();'>
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm3 onFocus='javascript:document.forms[0].func3[0].click(); document.forms[0].sel[2].click();'>
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy3 onFocus='javascript:document.forms[0].func3[0].click(); document.forms[0].sel[2].click();'>
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+
+<A href=""
+onClick="javascript:open('calendar.php?daystring=stdd3&monthstring=stdm3&yearstring=stdy3&month='+stmonth+'&year='+styear,'calendar','scrollbars=no,menubar=no,width=200,height=170');
+document.forms[0].func3[0].click(); document.forms[0].sel[2].click(); return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL>
+<small><i>&nbsp (inclusive)</i></small>
+</TD>
+
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td align="center">
+<input type="radio" name="func3" value="ntimes" onFocus='javascript:document.forms[0].sel[2].click();'>
+</input>
+</td>
+<td>
+<input type="text" name="num3" size="3" value="1" onFocus='javascript:document.forms[0].func3[1].click(); document.forms[0].sel[2].click();'>
+</input>
+<b><small>
+&nbsp;time(s)</small></b>
+</td>
+</tr>
+
+<TR class=header>
+<TD colspan="3" align=right>
+<INPUT type=hidden name=ida value='{clAg_IDA}'>
+<INPUT type=hidden name=fid value='{clAg_FID}'>
+<INPUT type=hidden name=level value='{clAg_LEVEL}'>
+<INPUT type=hidden name=position value='{clAg_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{clAg_STYLESHEET}'>
+<SMALL><SMALL>
+<INPUT type=submit name=request value="Clone Agenda">
+<INPUT type=submit name=submit value=CANCEL onClick="document.forms[0].action='displayAgenda.php';">
+</SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+
+
+</FORM>
+</font>
+<SCRIPT>
+
+{str_help}
+
+</BODY>
+</HTML>

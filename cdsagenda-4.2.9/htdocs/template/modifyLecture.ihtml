@@ -1,0 +1,284 @@
+<HTML>
+<HEAD>
+	
+	<TITLE>Modify Lecture</TITLE>
+
+    <SCRIPT>
+      function tester()
+      {
+      	if (document.newage.title.value=="")
+      	{
+      		alert("Please fill the 'title' field");
+      		return false;
+      	}
+      }
+
+    </SCRIPT>
+
+    <link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM name=newage action="agendaFactory.php" method=POST>
+
+<TR>
+	<TD colspan=2 class=header align="left">
+	<TABLE width="100%" border=0 cellpadding=0 cellspacing=0>
+	<TR>
+		<TD width="1%">
+		<IMG  hspace=0 vspace=0 border=0 SRC="{images}/edit.gif" alt="modify lecture" align=right>
+		</TD>
+		<TD>
+		<B><SMALL>&nbsp;[Modify a Lecture]</SMALL></B>
+		</TD><TD align=right><SMALL><SMALL>
+	<INPUT type=submit name=request value="MODIFY LECTURE" onClick="if (
+tester() == false ) { return false; }">
+	<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';">
+	</SMALL></SMALL></TD></TR></TABLE></TD></TR>
+
+<TR><TD align=right class=headerselected><B><SMALL>title:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=title></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>speaker:</B><BR>(The recommended format is:<BR>Name, Initial(s))</SMALL></TD><TD><SMALL><INPUT size=50 name=tspeaker></SMALL></TD></TR>
+<TR><TD align=right class=headerselected ><B><SMALL>Speaker's email:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=SuE></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><B><SMALL>Date:</SMALL></B></TD><TD><SMALL>
+<SELECT name=stdd onChange="changeDay();">
+<OPTION VALUE="01">01
+<OPTION VALUE="02">02
+<OPTION VALUE="03">03
+<OPTION VALUE="04">04
+<OPTION VALUE="05">05
+<OPTION VALUE="06">06
+<OPTION VALUE="07">07
+<OPTION VALUE="08">08
+<OPTION VALUE="09">09
+<OPTION VALUE="10">10
+<OPTION VALUE="11">11
+<OPTION VALUE="12">12
+<OPTION VALUE="13">13
+<OPTION VALUE="14">14
+<OPTION VALUE="15">15
+<OPTION VALUE="16">16
+<OPTION VALUE="17">17
+<OPTION VALUE="18">18
+<OPTION VALUE="19">19
+<OPTION VALUE="20">20
+<OPTION VALUE="21">21
+<OPTION VALUE="22">22
+<OPTION VALUE="23">23
+<OPTION VALUE="24">24
+<OPTION VALUE="25">25
+<OPTION VALUE="26">26
+<OPTION VALUE="27">27
+<OPTION VALUE="28">28
+<OPTION VALUE="29">29
+<OPTION VALUE="30">30
+<OPTION VALUE="31">31
+</SELECT>
+<SELECT name=stdm onChange="changeMonth();">
+<OPTION VALUE="01">January
+<OPTION VALUE="02">February
+<OPTION VALUE="03">March
+<OPTION VALUE="04">April
+<OPTION VALUE="05">May
+<OPTION VALUE="06">June
+<OPTION VALUE="07">July
+<OPTION VALUE="08">August
+<OPTION VALUE="09">September
+<OPTION VALUE="10">October
+<OPTION VALUE="11">November
+<OPTION VALUE="12">December
+</SELECT>
+<SELECT name=stdy onChange="changeYear();">
+<OPTION VALUE="1995">1995
+<OPTION VALUE="1996">1996
+<OPTION VALUE="1997">1997
+<OPTION VALUE="1998">1998
+<OPTION VALUE="1999">1999
+<OPTION VALUE="2000">2000
+<OPTION VALUE="2001">2001
+<OPTION VALUE="2002">2002
+<OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+</SELECT>
+<A href="" onClick="javascript:window.open('calendar.php?daystring=stdd&monthstring=stdm&yearstring=stdy','calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+</SMALL><BR><BR>from: 
+<SELECT name=thstart>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="tmstart">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT> to: 
+<SELECT name=thend>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="tmend">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT> </SMALL>
+</TD></TR>
+<INPUT type=hidden name=endd>
+<INPUT type=hidden name=endm>
+<INPUT type=hidden name=endy>
+<TR><TD align=right class=headerselected><B><SMALL>location:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=location value=CERN></SMALL></TD></TR><TR><TD align=right class=headerselected><B><SMALL>room</B><BR>(only if at CERN):</SMALL></TD><TD><SMALL>Bld:<INPUT size=4 name=bld> floor:<INPUT size=2 name=floor> room:<INPUT size=3 name=room> or 
+<SELECT name=confRoom>
+{modifyLecture_listRooms}
+</SELECT></SMALL>
+</TD></TR>
+<INPUT type=hidden name=format value=timetable>
+<INPUT type=hidden name=confidentiality value='open'>
+<INPUT type=hidden name=apassword value=''>
+<INPUT type=hidden name=stylesheet value='lecture'>
+
+
+<TR>
+	<TD align=right class=headerselected><SMALL><B>Description of the lecture:</B>
+	<BR><FONT color=white>(If you use html, make sure to include &lt;br&gt;s for carriage returns)</font></SMALL>
+	</TD>
+	<TD><SMALL>
+		<TEXTAREA rows=15 cols=80 name=tcomment nowrap></TEXTAREA></SMALL>
+	</TD>
+</TR>	
+
+<TR bgcolor=silver>
+        <TD align=right class=headerselected><B><SMALL>Confidentiality level:</SMALL></B></TD>
+        <TD>
+                <TABLE border=0><TR><TD><SMALL>
+                        <INPUT type=radio name=confidentiality value='open' {confOpen}> open<BR>
+                        <INPUT type=radio name=confidentiality value='cern-only' {confCernonly}> {runningAT} only<BR>
+                        <INPUT type=radio name=confidentiality value='password' {confPassword}> password</SMALL>
+                </TD><TD class=header><SMALL>
+                        <B>open</B>: accessible worldwide<BR>
+                        <B>{runningAT} only</B>: accessible only from a computer located at {runningAT}<BR>
+                        <B>password</B>: accessible only with the access password (username: <FONT color=red>agenda</FONT>)</SMALL>
+                </TD>
+                </TR>
+                <TR>
+                        <TD colspan=2><B><SMALL>access password:</SMALL></B>
+                        <SMALL><INPUT size=15 name=apassword value="{accessPassword}"></SMALL>
+                </TR>
+                </TABLE>
+        </TD>
+</TR>
+
+<TR>
+	<TD align=right class=headerselected><SMALL><B>modify key:</B></SMALL></TD>
+	<TD><SMALL>
+		<INPUT size=20 name=mpassword></SMALL>
+	</TD>
+</TR>
+<TR>
+        <TD align=right class=headerselected><B><SMALL>Visibility:</SMALL></B>
+        </TD>
+        <TD><SMALL>
+                <SELECT name=visibility>
+{modifyLecture_visibility}
+                <SELECT>
+        </SMALL>
+        </TD>
+</TR>
+
+<INPUT type=hidden name=ida value='{modLec_IDA}'>
+<INPUT type=hidden name=AN value='{modLec_AN}'>
+<INPUT type=hidden name=category value=''>
+<INPUT type=hidden name=position value='{modLec_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{modLec_STYLESHEET}'>
+
+<TR>
+	<TD class=header colspan=2 align=right>
+
+<SMALL><SMALL>
+	<INPUT type=submit name=request value="MODIFY LECTURE" onClick="if (
+tester() == false ) { return false; }">
+	<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL>
+	</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+{str_ifres}
+{str_help}
+{str_help2}
+{str_help3}
+{str_help4}
+{str_help5}
+{modifyLecture_JS_startingtime}
+{modifyLecture_JS_endingtime}
+{str_help7}
+{str_help19}
+{str_help20}
+{str_help21}
+{str_help22}
+{str_help23}
+
+</BODY>
+</HTML>

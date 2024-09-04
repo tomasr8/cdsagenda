@@ -1,0 +1,72 @@
+CDS AGENDA SOFTWARE UNINSTALLATION
+======================================================
+
+Revision: $Id: UNINSTALL,v 1.1.1.1 2002/07/18 16:14:13 tbaron Exp $
+
+About
+=====
+
+This document specifies how to uninstall the CDS
+ Agenda Software.  (See 'INSTALL' file if you look  
+for information on how to install the system!)
+
+Contents
+========
+
+1. Quick instructions for the impatient CDS Agenda admin
+2. Detailed instructions for the patient CDS Agenda admin
+
+1. Quick instructions for the impatient CDS Agenda admin
+==================================================
+
+      $ cd /usr/local/src/eagenda-0.9
+      $ gmake uninstall     ## NOTE: This has not been tested yet!!
+      $ cd ..
+      $ rm -rf eagenda-0.9.tar.gz eagenda-0.9
+      $ mysql -h sqlserver.domain.com -u root -p mysql
+          mysql> DROP DATABASE cdsagenda;
+          mysql> REVOKE ALL PRIVILEGES ON cdsagenda.* FROM cdsagenda@webserver.domain.com;
+
+2. Detailed instructions for the patient CDS Agenda admin
+===================================================
+
+      $ cd /usr/local/src/eagenda-0.9
+ 
+          Change to the directory where you have configured and built
+          the CDS Software.
+
+      $ gmake uninstall     ## NOTE: This has not been tested yet!!
+
+          This will uninstall all the installed web pages, cgi scripts
+          and database utilities from their respective directories.
+
+          Note that it may happen that you will need to clean manually
+          HTDOCS directory where all the collection pages were
+          created.  We'll test this in the coming future.
+
+          Also, you may want to remove the directories manually in
+          case you have added some non-CDS Agenda files to the same place.
+
+      $ cd ..
+  
+          Go to the parent directory.
+
+      $ rm -rf eagenda-0.9.tar.gz eagenda-0.9
+
+          Wipe out the downloaded tarball and all the CDS Agenda sources.
+
+      $ mysql -h sqlserver.domain.com -u root -p mysql
+          mysql> DROP DATABASE cdsagenda;
+          mysql> REVOKE ALL PRIVILEGES ON cdsagenda.* FROM cdsagenda@webserver.domain.com;
+
+          Ask your MySQL administrator to execute the above commands
+          that will drop the CDS Agenda databases and revoke access rights
+          to the CDSware user.
+
+Good luck, and thanks for testing the CDS Agenda Software.
+We would be glad to hear from you on your CDS Agenda experience: please tell
+us what you think and thus help us to improve the system.  Thanks!
+  
+       - CDS Development Group
+         <cds.support@cern.ch>
+         <http://cdsware.cern.ch/>

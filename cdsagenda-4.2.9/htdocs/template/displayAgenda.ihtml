@@ -1,0 +1,358 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+<HEAD>
+
+<SCRIPT TYPE="text/javascript" LANGUAGE="Javascript1.2">
+
+function closeAll()
+{
+    popUp('ToolSession',false,0,0);
+    closeSubItems('ToolSession');
+    popUp('FileSession',false,0,0);
+    closeSubItems('FileSession');
+    popUp('FileTalk',false,0,0);
+    closeSubItems('FileTalk');
+    popUp('ToolTalk',false,0,0);
+    closeSubItems('ToolTalk');
+    popUp('ToolSubPoint',false,0,0);
+    closeSubItems('ToolSubPoint');
+    popUp('ToolAgenda',false,0,0);
+    closeSubItems('ToolAgenda');
+    popUp('TimeTalk',false,0,0);
+    closeSubItems('TimeTalk');
+    popUp('RepNumber',false,0,0);
+    closeSubItems('RepNumber');
+}
+
+function changeAuthorization() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "changeAuthorization.php";
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function cloneAgenda() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "cloneAgenda.php";
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openAddTalk() {
+    document.forms[0].action = "addTalk.php";
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].target = "{display_ModWndName}";
+    {display_ModWndName} = window.open( "" , '{display_ModWndName}' , 'height=550,witdh=320,scrollbars=yes,menubar=no,resizable' );
+    document.forms[0].submit();
+}
+
+function openAddSubTalk() {
+    document.forms[0].action = "addSubTalk.php";
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].target = "{display_ModWndName}";
+    {display_ModWndName} = window.open( "" , '{display_ModWndName}' , 'height=550,witdh=320,scrollbars=yes,menubar=no,resizable' );
+    document.forms[0].submit();
+}
+
+function openAddSession() {
+    document.forms[0].action = "addSession.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].target = "{display_ModWndName}";
+    {display_ModWndName} = window.open( "" , '{display_ModWndName}' , 'height=550,witdh=320,scrollbars=yes,menubar=no,resizable' );
+    document.forms[0].submit();
+}
+
+function AlarmSetUp() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "setUpAlarm.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openModAgenda() {
+    document.forms[0].action = "modifyAgenda.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openModSession() {
+    document.forms[0].action = "modifySession.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openTimeTableEdit() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "TimeTableEdit.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openModTalk() {
+    document.forms[0].action = "modifyTalk.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openModLecture() {
+    document.forms[0].action = "modifyLecture.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openModSubTalk() {
+    document.forms[0].action = "modifySubTalk.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openAddRole() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "addRoleTop.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function delet() {
+    if (confirm('WARNING! Are you sure you want to delete this agenda?\nAll associated talks and sessions will be deleted too!')) {
+        document.forms[0].target = this.window.name;
+	document.forms[0].position.value = Get_Scroll_Position();
+	document.forms[0].method="POST";
+	document.forms[0].action="agendaFactory.php";
+	document.forms[0].request.value='DELETE AGENDA';
+	document.forms[0].submit();
+    };
+}
+
+function deleteTalk() {
+    if (confirm('WARNING! Are you sure you want to delete this talk? All sub-points will also be deleted.')) {
+        document.forms[0].target = this.window.name;
+	document.forms[0].position.value = Get_Scroll_Position();
+	document.forms[0].request.value='DELETE TALK';
+	document.forms[0].submit();
+    };
+}
+
+function deleteSubTalk() {
+    if (confirm('WARNING! Are you sure you want to delete this sub-point?')) { 
+        document.forms[0].target = this.window.name;
+	document.forms[0].position.value = Get_Scroll_Position();
+	document.forms[0].request.value='DELETE SUB TALK';
+	document.forms[0].submit();
+    };
+}
+
+function deleteSession() {
+    if (confirm('WARNING! Are you sure you want to delete this session? \nAll associated Talks will be deleted too!')) {
+        document.forms[0].target = this.window.name;
+	document.forms[0].position.value = Get_Scroll_Position();
+	document.forms[0].request.value='DELETE SESSION';
+	document.forms[0].submit();
+    };
+}
+
+function computeDuration() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].request.value='COMPUTE DURATION';
+    document.forms[0].submit();
+}
+
+function computeTime() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].request.value='COMPUTE TIME';
+    document.forms[0].submit();
+}
+
+function computeSessionTime() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value = Get_Scroll_Position();
+    document.forms[0].request.value='COMPUTE SESSION TIME';
+    document.forms[0].submit();
+}
+
+function openFile() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "file.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openScanSession() {
+    document.forms[0].action = "scanning.php";	
+    document.forms[0].from.value = "session";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].target = "{display_ModWndName}";
+    open( "" , '{display_ModWndName}' , 'scrollbars=yes,menubar=yes' );
+    document.forms[0].submit();
+}
+
+function openScanTalk() {
+    document.forms[0].action = "scanning.php";
+    document.forms[0].from.value = "talk";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].target = "{display_ModWndName}";
+    open( "" , '{display_ModWndName}' , 'scrollbars=yes,menubar=yes' );
+    document.forms[0].submit();
+}
+
+function openUpload() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "upload.php";
+    document.forms[0].from.value = "file.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openMinWrit() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "MinWrit.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openLink() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "link.php";
+    document.forms[0].from.value = "file.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openBroadcastTalk() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "broadcastTalk.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+function openRoomBook() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].action = "roomBook.php";
+    document.forms[0].position.value =  Get_Scroll_Position();
+    document.forms[0].submit();
+}
+
+
+function setTimeScale(scale)
+{
+    document.forms[0].scale.value=(scale+1)*5;
+}
+
+function setTimeSessionScale(scale)
+{
+    document.forms[0].sessionscale.value=(scale+1)*5;
+}
+
+function MoveSubTalkUp() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='subtalkup';
+    document.forms[0].submit();
+}
+
+function MoveSubTalkDown() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='subtalkdown';
+    document.forms[0].submit();
+}
+
+function delayTalk() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='delay';
+    document.forms[0].submit();
+}
+
+function delayAllTalk() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='delayall';
+    document.forms[0].submit();
+}
+
+function advanceTalk() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='advance';
+    document.forms[0].submit();
+}
+
+
+function advanceAllTalk() {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='advanceall';
+    document.forms[0].submit();
+}
+
+
+function MoveTalkTo(session) {
+    document.forms[0].target = this.window.name;
+    document.forms[0].position.value=Get_Scroll_Position();
+    document.forms[0].request.value='moveto';
+    document.forms[0].newsession.value=session;
+    document.forms[0].submit();
+}
+
+</SCRIPT>
+
+  <TITLE>AGENDA MODIFICATION {display_ida}</TITLE>  
+  <link rel="stylesheet" href="{images}/stylemodify.css">
+	<SCRIPT TYPE="text/javascript" LANGUAGE="Javascript">
+	  var bgmenucolor = "#6cc";
+	  var addSession, modAgenda, modSession, modTalk, {display_ModWndName};
+	</SCRIPT>
+	<NOSCRIPT>
+	  <BR><BR>
+	  <CENTER>
+	  <FONT color=red size=+1><BLINK>WARNING:</BLINK></FONT> This tool needs javascript to run properly<BR>
+	  Please enable javascript in your browsers preferences, then reload this page.
+	  </CENTER>
+	  <BR><BR>
+        </NOSCRIPT>
+   <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+</HEAD>
+
+<BODY onLoad="allLoaded = 1;{display_scrollTo}"
+      onUnload = "if ( {display_ModWndName} ){ {display_ModWndName}.close();};"
+      onMouseUp = "DRAG_enddrag();">
+
+<SCRIPT>
+    this.window.name = "{display_MainWndName}";
+</SCRIPT>
+
+{display_jsmenutools}
+
+<table width="100%">
+<tr>
+   <td>
+      <small>
+      This is the editor for the CDS Agenda system.<BR>
+      To be used with Netscape 4.0 or higher and IE 4.0 or higher!<BR>
+      <B>Click on the agenda, session or talk name to modify the
+      desired item (<IMG HSPACE=5 VSPACE=0 BORDER=0
+      SRC="../images/link.gif" ALT="click here">).</B>
+      </small>
+   </td>
+   <td align=right valign=top>
+      <a href="" onclick="window.opener.location.reload();window.close();return false;"><img src="{images}/closewindow.gif" border=0 alt="close window"></a>
+   </td>
+</tr>
+</table>
+
+<BR><BR>
+
+{display_core}
+
+{display_menus}
+
+      <a href=""
+      onclick="window.opener.location.reload();window.close();return
+      false;"><img src="{images}/closewindow.gif" border=0 alt="close
+      window" align=right></a>
+</BODY>
+</HTML>

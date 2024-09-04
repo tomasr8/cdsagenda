@@ -1,0 +1,43 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+<HEAD>
+<TITLE>OVERVIEW</TITLE> 
+<STYLE type="text/css">
+.empty { background-image: url(../images/empty.gif); 
+         background-color: silver;}
+</STYLE> 
+<link rel="stylesheet" href="../images/style.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 width="100%">
+<TR>
+   <TD bgcolor="#f0c060" class=results>
+   <TABLE border=0 cellspacing=0 bgcolor="#f0c060" class=results>
+   <TR bgcolor="#f0c060">
+      <TD class=results valign=top> 
+      <SMALL><B>
+      List of bases
+      </B></SMALL> 
+      </TD>
+      <TD valign=top> 
+      <SMALL><B>></B></SMALL> 
+      </TD>
+
+{overview_categlist}
+
+      <TD valign=top class=results>
+      <SMALL><B>Overview Display</B></SMALL><BR>
+      </TD>
+   </TR>
+   </TABLE>
+   </TD>
+</TR>
+</TABLE>
+
+{overview_maincell}
+
+</BODY>
+</HTML>

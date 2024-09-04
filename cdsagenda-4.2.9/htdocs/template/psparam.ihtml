@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"> 
+
+<HTML>
+<HEAD>
+<TITLE>CREATE POSTSCRIPT</TITLE>  
+<link rel="stylesheet" href="../images/style.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<FORM action="../makePS.php" method="GET" name="formMenu6">
+
+{psparam_param}
+
+<TABLE BORDER=0 CELLPADDING=1 CELLSPACING=0 CLASS=header width=100%>
+<TR class="headerselected">
+<TD align="center">
+&nbsp;<strong><SMALL><FONT color="white">PostScript Creation Setup</FONT></SMALL></strong><BR>
+</TD>
+</TR>
+<TR>
+<TD align="center">
+
+<TABLE width="100%">
+		<TR><TD align=right><SMALL>orientation:</SMALL></TD><TD><SMALL><SELECT name=orientation><OPTION>portrait<OPTION>landscape</SELECT></SMALL></TD></TR>
+		<TR><TD align=right><SMALL>colors:</SMALL></TD><TD><SMALL><SELECT name=colors><OPTION>black&amp;white<OPTION>colored</SELECT></SMALL></TD></TR>
+		<TR><TD align=right><SMALL>format:</SMALL></TD><TD><SMALL><SELECT name=format><OPTION>A5<OPTION selected>A4<OPTION>A3</SELECT></SMALL></TD></TR>
+		<TR><TD align=right><SMALL>scale:</SMALL></TD><TD><SMALL><INPUT name="scale" size=3 value="1.0"></SMALL></TD></TR></TR></TABLE>
+	</TD>
+</TR>	
+<TR class=headerselected>
+	<TD align=center><FONT color="white"><SMALL>
+		<INPUT type="button" value="OK" onClick="document.forms[0].submit();">
+		<INPUT type="button" value="CLOSE" onClick="window.close();">
+	</FONT></SMALL></TD>
+</TD>
+</TR>
+</TABLE>
+</FORM>

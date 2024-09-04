@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>CDS Agendas Administrator</title>
+    <link rel="stylesheet" href="../images/style.css">
+  </head>
+  <body class=admin>
+    <form action="{postAddr}" method="POST" enctype="multipart/form-data" >
+      <input type="hidden" name="action" value="edit">
+      <input type="hidden" name="uid_level" value="{uid_level}">
+      <input type="hidden" name="MAX_FILE_SIZE" value="{maxfilesize}">
+      <table align="center" width="100%">
+        <tr>
+          <td align="left" bgcolor="#CCCCCC">
+	     <table>
+	       <tr>
+	         <td><img src="{img_edit}" align="middle"></td>
+		 <td><small>&nbsp;<b>Modifying the {category_name}</b></small></td>
+	       </tr>
+	     </table>
+          </td>
+        </tr>
+	<tr>
+	  <td>
+	  <table align="center">
+	    <tr>
+	      <td align="right"><font size="-1">TITLE</font></td>
+	      <td><small><input type="text" name="title" size="66" value="{title}"></small></td>
+	    </tr>
+	    <tr>
+	      <td align="right"><font size="-1">DESCRIPTION</font></td>
+  	      <td><small><textarea cols="50" rows="8"
+  name="description" wrap>{description}</textarea></small></td>
+	    </tr>
+            <tr>
+	      <td align="right"><font size="-1">ICON</font></td>
+	      <td><small><input name="icon" type="file" size="52" value="{icon}"></small></td>
+	    </tr>
+            <tr>
+	      <td align="right">&nbsp;</td>
+	      <td><small><input name="deleteicon" type="checkbox"> delete the icon</small></td>
+	    </tr>
+            <tr>
+	      <td align="right"><font size="-1">SHORT TITLE</font></td>
+	      <td><small><input type="text" name="stitle" size="66" value="{stitle}"></small></td>
+	    </tr>
+            <tr>
+	      <td align="right"><font size="-1">DEFAULT VISIBILITY OF AGENDAS</font></td>
+	      <td><small>{visibility}</small></td>
+	    </tr>
+            <tr>
+	      <td align="right"><font size="-1">DEFAULT ACCESS
+  PASSWORD FOR AGENDAS</font></td>
+	      <td><small>{accessPassword}</small></td>
+	    </tr>
+	      <td align="right"><font size="-1">DEFAULT MODIFY
+  PASSWORD FOR AGENDAS</font></td>
+	      <td><small>{modifyPassword}</small></td>
+	    </tr>
+          </table>
+	  </td>
+        </tr>
+        <tr bgcolor="#CCCCCC">
+	  <td align="center"><small><input type="submit"
+  value="UPDATE"><input type="submit" onClick="window.close();" value="CANCEL"></small></td>
+	</tr>
+      </table>
+    </form>
+  </body>
+</html>

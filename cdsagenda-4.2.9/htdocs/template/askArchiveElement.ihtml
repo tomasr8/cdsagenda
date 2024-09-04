@@ -1,0 +1,5 @@
+  <tr bgcolor="{askArchiveElement_bgcolor}">
+    <td><a href={askArchiveElement_href}>{askArchiveElement_entry}</a></td><td><a href={askArchiveElement_hrefdown}>{askArchiveElement_entrydown}</a></td>
+    <td>{askArchiveElement_description}</td><td>{askArchiveElement_type}</td>
+    <td>{askArchiveElement_size}</td><td>{askArchiveElement_CP}</td><td>{askArchiveElement_DP}</td><td>{askArchiveElement_OW}</td>
+  </tr>

@@ -1,0 +1,138 @@
+ 
+The CDS Agenda v4.2.8 was released on October 6th 2004
+
+What's corrected:
+	* Bug correction with file names containing single quotes in 
+        archive management
+        * Bug correction in file deletion
+        * Admin area misprotection
+__________________________________________________________________________
+
+The CDS Agenda v4.2.7 was released on June 1th 2004
+
+What's corrected:
+	* Important bug with mysql tables naming (co-existing SESSION and 
+        session tables caused problems on case-insensitive OSs) session was 
+        renamed into auth_session
+__________________________________________________________________________
+
+The CDS Agenda v4.2.6 was released on February 18th 2004
+
+What's corrected:
+	* years 2004->2006 added to the template files
+__________________________________________________________________________
+
+The CDS Agenda v4.2.5 was released on December 15th 2003
+
+What's corrected:
+	* all scripts now use the Pear DB abstraction layer (some still used 
+	the php built-in mysql functions in previous versions)
+	* Bug on authentication in List.php corrected
+__________________________________________________________________________
+
+The CDS Agenda v4.2.4 was released on November, 6th 2003
+
+What's corrected:
+	* missing images added
+	* style.css updated
+	* INSTALL file enhanced
+__________________________________________________________________________
+
+The CDS Agenda v4.2.3 was released on October 28th 2003
+
+What's corrected:
+	* few bug fixes in installation and configuration files
+__________________________________________________________________________
+
+The CDS Agenda v4.2.2 was released on July 4th 2003
+
+What's new:
+	* HTML title of Agenda pages now reproduces the name of the meeting
+          and its starting date (easier to bookmark)
+
+What's corrected:
+	* installation scripts now include /images/menu.js and xsftStyle.css
+__________________________________________________________________________
+
+The CDS Agenda v4.2.1 was released on June 3rd 2003
+
+What's new:
+	* Calendar feature (enhanced overview which allows to monitor events
+	  from several chosen categories)
+
+What's corrected:
+	* admin module now works with authentication off
+__________________________________________________________________________
+
+The CDS Agenda v4.2 was released on March 28th 2003
+
+What's new:
+	* Complete authentication module
+	* Groups definition
+	* Authorization scheme for modification and access to the agendas
+	* Authorization scheme for managing categories
+	* IMAP authentication
+	* LDAP-based group definition
+	* Visibility level, access and modification passwords can now be
+	  globally defined at the level of the category.
+	* Modification of an agenda is done in a new window
+	* New possibility to order subpoints of a talk
+	* New possibility to order subcategories
+	* Some parameters have been added to config_runtime.inc (list of years
+	  for use in search and overview, various messages)(thanks to F.Melot!)
+
+What's corrected:
+	* The lecture titles were not visible in the modification area. This 
+	  point has been corrected
+	* The size of the uploaded files was limited by a MAX_FILE_SIZE 
+	  hardcoded in the templates. This variable is now defined in the 
+	  config_runtime.inc file.
+	* Corrected bug with file and directory protection mode in file.php
+	* When a talk is moved from one session to another, its date is changed
+  	  accordingly. Its attached files are also correctly transfered.
+	* Modify works correctly with IE > 5.1
+	
+Download:
+   <http://cdsware.cern.ch/cdsagenda/download/cdsagenda-4.2.tar.gz>
+
+Notes: 
+	* This version includes a built-in module dedicated to authentication
+	  (login + groups management)
+	* Make sure you put your email address in the $admin_email variable
+	  in config/config_runtime.inc file to have access to all management
+ 	  interfaces when logged in.
+	* However, you also have the possibility to use a local IMAP server for
+	  login, and/or a local LDAP server for group managements. In this 
+	  case, please edit the platform/authentication/ldapfunctions.inc and
+	  imapfunctions.inc files for your local implementation. All functions
+	  implemented in these scripts are very CERN-centric.
+	* IN ANY CASE, to run this new version, MySQL should be compiled with
+	  --with-imap and --with-ldap 
+__________________________________________________________________________
+
+The CDS Agenda v4.1 was released on Tuesday, 21st January 2003.
+
+What was new in 4.1:
+	* New file management system (relies on a database)
+	* Possibility of protecting each file separately with a password.
+	* Possibility of protecting all files attached to an event (agenda 
+	  session or talk) with a password
+	* All pages now use templates
+	* Enhanced menu management (with delays in opening and closing)
+	* The owner of an agenda can now set the level of visibility of his
+	  agenda in the overview
+	* "Compute talks startingtime/duration" now also appears in 
+	  single-session meetings modification.
+
+What's corrected:
+	* Corrected bug in the email address display
+	* Session description update: carriage returns are correctly displayed
+	* SubTalk description update: carriage returns are correctly displayed
+	* Agenda/Session/Talk/SubTalk descriptions: if simple text, output is 
+	  formatted (\n is turned into <br>) else if html displayed as is.
+	* Corrected bug in manager (category creation: leading white spaces 
+	  were added to the title and description)
+	* Corrected the bug occuring in the search form when using the "or" 
+	  logical operator
+	* Corrected bug "up one level" in manager (category re-allocation).
+

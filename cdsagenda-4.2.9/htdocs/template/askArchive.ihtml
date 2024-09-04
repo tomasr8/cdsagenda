@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>CDS Agenda - Archive</title>
+  <link rel="stylesheet" href="images/style.css">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body bgcolor="white" text="#000000">
+<br>
+<center>
+<table width=50%>
+<tr>
+  <td>This archive contains <font color=green><b>{askArchive_number}</b></font> files.<hr>
+  </td>
+</tr>
+<tr>
+   <td>
+  {askArchive_element} 
+   </td>
+</tr>
+<tr>
+  <td><hr>
+  <small>
+<a href="#" onclick="history.back();return false">back to the
+previous page</a> - <a href="{askArchive_backagenda}">back to the agenda</a>
+  </small>
+  </td>
+</tr>
+</table>
+</center>
+
+</body>
+</html>

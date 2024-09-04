@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDAS</TITLE>
+  <link rel="stylesheet" href="images/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+{list_jsmenutools}
+{list_topmenubar}
+
+<TABLE>
+<TR>
+        <TD>
+<img border=0 align=top src="images/dec.agendas.gif" alt="CDS Agendas!" width=108 height=52>
+        </TD>
+        <TD>
+	<font size=-1>
+This CDS Agenda tool is available under the GPL license. Among its
+	numerous features it allows to manage time-tables of meetings,
+	to attach multimedia files to each meeting item and to store
+	the resulting agendas in a multi-levels hierarchical tree.
+	</font>
+        </TD>
+</TR>
+</TABLE>
+
+<H1 class=headline>Categories:</H1>
+
+<TABLE align=center>
+
+{list_table}
+
+</TABLE>
+
+{list_menus}
+{AGEfooter_template}
+
+</BODY>
+</HTML>

@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <title>CDS Agenda Administrator</title>
+    <link rel="stylesheet" href="../images/style.css">
+  </head>
+  <body class=admin>
+    <form action="{postAddr}" method="POST">
+      <input type="hidden" name="action" value="edit">
+      <input type="hidden" name="ida" value="{ida}">
+      <table align="center" width="100%" bgcolor="#CCCCCC">
+        <tr>
+          <td align="center"><img src="{img_edit}" align="middle">&nbsp;<b>Modifying the agenda {title}</b></td>
+        </tr>
+      </table>
+      <br>
+      <table align="center" width="70%" border="1">
+        <tr>
+	  <td><font color="blue" size="2"><b>REMEMBER</b> that if you want to edit the whole details of the agenda you should use the Agenda Maker modification interface</font></td>
+	</tr>
+      </table>
+      <br>
+      <table align="center">
+        <tr>
+	  <td align="right"><font size="2">CONFIDENTIALITY</font></td>
+	  <td><select name="confid">
+	        <option value="open" {selected_open}>open</option>
+	        <option value="password" {selected_password}>password protected</option>
+	        <option value="cern-only" {selected_cern}>accessible only by CERN domain</option>
+              </select>
+	  </td>
+	</tr>
+	<tr>
+	  <td align="right"><font size="2">ACCESS PASSWORD</font></td>
+	  <td><input type="input" name="apassword" size="52" value="{apassword}"></td>
+	</tr>
+	<tr>
+	  <td align="right"><font size="2">STATUS</font></td>
+	  <td>
+        <TABLE border=0>
+                <TR>
+                        <TD><SMALL>
+                        <INPUT type=radio name=status value=open {open} >&nbsp;open<BR><INPUT type=radio name=status value=close {close}>&nbsp;close</SMALL>
+                        </TD>
+                        <TD class=header><SMALL>Closing an agenda
+  means nobody will be able to modify it again. Only the
+  administrator (you) will be able to reopen it.</SMALL>
+                        </TD>
+                </TR>
+        </TABLE>
+	</td>
+	</tr>
+      </table>
+      <table bgcolor="#CCCCCC" align="center" width="100%">
+        <tr>
+	  <td align="center"><input type="submit" value="UPDATE"></td>
+	</tr>
+      </table>
+    </form>
+  </body>
+</html>

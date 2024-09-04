@@ -1,0 +1,223 @@
+<?php
+//$Id: subtalk.obj,v 1.1.4.14 2004/07/29 10:06:09 tbaron Exp $
+
+// subtalk.obj --- subtalk
+//
+// Copyright (C) 2002  CDS Team <cds.support@cern.ch>
+//     http://cds.cern.ch
+//
+// Author(s): Thomas Baron <thomas.baron@cern.ch>
+//
+// subtalk.obj is part of CDS Agenda.
+//
+// CDS Agenda is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// CDS Agenda is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with ; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// Commentary:
+//
+// T Baron 26/09/2001 function returns value instead of standard output
+// T Baron 03/10/2001 added "email" field to SUBTALK
+//
+
+class subtalk {
+
+
+	var $className = "subtalk";
+
+	var $idt;
+	var $files;                //array containing the files related to the subtalk
+	var $minutes;                //minutes of the subtalk
+	var $ttitle;
+	var $tspeaker;
+	var $tday;
+	var $tcomment;
+	var $type;
+	var $cd;
+	var $md;
+	var $stime;
+	var $repno;
+	var $affiliation;
+	var $duration;
+	var $fidt;
+	var $email;
+
+	//constructor
+	function subtalk($ida,$ids,$idt) {
+		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$directDisplaySingleFiles;
+		$nbfiles = 0;
+        $log = &AGeLog::getLog();
+
+		$db  = &AgeDB::getDB();
+
+        // fill in array structure with list of categories;
+        $sql = "SELECT categoryID,
+                       shortName,
+                       longName,
+                       preselected
+                FROM CATEGORY
+                ORDER BY categoryID";
+        $res = $db->query($sql);
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+        while ($row = $res->fetchRow()) {
+            $FILE_TYPES_ARRAY[$row['shortName']] = $row['longName'];
+            if ($row['preselected'] == 1) {
+                $FILE_TYPES_ARRAY_PRESELECTED = $row['categoryID'];
+            }
+        }
+
+		$sql = "select ttitle,tspeaker,affiliation,repno,duration,tcomment,idt,email from SUBTALK where ida='$ida' and ids='$ids' and idt='$idt'";
+		$rescom = $db->query($sql);
+		if (DB::isError($rescom)) {
+			die ($rescom->getMessage());
+		}
+		$numRows = $rescom->numRows();
+
+		if ( $numRows != 0 ) {
+			$row = $rescom->fetchRow();
+			// Data
+			///////////////////////////////////////////////////
+
+			$this->tspeaker = formatfield($row['tspeaker']);
+			$this->ttitle = str_replace("\r","<br>",$row['ttitle']);
+			$this->ttitle = formatfield($this->ttitle);
+
+            $this->tcomment = $row['tcomment'];
+            if ($this->tcomment == strip_tags($this->tcomment)) {
+                $this->tcomment = str_replace("\r\n","<br>",$this->tcomment);
+                $this->tcomment = str_replace("\r","<br>",$this->tcomment);
+                $this->tcomment = str_replace("\n","<br>",$this->tcomment);
+            }
+            $this->tcomment = formatfield($this->tcomment);
+
+			$this->affiliation = formatfield($row['affiliation']);
+			$this->repno = ereg_replace(" ","&lt;br&gt;",$row['repno']);
+			$this->duration = $row['duration'];
+			$this->idt = $row['idt'];
+			$this->email = formatfield($row['email']);
+            if (strlen($this->email) < 2) {
+                $this->email = "";
+            }
+
+			// Attached Files + Minutes
+			///////////////////////////////////////////////////
+            $nbfiles = 0;
+            $archive = new archive();
+            $categories = $archive->listFileCategories("$ida$ids$idt");
+            asort($categories);
+            while ($category = current($categories)) {
+                if ($FILE_TYPES_ARRAY[$category] != "") {
+                    $text = $FILE_TYPES_ARRAY[$category];
+                }
+                else {
+                    $text = $category;
+                }
+                $catfiles = $archive->listFiles("$ida$ids$idt",$category);
+                if (count($catfiles) == 1 && $directDisplaySingleFiles) {
+                    $linkname = $catfiles[0]->name;
+                }
+                else {
+                    $linkname = $text;
+                }
+                
+                $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida$ids$idt/$category" );
+                $nbfiles ++;
+                next($categories);
+            }
+            if ($stylesheet == "standard2") {
+                $mintext = "";
+                $minutesfiles = $archive->listFiles("$ida$ids$idt","minutes");
+                while (($minutesfile = current($minutesfiles)) && $mintext == "") {
+                    $path = $minutesfile->getField("path");
+                    $name = $minutesfile->getField("name");
+                    if (ereg(".txt$",$name)) {
+                        $mintext = `cat $path/$name`;
+                    }
+                    elseif ((ereg(".htm$",$name) || ereg(".html$",$name)) && $HTML2TEXT != "") {
+                        $mintext = `$HTML2TEXT $path/$name`;
+                    }
+                    elseif (ereg(".ps$",$name) && $PS2ASCII != "") {
+                        $mintext = `$PS2ASCII $path/$name`;
+                        $mintext = ereg_replace("\%.*\%","",$mintext);
+                    }
+                    elseif (ereg(".pdf$",$name) && $PS2ASCII != "") {
+                        $mintext = `$PS2ASCII $path/$name`;
+                    }
+                    if ($mintext != "") {
+                        $mintext = ereg_replace("^\n*","",$mintext);
+                        $mintext = str_replace("\r\n","<br>",$mintext);
+                        $mintext = str_replace("\r","<br>",$mintext);
+                        $mintext = str_replace("\n","<br>",$mintext);
+                        $mintext = formatfield($mintext);
+                        $mintext = stripslashes($mintext);
+                        if (strlen($mintext) > 100000) {
+                            $mintext = substr($mintext,0,100000);
+                            $mintext .= " ####text too long... Please access the file directly to have the whole content####";
+                        }
+                        $this->minutes = $mintext;
+                    }
+                    next($minutesfiles); 
+                }
+            }
+		} else
+			if ( ERRORLOG )
+				$log->logError( __FILE__ . "." . __LINE__, "main", " Cannot find SESSION with ida '$ida' and ids '$ids' and idt '$idt' " );
+
+	}
+
+	function displayXML()
+        {
+			// SubTalks XML
+			///////////////////////////////////////////////////
+
+			$xml = "
+                        <subtalk        id=\"$this->idt\"
+                                        title=\"$this->ttitle\"
+                                        speaker=\"$this->tspeaker\"
+                                        affiliation=\"$this->affiliation\"
+                                        repno=\"$this->repno\"
+                                        duration=\"$this->duration\"
+                                        comments=\"$this->tcomment\"
+                                        email=\"$this->email\">\n";
+
+			// Minutes XML
+			///////////////////////////////////////////////////
+
+			if ($this->minutes != "")
+                {
+					$xml .= "
+                                <minutes>
+                                        $this->minutes
+                                </minutes>\n";
+                }
+
+			// Files XML
+			///////////////////////////////////////////////////
+
+			$nbFiles = count($this->files);
+			// Put here a sort to order files by type
+			for ($i=0;$i<$nbFiles;$i++)
+				$xml .= $this->files[$i]->displayXML();
+
+			$xml .= "
+                        </subtalk>";
+			
+			//return final value
+			return $xml;
+        }
+
+}
+
+?>

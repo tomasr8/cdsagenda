@@ -1,0 +1,355 @@
+/* cds.css -- the style sheet for cds */
+/* author: tibor.simko@cern.ch, david.mcglashan@cern.ch */
+
+body { 
+   color: #000; 
+   background: #fff; 
+   font-family: helvetica, verdana, sans-serif;
+}
+p,br,dl,strong,em,h1,h2,td {
+   font-family: helvetica, verdana, sans-serif;
+} 
+p.clone-description {
+   color: darkblue; 
+   font-style: italic;
+   margin-bottom: 0.25em
+}
+a:link { 
+   color: #00c;  
+   background: transparent;
+}
+a:visited { 
+   color: #006; 
+   background: transparent;
+}
+a:active { 
+   color: #fff; 
+   background: #006; 
+   text-decoration: none; 
+}
+a:hover { 
+   color: #fff;
+   background: #006; 
+   text-decoration: underline;
+}
+a.img:hover { 
+   color: #00c; 
+   background: transparent;
+}
+a.img:active { 
+   color: #00c; 
+   background: transparent;
+   font-weight: normal; 
+}
+hr.invisible { 
+   height: 0; 
+   width: 0; 
+}
+.headline { 
+   color: #006;
+   background: transparent; 
+}
+.quicknote { 
+   color: #603;
+   background: transparent; 
+}
+.important { 
+   color: #f00;
+   background: transparent; 
+}
+.popupselected { 
+   color: #fff; 
+   background: #006; 
+}
+.results { 
+   color: #000; 
+   background: #fc6; 
+} 
+.topbarheader { 
+   color: #000; 
+   background: #9cf; 
+} 
+.topbarheaderselected { 
+   color: #fff; 
+   background: #006; 
+} 
+.header { 
+   color: #000; 
+   background: #9cf; 
+} 
+.headerselected { 
+   color: #fff; 
+   background: #006; 
+} 
+.headerselectedtext { 
+   color: #fff; 
+   background: #006; 
+}
+.highlightbox { 
+   color: #000; 
+   background: aqua; 
+} 
+.lowlightbox { 
+   color: #000; 
+   background: teal; 
+} 
+.dayheader {
+   background-image: url(http://localhost:5555/cdsagenda/images/daybackground.gif);
+   color: #fff
+}
+select.small { 
+   font-size: small; 
+}
+select.smallheadline { 
+   font-size: small; 
+   color: #006; 
+   background: transparent;
+}
+.faq { 
+   margin-left: 6%; 
+   margin-right: 6%; 
+}
+.faqq { 
+   margin-left: 12%; 
+   margin-right: 12%; 
+}
+.menuheader {
+   background-image: url(http://localhost:5555/cdsagenda/images/agemenu.gif);
+   color: #fff;
+}
+.empty {
+   background-image: url(http://localhost:5555/cdsagenda/images/empty.gif);
+}
+.list {
+   background-image: url(http://localhost:5555/cdsagenda/images/audience7.gif);
+}
+.admin {
+   background-image: url(http://localhost:5555/cdsagenda/images/audience_admin.gif);
+}
+.menudiv {
+   position: absolute; 
+   z-index: 30; 
+   visibility: hidden;
+}
+.menutop {
+   position: relative; 
+   z-index: 50; 
+   color: #000; 
+   background: #9cf; 
+}
+
+.parts {
+	COLOR: #fff;
+	margin: 0px;
+	padding: 0px;
+	background-color: #fff;
+	border-bottom: 1px dashed #999999;
+	border-left: 1px dashed #999999;
+	border-right: 1px dashed #999999;
+	border-top: 1px dashed #999999;
+}
+
+.titles {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #FFFFFF;
+
+}
+
+.day {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: large;
+	font-weight: normal;
+	color: #000;
+}
+
+.sessiontitle {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: bold;
+	color: #333;
+}
+
+.sessiontime {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: medium;
+	font-weight: normal;
+	color: #000;	
+}
+
+.author {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+	font-style: italic;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+
+.settings {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	color: #FFFFFF;
+	text-align: right;
+	vertical-align: middle;
+	padding: 3px;
+}
+
+.abstract {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+	color: #000000;
+	padding: 5px 5px 20px;
+}
+
+a.normal:link {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+a.normal:visited {
+	color: #FFFFFF;
+}
+a.normal:hover {
+	color: #FFFFFF;
+	background-color: #1058A0;
+	font-weight: normal;
+
+}
+.bold {
+	font-weight: bold;
+}
+
+.headerselected2 {
+	COLOR: #fff;
+	margin: 0px;
+	padding: 0px;
+	background-color: #1058A0;
+	border-bottom: 1px dashed #999999;
+}
+
+.headerselected3 {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #E6E6E6;
+	border-top: 1px dashed #999999;
+	vertical-align: middle;
+	font-size: small;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.headertimetable {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #fafafa;
+	border-top: 1px dashed #999999;
+	vertical-align: top;
+	font-size: small;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.headertimetable2 {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #fff;
+	border-top: 1px dotted #999999;
+	vertical-align: top;
+	font-size: small;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 15px;
+}
+
+.headertimetable3 {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #fafafa;
+	border-top: 1px dotted #999999;
+	vertical-align: top;
+	font-size: small;
+	padding-top: 5px;
+	padding-right: 5px;
+	padding-left: 15px;
+}
+
+.headersession {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #fff;
+	vertical-align: middle;
+	font-size: small;
+	padding-right: 5px;
+	padding-left: 0px;
+}
+
+.headertalklight {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #FAFAFA;
+	vertical-align: middle;
+	font-size: small;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.headertalk {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #E8E8E8;
+	vertical-align: middle;
+	font-size: small;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.headerbreak {
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #B0E0FF;
+	vertical-align: middle;
+	font-size: small;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+a.author:link {
+	color: #fff;
+}
+a.material:link {
+	color: #333333;
+}
+a.material:hover {
+	color: #000000;
+	text-decoration: underline;
+	background-color: #E6E6E6;
+	font-weight: normal;
+
+
+}
+a.material:visited {
+	color: #333333;
+	background-color: #E6E6E6;
+	text-decoration: underline;
+
+
+}
+.headerselectedimg {
+
+	COLOR: #333333;
+	margin: 0px;
+	background-color: #E6E6E6;
+	border-top: 1px dashed #999999;
+	vertical-align: middle;
+	font-size: small;
+}
+.headerabstract {
+	COLOR: #fff;
+	margin: 0px;
+	padding: 0px;
+	background-color: #FFFDEC;
+	border: 1px solid #204060;
+}
+
+/* end of cds.css */

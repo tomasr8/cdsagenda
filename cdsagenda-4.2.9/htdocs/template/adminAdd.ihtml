@@ -1,0 +1,64 @@
+<html>
+  <head>
+    <title>CDS Agendas Administrator</title>
+    <link rel="stylesheet" href="../images/style.css">
+  </head>
+  <body class=admin>
+    <form action="{postAddr}" method="POST" enctype="multipart/form-data" >
+      <input type="hidden" name="action" value="add">
+      <input type="hidden" name="fid" value="{fid}">
+      <input type="hidden" name="level" value="{level}">
+      <input type="hidden" name="MAX_FILE_SIZE" value="{maxfilesize}">
+      <table align="center" width="100%">
+        <tr bgcolor="#CCCCCC">
+          <td align="left">
+	    <table>
+	      <tr>
+	        <td>
+	 	  <img src="{img_add}" align="middle">
+		</td>
+		<td><small>&nbsp;<b>Adding a new {category_name}</b>
+		</small></td>
+	      </tr>
+	    </table>
+	  </td>
+        </tr>
+	<tr>
+	  <td>
+      {warning}
+          </td>
+       </tr>
+       <tr>
+         <td>
+	   <table align="center">
+	     <tr>
+	       <td align="right"><font size="2">TITLE</font></td>
+	       <td><input type="text" name="title" size="66"></td>
+	     </tr>
+	     <tr>
+	       <td align="right"><font size="2">DESCRIPTION</font></td>
+	       <td><textarea cols="50" rows="8" name="description"></textarea></td>
+	     </tr>
+             <tr>
+	       <td align="right"><font size="2">ICON</font></td>
+	       <td><input type="file" name="icon" size="52"></td>
+	     </tr>
+             <tr>
+	       <td align="right"><font size="2">SHORT TITLE</font></td>
+	       <td><input type="text" name="stitle" size="66"></td>
+	     </tr>
+           </table>
+	 </td>
+      </tr>
+      <tr bgcolor="#CCCCCC">
+	<td align="center">
+	  <small>
+	  <input type="submit" value="ADD">
+	  <input type="submit" onclick="window.close();" value="CANCEL">
+	  </small>
+	</td>
+      </tr>
+    </table>
+    </form>
+  </body>
+</html>

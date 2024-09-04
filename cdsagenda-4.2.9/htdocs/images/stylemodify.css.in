@@ -1,0 +1,122 @@
+/* cds.css -- the style sheet for cds */
+/* author: tibor.simko@cern.ch, david.mcglashan@cern.ch */
+/* revision: 19990423 */
+body { 
+   color: #000; 
+   background: #fff; 
+   font-family: helvetica, verdana, sans-serif;
+}
+p,br,dl,strong,em,h1,h2,td {
+   font-family: helvetica, verdana, sans-serif;
+} 
+a:link { 
+   color: #007;  
+   background: transparent;
+}
+a:visited { 
+   color: #006; 
+   background: transparent;
+}
+a:active { 
+   color: #fff; 
+   background: #006; 
+   text-decoration: none; 
+}
+a:hover { 
+   color: #fff; 
+   background: #006; 
+   text-decoration: underline;
+}
+a.img:hover { 
+   color: #00c; 
+   background: transparent;
+}
+a.img:active { 
+   color: #00c; 
+   background: transparent;
+   font-weight: normal; 
+}
+hr.invisible { 
+   height: 0; 
+   width: 0; 
+}
+.headline { 
+   color: #006;
+   background: transparent; 
+}
+.quicknote { 
+   color: #603;
+   background: transparent; 
+}
+.important { 
+   color: #f00;
+   background: transparent; 
+}
+.popupselected { 
+   color: #fff; 
+   background: #006; 
+}
+.topbarheader { 
+   color: #000; 
+   background: #6cc; 
+} 
+.topbarheaderselected { 
+   color: #fff;
+   background: #006; 
+} 
+.header { 
+   color: #000; 
+   background: #6cc; 
+} 
+.headerselected { 
+   color: #fff;
+   background: #006; 
+} 
+.headerselectedtext { 
+   color: #fff; 
+   background: #006; 
+}
+.highlightbox { 
+   color: #000; 
+   background: aqua; 
+} 
+.lowlightbox { 
+   color: #000; 
+   background: teal; 
+} 
+select.small { 
+   font-size: small; 
+}
+select.smallheadline { 
+   font-size: small; 
+   color: #006; 
+   background: transparent;
+}
+.faq { 
+   margin-left: 6%; 
+   margin-right: 6%; 
+}
+.faqq { 
+   margin-left: 12%; 
+   margin-right: 12%; 
+}
+.menuheader {
+   background-image: url(@HTDOCSURL@/images/agemenu.gif);
+   color: #fff
+}
+.empty {
+   background-image: url(@HTDOCSURL@/images/empty.gif);
+}
+.menudiv {
+   position: absolute; 
+   z-index: 30; 
+   visibility: hidden;
+}
+.menutop {
+   position: relative; 
+   z-index: 50;
+   color: #000;
+   background: #6cc; 
+}	
+
+/* end of cds.css */

@@ -1,0 +1,314 @@
+<?php
+//$Id: talk.obj,v 1.1.4.18 2004/07/29 10:06:09 tbaron Exp $
+
+// talk.obj --- talk
+//
+// Copyright (C) 2002  CDS Team <cds.support@cern.ch>
+//     http://cds.cern.ch
+//
+// Author(s): Thomas Baron <thomas.baron@cern.ch>
+//
+// talk.obj is part of CDS Agenda.
+//
+// CDS Agenda is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// CDS Agenda is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with ; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// Commentary:
+//
+// T Baron 26/09/2001 	functions return value instead of standard output
+//			just a small correction on the way \n where treated inside tcomment
+// T Baron 03/10/2001	added "email" field in TALK
+//
+
+//require_once 'DB.php';
+//require_once '../AgeDB.php';
+
+class talk {
+
+	var $className = "talk";
+
+	var $idt;
+	var $subtalks;                //array containing all subtalks
+	var $files;                //array containing the files related to the talk
+	var $minutes;                //minutes of the talk
+	var $ttitle;
+	var $tspeaker;
+	var $tday;
+	var $tcomment;
+	var $location;
+	var $bld;
+	var $floor;
+	var $room;
+	var $broadcasturl;
+	var $type;
+	var $cd;
+	var $md;
+	var $category;
+	var $stime;
+	var $repno;
+	var $affiliation;
+	var $duration;
+	var $email;
+
+	//constructor
+	function talk($ida,$ids,$idt) {
+		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$mapServerACTIVE,$mapServerAddress,$directDisplaySingleFiles;
+		$nbfiles = 0;
+		$nbsubtalks = 0;
+
+        $log = &AgeLog::getLog();
+
+		$db  = &AgeDB::getDB();
+
+        // fill in array structure with list of categories;
+        $sql = "SELECT categoryID,
+                       shortName,
+                       longName,
+                       preselected
+                FROM CATEGORY
+                ORDER BY categoryID";
+        $res = $db->query($sql);
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+        while ($row = $res->fetchRow()) {
+            $FILE_TYPES_ARRAY[$row['shortName']] = $row['longName'];
+            if ($row['preselected'] == 1) {
+                $FILE_TYPES_ARRAY_PRESELECTED = $row['categoryID'];
+            }
+        }
+
+		$sql = "select stime,tday,ttitle,tspeaker,tcomment,location,category,broadcasturl,bld,room,repno,affiliation,duration,floor,type,idt,email from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
+		$res = $db->query($sql);
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+		$numRows = $res->numRows();
+		if ( $numRows != 0 ) {
+			$row = $res->fetchRow();
+			// Data
+			///////////////////////////////////////////////////
+
+			$this->idt = $row['idt'];
+			$this->stime = $row['stime'];
+			$this->tday = $row['tday'];
+			$this->ttitle = formatfield( $row['ttitle']);
+			$this->tspeaker = formatfield( $row['tspeaker']);
+
+            $this->tcomment = $row['tcomment'];
+            if ($this->tcomment == strip_tags($this->tcomment)) {
+                $this->tcomment = str_replace("\r\n","<br>", $this->tcomment);
+                $this->tcomment = str_replace("\r","<br>",$this->tcomment);
+                $this->tcomment = str_replace("\n","<br>",$this->tcomment);
+                $this->tcomment = str_replace("\037"," ",$this->tcomment);
+            }
+			$this->tcomment = formatfield($this->tcomment);
+
+			$this->location = formatfield($row['location']);
+			$this->bld = $row['bld'];
+			$this->room = $row['room'];
+			$this->floor = $row['floor'];
+			$this->type = $row['type'];
+			$this->category = formatfield($row['category']);
+			$this->broadcasturl = formatfield( $row['broadcasturl']);
+			if ( $repnoChangeBlankWith != "" )
+				$this->repno = ereg_replace(" ", $repnoChangeBlankWith, formatfield($row['repno']));			
+			else
+				$this->repno = formatfield($row['repno']);
+			$this->affiliation = formatfield( $row['affiliation']);
+			$this->duration = $row['duration'];
+
+			// SIMONE: WILL SEE IF MUST BE REMOVED END TIME CALCULATION
+			// Calculate end time
+			$stm = explode( ":", $row['stime']);
+			$dur = explode( ":", $row['duration']);
+			// Seconds
+			$endTimeSec = $dur[ 2 ] + $stm[ 2 ];
+			$endTimeMin = $dur[ 1 ] + $stm[ 1 ];
+			$rep = 0;
+			if ( $endTimeMin >= 60 )
+				{
+					$endTimeMin -= 60;
+					$rep = 1;
+				}
+			$endTimeHours = $dur[ 0 ] + $stm[ 0 ] + $rep;
+			if ( $endTimeHours > 24 )
+				$endTimeHours -= 24;
+			if ( strlen( $endTimeMin ) == 1 )
+				$endTimeMin = "0$endTimeMin";
+			if ( strlen( $endTimeHours ) == 1 )
+				$endTimeHours = "0$endTimeHours";
+			$this->etime = "$endTimeHours:$endTimeMin";
+
+			$this->email = formatfield( $row['email']);
+            if (strlen($this->email) < 2) {
+                $this->email = "";
+            }
+
+            // If the map server is active, then we embed the map info in
+            // the room variable
+            if ($mapServerACTIVE && $this->bld != "" && $this->room != "0--" && $this->room != "") {
+                $this->room = "<a href=\"$mapServerAddress".( $this->bld!=0 ? $this->bld : ereg_replace(" ","+",$this->room) )."\" classinfo>".$this->room."</a>";
+            }
+            $this->room = formatfield($this->room);
+
+			// Attached Files + Minutes
+			///////////////////////////////////////////////////
+            $nbfiles = 0;
+            $archive = new archive();
+            $categories = $archive->listFileCategories("$ida$ids$idt");
+            asort($categories);
+            while ($category = current($categories)) {
+                if ($FILE_TYPES_ARRAY[$category] != "") {
+                    $text = $FILE_TYPES_ARRAY[$category];
+                }
+                else {
+                    $text = $category;
+                }
+                $catfiles = $archive->listFiles("$ida$ids$idt",$category);
+                if (count($catfiles) == 1 && $directDisplaySingleFiles) {
+                    $linkname = $catfiles[0]->name;
+                }
+                else {
+                    $linkname = $text;
+                }
+                
+                $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida$ids$idt/$category" );
+                $nbfiles ++;
+                next($categories);
+            }
+            if ($stylesheet == "standard2") {
+                $mintext = "";
+                $minutesfiles = $archive->listFiles("$ida$ids$idt","minutes");
+                while (($minutesfile = current($minutesfiles)) && $mintext == "") {
+                    $path = $minutesfile->getField("path");
+                    $name = $minutesfile->getField("name");
+                    if (ereg(".txt$",$name)) {
+                        $mintext = `cat $path/$name`;
+                    }
+                    elseif ((ereg(".htm$",$name) || ereg(".html$",$name)) && $HTML2TEXT != "") {
+                        $mintext = `$HTML2TEXT $path/$name`;
+                    }
+                    elseif (ereg(".ps$",$name) && $PS2ASCII != "") {
+                        $mintext = `$PS2ASCII $path/$name`;
+                        $mintext = ereg_replace("\%.*\%","",$mintext);
+                    }
+                    elseif (ereg(".pdf$",$name) && $PS2ASCII != "") {
+                        $mintext = `$PS2ASCII $path/$name`;
+                    }
+                    if ($mintext != "") {
+                        $mintext = ereg_replace("^\n*","",$mintext);
+                        $mintext = str_replace("\r\n","<br>",$mintext);
+                        $mintext = str_replace("\r","<br>",$mintext);
+                        $mintext = str_replace("\n","<br>",$mintext);
+                        $mintext = formatfield($mintext);
+                        $mintext = stripslashes($mintext);
+                        if (strlen($mintext) > 100000) {
+                            $mintext = substr($mintext,0,100000);
+                            $mintext .= " ####text too long... Please access the file directly to have the whole content####";
+                        }
+                        $this->minutes = $mintext;
+                    }
+                    next($minutesfiles); 
+                }
+            }
+
+			// SubTalks
+			///////////////////////////////////////////////////
+			$sql = "select idt from SUBTALK where ida='$ida' and ids='$ids' and fidt='$idt' order by stime,ttitle";
+
+			$res = $db->query($sql);
+			if (DB::isError($res)) {
+				die ($res->getMessage());
+			}
+			$numRows = $res->numRows();
+
+			if ( $numRows != 0 )
+				for ( $i = 0; $numRows > $i; $i++ ) {
+					$row = $res->fetchRow();
+					$this->subtalks[$nbsubtalks] = new subtalk($ida,$ids,$row['idt']);
+					$nbsubtalks++;
+				}
+
+		} else
+			if ( ERRORLOG )
+				$log->logError( __FILE__ . "." . __LINE__, "main", " Cannot find TALK with ida='$ida' and ids='$ids' and idt='$idt' " );
+	}
+
+	function displayXML() {
+
+			// Talks XML
+			///////////////////////////////////////////////////
+
+			$stime = ereg_replace(":00$","",$this->stime);
+
+			//		if ( $this->ttitle == "Atmospheric Aspects of El Nino" )
+			//		    print "2REPNO: '".$res[0]->repno."'<br>";
+
+			$xml = "
+<talk        id=\"$this->idt\"
+title=\"$this->ttitle\"
+category=\"$this->category\"
+speaker=\"$this->tspeaker\"
+affiliation=\"$this->affiliation\"
+day=\"$this->tday\"
+stime=\"$stime\"
+duration=\"$this->duration\"
+location=\"$this->location\"
+building=\"$building\"
+floor=\"$this->floor\"
+room=\"$this->room\"
+type=\"$this->type\"
+repno=\"$this->repno\"
+broadcasturl=\"$this->broadcasturl\"
+comments=\"$this->tcomment\"
+etime=\"$this->etime\"
+email=\"$this->email\">\n";
+
+			// Minutes XML
+			///////////////////////////////////////////////////
+
+			if ($this->minutes != "")
+				{
+					$xml .= "
+<minutes>
+$this->minutes
+</minutes>\n";
+				}
+
+			// Files XML
+			///////////////////////////////////////////////////
+
+			$nbFiles = count($this->files);
+			// Put here a sort to order files by type
+			for ($i=0;$i<$nbFiles;$i++)
+				$xml .= $this->files[$i]->displayXML();
+
+			// SubTalks XML
+			///////////////////////////////////////////////////
+
+			$nbSubTalks = count($this->subtalks);
+			for ($i=0;$i<$nbSubTalks;$i++)
+				{
+					$xml .= $this->subtalks[$i]->displayXML();
+				}
+			$xml .=  "
+</talk>";
+
+			//return final value
+			return $xml;
+		}
+
+}
+?>

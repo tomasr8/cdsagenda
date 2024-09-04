@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDAS Monitor - Selection</TITLE>
+  <link rel="stylesheet" href="images/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+	<link type="text/css" rel="stylesheet" href="{images}/xsftStyles.css">
+	<script language=javascript type="text/javascript" src="{images}/menu.js"></script>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+
+{list_jsmenutools}
+{list_topmenubar}
+
+<form name="calform" action=monitor.php>
+<input type="hidden" name="nbofmonths" value='{nbofmonths}'>
+<br>
+<CENTER>
+<TABLE>
+<TR>
+<TD align=right class=calcell>
+<font color="#006699"><b>Select the categories you wish to monitor <input type=submit value="OK"></b></font>
+<hr>
+</TD>
+</TR>
+<tr>
+<TD>
+{main_list}
+</TD>
+</TR>
+<TR>
+<TD align=right>
+<hr>
+<input type=submit value="OK">
+</TD>
+</TR>
+</TABLE>
+</CENTER>
+</form>
+<br>
+{list_menus}
+{AGEfooter_template}
+
+</BODY>
+</HTML>

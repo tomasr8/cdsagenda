@@ -1,0 +1,52 @@
+<html>
+<head>
+</head>
+<body bgcolor="#9CCFFF">
+<FORM name=role_form action="agendaFactory.php" target="mainWnd" method=POST>
+<table align="center">
+<tr>
+<center><font size="+2" color="#852600" face="Verdana"><b>The user you entered does not exists into the Agenda
+<br>
+To add it now click on Confirm button
+<br>
+(will be added the requested role too)</b></font></center>
+</tr>
+<tr>
+<td>
+Email (used as user Log):{addUserConfirm_userLog}
+<input type=hidden value={addUserConfirm_userLog} name=newUserLog>
+<input type=hidden value={addUserConfirm_firstName} name=firstName>
+<input type=hidden value={addUserConfirm_lastName} name=lastName>
+<input type=hidden value={addUserConfirm_roleID} name=roles>
+<input type=hidden value={addUserConfirm_fromDate} name=fromDate>
+<input type=hidden value={addUserConfirm_toDate} name=toDate>
+<input type=hidden value={addUserConfirm_ida} name=ida>
+<input type=hidden value={addUserConfirm_eId} name=eId>
+<input type=hidden value={addUserConfirm_recursive} name=recursive>
+<input type=hidden value={addUserConfirm_notify} name=notify>
+<input type=hidden value={addUserConfirm_inactive} name=inactive>
+<input type=hidden value={addUserConfirm_notifyUpload} name=notifyUpload>
+<input type=hidden value={addUserConfirm_sourceScript} name=sourceScript>
+<input type=hidden value={addUserConfirm_query} name=query>
+</td>
+</tr>
+<tr>
+<td>
+First Name:{addUserConfirm_firstName}
+</td>
+</tr>
+<tr>
+<td>
+Last Name:{addUserConfirm_lastName}
+</td>
+</tr>
+<tr align="center">
+<td align="center">
+<INPUT type=submit name=request value="Confirm (Add User)">
+<INPUT type=submit name=request value=CANCEL>
+</td>
+</tr>
+</form>
+</table><br>
+</body>
+</html>

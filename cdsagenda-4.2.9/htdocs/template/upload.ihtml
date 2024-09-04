@@ -1,0 +1,59 @@
+<HTML>
+<HEAD><TITLE>Upload File(s)</TITLE>
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<FORM  method=POST enctype="multipart/form-data" action="{action}">
+<INPUT type=hidden name=ida value="{ida}">
+<INPUT type=hidden name=ids value="{ids}">
+<INPUT type=hidden name=idt value="{idt}">
+<INPUT type=hidden name=AN value="{an}">
+<INPUT type=hidden name=position value="{pos}">
+<INPUT type=hidden name=stylesheet value="{styl}">
+<INPUT type=hidden name=from value="{from}">
+<INPUT type=hidden name=nextScript value="{submitScript}">
+{nextQuery}
+
+
+
+<TABLE border=0 bgcolor=silver align="center" cellpadding=0 cellspacing=1 width=75%>
+<TR><TD colspan=1 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0>
+<TR><TD width="1%"><A HREF="../guide/english/file_upload.php" target="top"><IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0>
+</A></TD><TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/files.gif" alt="upload a file" align=right></TD>
+<TD><B><SMALL>&nbsp;[Upload File(s)]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT TYPE=submit name=transfer value="Send File">
+<INPUT type=submit name=cancel value=CANCEL></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR><TD>
+<SMALL>
+I want to upload 
+<SELECT name=nbFiles onChange="document.forms[0].action='upload.php';document.forms[0].submit();">
+{nbfiles}
+</SELECT>files.
+<INPUT TYPE=hidden name=MAX_FILE_SIZE value={maxfilesize}>
+<BR>
+<table border=0 cellspacing=0 cellpadding=0 width=100%>
+
+{filelist}
+
+</table>
+
+{hlp}
+
+{hlp2}
+
+</SMALL></TD></TR>
+
+
+<TR>
+<TD class=header align=right colspan=1><SMALL><SMALL>
+<INPUT TYPE=submit name=transfer value="Send File">
+<INPUT type=submit name=cancel value=CANCEL></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+
+
+</FORM>
+</BODY>
+</HTML>

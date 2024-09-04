@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<TITLE>Talk Scanning Request</TITLE>
+<SCRIPT>
+
+function tester()
+{
+	ok=true;
+	if (document.SCAN.requester.value=="") { ok=false; }
+	if (document.SCAN.email.value=="") { ok=false; }
+	if (document.SCAN.tel.value=="") { ok=false; }
+	if (document.SCAN.back.value=="") { ok=false; }
+	if (document.SCAN.bcode.value=="") { ok=false; }
+	if (document.SCAN.bholder.value=="") { ok=false; }
+	if ( ok == false)
+	{
+		alert("Please fill in all the fields");
+		return false;
+	}
+	else 
+	{	
+		return true;
+	}
+}
+</SCRIPT>
+  <link rel="stylesheet" href="{images}/stylemodify.css">
+
+
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<FORM name=SCAN method=GET action=scanningSend.php>
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<TR><TD colspan=3 class=header align="left">
+<TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR><TD width="1%">
+<A HREF="../guide/english/scanning_request.php" target="top">
+<IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD width="1%">
+<IMG  hspace=0 vspace=0 border=0 SRC="{images}/files.gif" alt="scanning request" align=right>
+</TD><TD><B><SMALL>&nbsp;[Scanning Request]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT TYPE=submit text=Submit onClick="return tester();">
+<INPUT TYPE=submit onClick="window.close();" value=CANCEL></SMALL></SMALL></TD></TR></TABLE>
+</TD></TR>
+<TR>
+<TD colspan=3>
+
+<INPUT type=hidden name=categ value='{MinWritTalk_CATEG}'>
+<INPUT type=hidden name=type value='{MinWritTalk_TYPE}'>
+<INPUT type=hidden name=base value='{MinWritTalk_BASE}'>
+<INPUT type=hidden name=ida value='{MinWritTalk_IDA}'>
+<INPUT type=hidden name=ids value='{MinWritTalk_IDS}'>
+<INPUT type=hidden name=idt value='{MinWritTalk_IDT}'>
+<INPUT type=hidden name=from value='{MinWritTalk_FROM}'>
+<INPUT type=hidden name=AN value='{MinWritTalk_AN}'><SMALL>
+<INPUT type=hidden name=position value='{MinWritTalk_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{MinWritTalk_STYLESHEET}'>
+BEFORE SENDING PAPERS FOR SCANNING, PLEASE ORGANISE YOUR DOCUMENTS:
+<BR>
+<UL>
+<LI><b>Documents should not be more than <font size=+1>50 pages </font></b>
+<LI><b>All documents should be <font size=+1>A4 format</font></b>
+<LI><b>The name of the scanned file attached to each paper should be evident on each paper</b>
+</UL>
+The papers will be scanned exactly as we receive them.
+
+</SMALL></TD>
+</TR>
+
+<TR><TD align=right class=headerselected><SMALL><B>Requester: </B></SMALL></TD><TD colspan=2>
+<SMALL><INPUT SIZE=30 NAME=requester></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>Your email address: </B></SMALL></TD>
+<TD colspan=2><SMALL><INPUT SIZE=30 NAME=email></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>Tel: </B></SMALL></TD><TD colspan=2>
+<SMALL><INPUT SIZE=10 NAME=tel></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>Original to go back to: </B></SMALL></TD>
+<TD colspan=2><SMALL><INPUT SIZE=30 NAME=back></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>Budget Code: </B></SMALL></TD><TD colspan=2>
+<SMALL><INPUT SIZE=10 NAME=bcode></SMALL></TD></TR>
+<TR><TD align=right class=headerselected><SMALL><B>Budget Holder: </B></SMALL></TD><TD colspan=2>
+<SMALL><INPUT SIZE=20 NAME=bholder></SMALL></TD></TR>
+<TR><TD align=center class=headerselected colspan=3><SMALL>Choose the documents you want to scan</SMALL></TD></TR>
+
+{str_help}
+
+{str_help2}
+
+{str_help3}
+
+{str_help4}
+
+</TD></TR>
+<TR><TD align=center class=headerselected colspan=3><SMALL><b>IMPORTANT</b>: Please indicate for each talk the number of documents that composes it (n x 50 pages max).<BR>
+<font color=red>The cost is 10CHF per document.</FONT></SMALL></TD></TR>
+<TR><TD class=header colspan=3 align=right><SMALL><SMALL>
+<INPUT TYPE=submit text=Submit onClick="return tester();">
+<INPUT TYPE=submit onClick="window.close();" value=CANCEL></SMALL></SMALL></TD>
+</TR></TABLE>
+<INPUT type=hidden name=nbTalk value='{scanning_NBTALK}'>
+</FORM>
+<SCRIPT>
+
+{str_help5}
+
+</SCRIPT>
+
+</BODY>
+</HTML>

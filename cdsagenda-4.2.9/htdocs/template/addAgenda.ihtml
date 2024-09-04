@@ -1,0 +1,595 @@
+<HTML>
+<HEAD>
+        <TITLE>Add Agenda</TITLE>
+<SCRIPT>
+      function changeMonth()
+      {
+              document.newage.endm.selectedIndex=document.newage.stdm.selectedIndex;
+      }
+      function changeDay()
+      {
+              document.newage.endd.selectedIndex=document.newage.stdd.selectedIndex;
+      }
+      function changeYear()
+      {
+              document.newage.endy.selectedIndex=document.newage.stdy.selectedIndex;
+      }
+
+      function tester()
+      {
+        if (document.newage.SuE.value == "")
+        {
+                alert("Please enter your email address\nWe need it to send you the modification password once your agenda is created!");
+                return false;
+        }
+              if (document.newage.title.value=="")
+              {
+                      alert("Please fill the 'title' field");
+                      return false;
+              }
+             if (document.newage.confidentiality[2].checked==true)
+        {
+                if (document.newage.apassword.value=="")
+                {
+                              alert("Please enter an access password!");
+                              return false;
+                      }
+        }
+      }
+</SCRIPT>
+    <link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1><FORM name=newage action="agendaFactory.php" method=POST>
+  <TR>
+    <TD colspan=2 class=header align="left">
+      <TABLE width="100%" border=0 cellpadding=0 cellspacing=0>
+        <TR>
+          <TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/add.gif" alt="add agenda" align=right></TD>
+          <TD width="1%"><a href="../guide/english/create.php" target=top><img src="{images}/help.gif" border=0 ALT="help!"></a></TD>
+          <TD><B><SMALL>&nbsp;[Add an Agenda]</SMALL></B></TD>
+          <TD align=right><SMALL><SMALL>
+            <INPUT type=submit name=submit value="ADD AGENDA" onClick="return tester();">
+            <INPUT type=submit name=submit value=CANCEL>
+            </SMALL></SMALL></TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>title:</SMALL></B></TD>
+    <TD><SMALL>
+      {addAgenda_extOnStart}<textarea name=title cols=80 rows=4></textarea>{addAgenda_extOnEnd}
+      {addAgenda_extOffStart}<INPUT size=50 name=title>{addAgenda_extOffEnd}
+      </SMALL></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><SMALL><B>chairperson:</B><BR>
+      (The recommended format is:<BR>
+      Name, Initial(s))</SMALL></TD>
+    <TD><SMALL>
+      <INPUT size=50 name=chairman>
+      </SMALL></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>contact e-mail:</SMALL></B></TD>
+    <TD><SMALL>
+      <INPUT size=50 name=cem>
+      </SMALL></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>SMR:</b></TD>
+    <TD><small>
+      <input size=7 name=smr maxlength="7">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>starting date:</SMALL></B></TD>
+    <TD><SMALL>
+      <SELECT name=stdd onChange="changeDay();">
+        <OPTION VALUE="01">01
+        <OPTION VALUE="02">02
+        <OPTION VALUE="03">03
+        <OPTION VALUE="04">04
+        <OPTION VALUE="05">05
+        <OPTION VALUE="06">06
+        <OPTION VALUE="07">07
+        <OPTION VALUE="08">08
+        <OPTION VALUE="09">09
+        <OPTION VALUE="10">10
+        <OPTION VALUE="11">11
+        <OPTION VALUE="12">12
+        <OPTION VALUE="13">13
+        <OPTION VALUE="14">14
+        <OPTION VALUE="15">15
+        <OPTION VALUE="16">16
+        <OPTION VALUE="17">17
+        <OPTION VALUE="18">18
+        <OPTION VALUE="19">19
+        <OPTION VALUE="20">20
+        <OPTION VALUE="21">21
+        <OPTION VALUE="22">22
+        <OPTION VALUE="23">23
+        <OPTION VALUE="24">24
+        <OPTION VALUE="25">25
+        <OPTION VALUE="26">26
+        <OPTION VALUE="27">27
+        <OPTION VALUE="28">28
+        <OPTION VALUE="29">29
+        <OPTION VALUE="30">30
+        <OPTION VALUE="31">31
+      </SELECT>
+      <SELECT name=stdm onChange="changeMonth();">
+        <OPTION VALUE="01">January
+        <OPTION VALUE="02">February
+        <OPTION VALUE="03">March
+        <OPTION VALUE="04">April
+        <OPTION VALUE="05">May
+        <OPTION VALUE="06">June
+        <OPTION VALUE="07">July
+        <OPTION VALUE="08">August
+        <OPTION VALUE="09">September
+        <OPTION VALUE="10">October
+        <OPTION VALUE="11">November
+        <OPTION VALUE="12">December
+      </SELECT>
+      <SELECT name=stdy onChange="changeYear();">
+        <OPTION VALUE="1995">1995
+        <OPTION VALUE="1996">1996
+        <OPTION VALUE="1997">1997
+        <OPTION VALUE="1998">1998
+        <OPTION VALUE="1999">1999
+        <OPTION VALUE="2000">2000
+        <OPTION VALUE="2001">2001
+        <OPTION VALUE="2002">2002
+        <OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+      </SELECT>
+      <A href="" onClick="javascript:window.open('calendar.php?daystring=stdd&monthstring=stdm&yearstring=stdy','calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+      </SMALL> 
+<SELECT name=startinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="startingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>
+    </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>ending date:</SMALL></B></TD>
+    <TD><SMALL>
+      <SELECT name=endd>
+        <OPTION VALUE="01">01
+        <OPTION VALUE="02">02
+        <OPTION VALUE="03">03
+        <OPTION VALUE="04">04
+        <OPTION VALUE="05">05
+        <OPTION VALUE="06">06
+        <OPTION VALUE="07">07
+        <OPTION VALUE="08">08
+        <OPTION VALUE="09">09
+        <OPTION VALUE="10">10
+        <OPTION VALUE="11">11
+        <OPTION VALUE="12">12
+        <OPTION VALUE="13">13
+        <OPTION VALUE="14">14
+        <OPTION VALUE="15">15
+        <OPTION VALUE="16">16
+        <OPTION VALUE="17">17
+        <OPTION VALUE="18">18
+        <OPTION VALUE="19">19
+        <OPTION VALUE="20">20
+        <OPTION VALUE="21">21
+        <OPTION VALUE="22">22
+        <OPTION VALUE="23">23
+        <OPTION VALUE="24">24
+        <OPTION VALUE="25">25
+        <OPTION VALUE="26">26
+        <OPTION VALUE="27">27
+        <OPTION VALUE="28">28
+        <OPTION VALUE="29">29
+        <OPTION VALUE="30">30
+        <OPTION VALUE="31">31
+      </SELECT>
+      <SELECT name=endm>
+        <OPTION VALUE="01">January
+        <OPTION VALUE="02">February
+        <OPTION VALUE="03">March
+        <OPTION VALUE="04">April
+        <OPTION VALUE="05">May
+        <OPTION VALUE="06">June
+        <OPTION VALUE="07">July
+        <OPTION VALUE="08">August
+        <OPTION VALUE="09">September
+        <OPTION VALUE="10">October
+        <OPTION VALUE="11">November
+        <OPTION VALUE="12">December
+      </SELECT>
+      <SELECT name=endy>
+        <OPTION VALUE="1995">1995
+        <OPTION VALUE="1996">1996
+        <OPTION VALUE="1997">1997
+        <OPTION VALUE="1998">1998
+        <OPTION VALUE="1999">1999
+        <OPTION VALUE="2000">2000
+        <OPTION VALUE="2001">2001
+        <OPTION VALUE="2002">2002
+        <OPTION VALUE="2003">2003
+        <OPTION VALUE="2004">2004
+        <OPTION VALUE="2005">2005
+        <OPTION VALUE="2006">2006
+      </SELECT>
+      <A href="" onClick="javascript:window.open('calendar.php?daystring=endd&monthstring=endm&yearstring=endy','calendar','scrollbars=no,menubar=no,width=200,height=170');return false;"><IMG SRC="{images}/calendar.gif" ALT="open calendar" border=0></A>
+      </SMALL> 
+<SELECT name=endinghour>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="endingminutes">
+<OPTION value="00">:00
+<OPTION value="05">:05
+<OPTION value="10">:10
+<OPTION value="15">:15
+<OPTION value="20">:20
+<OPTION value="25">:25
+<OPTION value="30">:30
+<OPTION value="35">:35
+<OPTION value="40">:40
+<OPTION value="45">:45
+<OPTION value="50">:50
+<OPTION value="55">:55
+</SELECT>
+    </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>location:</SMALL></B></TD>
+    <TD><SMALL>
+      <INPUT size=50 name=location value={addAgenda_runningAT}>
+      </SMALL></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>room</B><BR>
+      (only if at {addAgenda_runningAT}):</SMALL></TD>
+    <TD><SMALL>Bld:
+      <INPUT size=4 name=bld>
+      floor:
+      <INPUT size=2 name=floor>
+      room:
+      <INPUT size=3 name=room>
+      or
+      <SELECT name=confRoom>
+        <OPTION> Select: {addAgendaRooms}
+      </SELECT>
+      </SMALL> </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>format:</SMALL></B></TD>
+    <TD>
+      <TABLE border=0>
+        <TR>
+          <TD><SMALL>
+            <INPUT type=radio name=format value=timetable checked>
+            &nbsp;time table<BR>
+            <INPUT type=radio name=format value=olist>
+            &nbsp;ordered list</SMALL></TD>
+          <TD bgcolor=white><SMALL>The "<B>time-table</B>" format is the classical
+            agenda. If you choose the "<B>ordered list</B>" format, this agenda
+            will be a succession of points, the hours you enter for each talk
+            will not be meaningfull anymore (they will only indicate the order
+            of the list).</SMALL></TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><B><SMALL>Confidentiality level:</SMALL></B><BR>(set the confidentiality for the visualisation of the meeting)</TD>
+    <TD>
+      <TABLE border=0>
+        <TR>
+          <TD><SMALL>
+            <INPUT type=radio name=confidentiality value='open' checked>
+            open<BR>
+            <INPUT type=radio name=confidentiality value='cern-only'>
+            {addAgenda_runningAT} only<BR>
+            <INPUT type=radio name=confidentiality value='password'>
+            password<SMALL> </TD>
+          <TD bgcolor=white><SMALL> <B>open</B>: accessible worldwide<BR>
+            <B>{addAgenda_runningAT} only</B>: accessible only from a computer
+            located at {addAgenda_runningAT}<BR>
+            <B>password</B>: accessible only with the access password </SMALL></TD>
+        </TR>
+        <TR>
+          <TD colspan=2><SMALL><B>access password:</B>
+            <INPUT size=15 name=apassword>
+            (only if you clicked "password" above)</SMALL> </TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><SMALL><B>modify key:</B><BR>
+      (optional - this is the password you will use to modify your agenda)</SMALL></TD>
+    <TD><SMALL>
+      <INPUT size=20 name=mpassword>
+      (if you leave this empty, a modify key will be automatically created)</SMALL>
+    </TD>
+  </TR>
+  {addAgenda_reportNoStart}
+  <TR>
+    <TD align=right class=headerselected><SMALL><B>report number:</B><BR>
+      (optional)</SMALL></TD>
+    <TD><SMALL>
+      <INPUT size=20 name=repno>
+      </SMALL> </TD>
+  </TR>
+  {addAgenda_reportNoEnd}
+  <TR>
+    <TD align=right class=headerselected><SMALL><B>Comments:</B> <BR>
+      <FONT color=white>(This text will be displayed exactly the way it appears
+      in the input box. If you cut&paste your text, please get rid of any extra
+      newline. You can also use HTML tags in this text.)</font></SMALL> </TD>
+    <TD><SMALL>
+      <TEXTAREA rows=15 cols=80 name=acomment wrap></TEXTAREA>
+      </SMALL> </TD>
+  </TR>
+  <tr>
+    <td align=right class=headerselected><small><b>YOUR e-mail address:</b><br>
+      (We need it to send you the modification password once your agenda is created)</small></td>
+    <td><small>
+      <input size=50 name=SuE>
+      </small></td>
+  </tr>
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">Specify fields for the calendar creation</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Still incomplete?</b></TD>
+    <TD>
+      <input type=checkbox name=partial checked>
+    (if checked hide the session/talk/subtalk structure to visitors)</TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Hosted?</b></TD>
+    <TD>
+      <input type=checkbox name=hosted>
+      (check if hosted) </TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>To be held outside {addAgenda_baselocation}?</b></TD>
+    <TD>
+      <input type=checkbox name=outside>
+      (check if this event is going to be held outside {addAgenda_baselocation}) </TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><b>Co-sponsored?</b></TD>
+    <TD>
+      <input type=checkbox name=cosponsored>
+      (check if this event is co-sponsored)</TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><b>Show only in the internal version of the calendar?</b></TD>
+    <TD>
+      <input type=checkbox name=internalOnly>
+      (check to hide from the public version of the calendar)</TD>
+  </TR>   
+  <TR>
+    <TD align=right class=headerselected><b>Specify a web site link here:</b>
+    <BR><small>(cut & paste here the complete link (with http:// ). If not specified the "common" link will be used)</small></TD>
+    <TD><small>
+      <input size=80 name=website maxlength="500">
+        </small>
+    </TD>
+  </TR>   
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">The following 2 parametric fields will appear before the other fields in the calendar</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=topPersonal1title maxlength="80"><BR>Put above the title of the first parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=topPersonal1value cols=80 rows=2></textarea>
+      </small></TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=topPersonal2title maxlength="80"><BR>Put above the title of the second parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=topPersonal2value cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>   
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">Common fields (for public and/or private calendar)</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>    
+  <TR>
+    <TD align=right class=headerselected><b>Note about days during the meeting:</b></TD>
+    <TD><small>
+      <input size=80 name=dayNote maxlength="500">
+      </small></TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><b>Co-sponsor(s):</b></TD>
+    <TD><small>
+      <textarea name=cosponsor cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Local organizer(s):</b></TD>
+    <TD><small>
+      <textarea name=localorganizers cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Director(s)</b></TD>
+    <TD><small>
+      <textarea name=directors cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><b>Organizer(s):</b></TD>
+    <TD><small>
+      <textarea name=organizers cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Director(s)/Organizer(s)</b></TD>
+    <TD><small>
+      <textarea name=directorsandorganizers cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>   
+  <TR>
+    <TD align=right class=headerselected><b>Collaboration(s):</b></TD>
+    <TD><small>
+      <textarea name=collaborations cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Expected Participant(s):</b></TD>
+    <TD><small>
+      <input size=80 name=expparts maxlength="500">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Limited Participation:</b><small><br>(entering 'yes' here, in the calendar will appear<BR> "(Limited Participation)", instead of <BR>"Limited Participation: yes"</small></td>
+    <TD><small>
+      <input size=80 name=limitedpartecipants maxlength="500">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Venue(s):</b></TD>
+    <TD><small>
+      <input size=80 name=venues maxlength="500">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Laboratory:</b><small><br>(entering 'yes' here, in the calendar will appear<BR> "Infolab.", instead of<BR>"Laboratory: yes"</small>
+    <TD><small>
+      <input size=80 name=laboratories maxlength="500">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Secretary:</b></TD>
+    <TD><small>
+      <input size=80 name=secretary maxlength="100">
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected><b>Deadline(s) for requesting participation:</b></TD>
+    <TD><small>
+      <textarea name=deadrequest cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366"><b> </b></TD>
+    <TD bgcolor="#003366"><b><font size="+1" color="#FFFFFF">The following 2 parametric fields (in the calendar) will appear after the "common fields" but before the "activity information" link and the additional notes field</font><font color="#FFFFFF">
+      </font></b></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=bottomPersonal3title maxlength="80"><BR>Put above the title of the first parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=bottomPersonal3value cols=80 rows=2></textarea>
+      </small></TD>
+  </TR> 
+  <TR>
+    <TD align=right class=headerselected><input size=30 name=bottomPersonal4title maxlength="80"><BR>Put above the title of the second parametric field and on the right form the text corresponding to this field</TD>
+    <TD><small>
+     <textarea name=bottomPersonal4value cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected><b>Additional notes:</b>
+    <BR>(to appear after the activity information link, if present)</TD>
+    <TD><small>      
+      <textarea name=additionalnotes cols=80 rows=2></textarea>
+      </small></TD>
+  </TR>  
+  <TR>
+    <TD align=right class=headerselected bgcolor="#003366">&nbsp; </TD>
+    <TD bgcolor="#003366"><b><font color="#FFFFFF">end of specific calendar fields</font></b></TD>
+  </TR>
+  <TR>
+    <TD class=header colspan=2 align=right>
+      <INPUT type=hidden name=fid value={addAG_FID}>
+      <INPUT type=hidden name=level value={addAG_LEVEL}>
+      <INPUT type=hidden name=stylesheet value={addAG_stylesheet}>
+      <SMALL><SMALL>
+      <INPUT type=submit name=submit value="ADD AGENDA" onClick="return tester();">
+      <INPUT type=submit name=submit value=CANCEL>
+      </SMALL></SMALL> </TD>
+  </TR>
+</TABLE>
+</FORM>
+</font>
+
+<SCRIPT>
+
+{str_help}
+
+{str_help2}
+
+</SCRIPT>
+
+</BODY>
+</HTML>

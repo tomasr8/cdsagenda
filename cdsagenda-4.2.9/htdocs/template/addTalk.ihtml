@@ -1,0 +1,214 @@
+<HTML>
+<HEAD>
+
+<TITLE>Add Talk</TITLE>
+
+<SCRIPT LANGUAGE="JavaScript">
+
+function AUCheck(txt) {
+	if (txt == "") { return true; }
+	var res=1;
+	coma=txt.indexOf(",");
+	left=txt.substring(0,coma);
+	right=txt.substring(coma+1,txt.length);
+	coma2=right.indexOf(",");
+	space=right.indexOf(" ");
+	if ((coma==-1)||(left=="")||(right=="")||(space!=0)||(coma2!=-1))
+	{
+		res=0;
+	}
+	if (res == 0){
+		alert("The speaker's name must be written in the correct format: Put a comma (,) between the name and the firstname initial letters, and a space after the comma. \012The name is going first, followed by the firstname initial letters.\012\012Example \: Put\012\012Le Meur, J Y \012\012for\012\012Jean-Yves Le Meur");
+		return false;
+	}	
+	return true;	
+}
+
+      function tester()
+      {
+	      	if (document.forms[0].ttitle.value=="")
+	      	{
+		      	alert("Please fill the 'Title' field");
+		      	return false;
+			
+	      	}
+	      	else
+		{
+			return true;
+		}
+	
+      }
+
+    </SCRIPT>
+
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+
+<FORM name=forms[0] action="agendaFactory.php" method=POST target="{addTalk_target}">
+
+<TR><TD colspan=2 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR>
+<TD width="1%">
+<IMG  hspace=0 vspace=0 border=0 SRC="{images}/add.gif" alt="add talk" align=right>
+</TD>
+<TD width="1%"><A HREF="../guide/english/add_talk.php" target="top">
+<IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD><B><SMALL>&nbsp;[Add Talk]
+
+<FONT color=white> to <I>{addTalk_TITLE}</I></FONT>
+
+</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="ADD TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CLOSE onClick="window.close();return false;"></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR><TD align=right class=headerselected width="25%"><B><SMALL>Title:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=ttitle></SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Category:</SMALL></B><BR><small>(This field is mainly used for the "Seminar" base - it creates an highlighted header over the title)</small></TD><TD><SMALL><INPUT size=50 name=category></SMALL></TD></TR>
+<TR><TD align=right class=headerselected ><SMALL><B>Speaker:</B><BR>(The recommended format is:<BR>Name, Initial(s))</SMALL></TD><TD><SMALL><INPUT size=50 name=tspeaker></SMALL></TD></TR>
+<TR><TD align=right class=headerselected ><B><SMALL>Speaker's affiliation:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=affiliation></SMALL></TD></TR>
+<TR><TD align=right class=headerselected ><B><SMALL>Speaker's email:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=temail></SMALL></TD></TR>
+{addTalk_keywordsStart}<TR><TD align=right class=headerselected ><SMALL><B>Keywords</B><BR>(separated by blank):</SMALL></B></TD><TD><SMALL><INPUT size=50 name=keywords></SMALL></TD></TR>{addTalk_keywordsEnd}
+<TR><TD align=right class=headerselected ><B><SMALL>Timing:</SMALL></B></TD><TD><SMALL>
+{addTalk_startday}
+starts at
+<SELECT name=thstart>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12" selected>12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="tmstart">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT> and lasts 
+<SELECT name=durationh>
+<OPTION VALUE="00" selected>0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+<SELECT NAME="durationm">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION selected>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT> minutes</SMALL></TD></TR>
+<TR><TD align=right class=headerselected ><B><SMALL>location:</SMALL></B></TD><TD><INPUT size=50 name=location></TD></TR>
+<TR><TD align=right class=headerselected ><B><SMALL>room</SMALL></B><BR><SMALL>(only if at {addTalk_runningAT}):</SMALL></TD><TD><SMALL>Bld:</SMALL><INPUT size=4 name=bld> <SMALL>floor:</SMALL><INPUT size=2 name=floor><SMALL> room:</SMALL><INPUT size=3 name=room> <SMALL>or </SMALL>
+<SELECT name=confRoom>
+<OPTION> Select:
+{addTalkRooms}
+</SELECT>
+
+
+</TD></TR>
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>Type:</SMALL></B></TD>
+	<TD><SELECT name=ttype><OPTION value=1> Talk<OPTION value=2> Break</SELECT></TD>
+</TR>
+
+{addTalk_reportNoStart}
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>report number:</SMALL></B><BR>(optional)</TD>
+	<TD>
+		<INPUT size=20 name=repno>
+	</TD>
+</TR>
+{addTalk_reportNoEnd}
+<TR>
+	<TD align=right class=headerselected ><B><SMALL>Description:</SMALL></B><BR><BR>
+	<FONT color=white><SMALL>(This text will be displayed exactly the way it appears in the input box. If you cut&paste your text, please get rid of any extra newline.)</SMALL></font>
+	</TD>
+	<TD><TEXTAREA wrap rows=20 cols=50 name=tcomment></TEXTAREA>
+	</TD>
+</TR>
+
+<INPUT type=hidden name=ids value='{addTalk_IDS}'>
+<INPUT type=hidden name=ida value='{addTalk_IDA}'>
+<INPUT type=hidden name=AN value='{addTalk_AN}'>
+<INPUT type=hidden name=position value='{addTalk_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{addTalk_STYLESHEET}'>
+
+<TR bgcolor=white>
+<TD align=right colspan=2 class=header><SMALL><SMALL>
+<INPUT type=submit name=request value="ADD TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CLOSE onClick="window.close();return false;"></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+<SCRIPT>
+
+{str_help}
+
+{str_help2}
+
+{str_help3}
+
+{str_help4}
+
+{str_help5}
+
+</SCRIPT>
+</BODY>
+</HTML>

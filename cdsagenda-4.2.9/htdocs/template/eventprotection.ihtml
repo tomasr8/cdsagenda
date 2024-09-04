@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>EVENT PROTECTION</TITLE>
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+<FORM  method=POST enctype="multipart/form-data" action="{action}">
+
+<INPUT type=hidden name=ida value='{eventprotection_IDA}'>
+<INPUT type=hidden name=ids value="{eventprotection_IDS}">
+<INPUT type=hidden name=idt value="{eventprotection_IDT}">
+<INPUT type=hidden name=AN value='{eventprotection_AN}'>
+<INPUT type=hidden name=from value="{from}">
+<INPUT type=hidden name=position value='{eventprotection_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{eventprotection_STYLESHEET}'>
+
+<TABLE border=0 bgcolor=silver align="center" cellpadding=0 cellspacing=0 width=75%>
+<TR><TD colspan=1 class=header align="left"><TABLE border=0 cellpadding=0
+cellspacing=0 width=100%><TR><TD width="1%"></TD><TD
+width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/files.gif"
+alt="event proection" align=right></TD><TD><B><SMALL>&nbsp;[Global Files Protection]</SMALL></B></TD><TD align=right><SMALL><SMALL><INPUT
+name=request TYPE=submit value='Change Protection'><INPUT type=submit value=CANCEL></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR bgcolor=silver>
+<TD><SMALL>
+The following protection applies to the files stored with this event:<hr>
+{eventprotection_core}
+<hr></SMALL>
+</TD>
+</TR>
+<TR>
+<TD class=header align=right><SMALL><SMALL>
+<INPUT name=request TYPE=submit value='Change Protection'><INPUT type=submit value=CANCEL></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

@@ -1,0 +1,77 @@
+<HTML>
+  <HEAD>
+    <TITLE>CDS Agendas Administrator</TITLE>
+    <link rel="stylesheet" href="../images/style.css">
+  </HEAD>
+  
+  <BODY class=admin>
+    <script type="text/javascript">
+      <!---
+        function openwindowlink( addr, name )
+        {
+          window.open( addr, "Window"+name, "height=550,witdh=320,scrollbars,resizable")
+        }
+	function myPost( addr )
+	{
+	  document.test.action=addr;
+	  document.test.submit()
+	}
+	function complexPost()
+	{
+	  var str;
+	  str='';
+	  for(i=0; i<document.test.elements.length; i++)
+	  {
+	    if( (document.test.elements[i].type=='checkbox') && (document.test.elements[i].checked) )
+	    {
+	      if(str!='')
+	      {
+	        str=str+'&';
+	      }
+	      str=str+document.test.elements[i].name+'='+document.test.elements[i].value;
+            }
+	  }
+	  if(str!='')
+	  {
+	    str='{reall_url}?'+str;
+	    openwindowlink( str, 'reall' );
+          }
+	}
+
+      -->
+    </script>
+    <form name="test" action="" method="POST">
+      <table width="70%" align="center">
+        <tr><td align="center"><h1>Agenda Manager</h1></td></tr>
+      </table>
+      <table width="70%" align="center" bgcolor="#CCCCCC">
+        <tr>
+          <td bgcolor="#CCCCCC">{navigator}</td>
+	  <td align="right" bgcolor="#CCCCCC">{up_button}{add_button}<a href="JavaScript:myPost('{delete_url}')" onClick="return confirm('Are you sure you want to delete the selected {category_name_plural} and all their sub-categories and agendas')"><img src="{img_del}" align="middle" border="0" alt="Delete all selected {category_name_plural}"><a href="JavaScript:complexPost()"><img src="{img_reall}" align="middle" border="0" alt="Re-allocate all selected {category_name_plural}"></a>
+	  {recover_button}</td>
+        </tr>
+      </table>
+      <table align="center">
+        {bases}
+      </table>
+      <table width="70%" align="center">
+        <tr>
+          <td bgcolor="#CCCCCC">
+	    <font size="2"><u>Key:</u><br><br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_up}" align="middle"> Go to the <b>UPPER LEVEL</b> in the sub-category hierarchy<br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_add}" align="middle"> <b>ADD</b> a new sub-category to the current level<br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_edit}" align="middle"> <b>EDIT</b> the details of the current category<br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_del}" align="middle"> <b>DELETE</b> one or more {category_name_plural} from the current level<br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_reall}" align="middle"> <b>RE-ALLOCATE</b> one or more {category_name_plural} from the current level into a different sub-category<br>
+	    &nbsp;&nbsp;&nbsp;&nbsp;<img src="{img_trash}" align="middle" height="20" width="20"> <b>RESTORE</b> one or more <b>DELETED AGENDAS</b> into the current level<br>&nbsp;
+	    </font>
+	  </td>
+        </tr>
+      </table>
+      <input type="hidden" name="refreshURL" value="{refreshURL}">
+      <input type="hidden" name="request">
+      <input type="hidden" name="modid">
+      <input type="hidden" name="fid" value="{fid}">
+    </form>
+  </BODY>
+</HTML>

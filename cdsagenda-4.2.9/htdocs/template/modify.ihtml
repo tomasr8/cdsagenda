@@ -1,0 +1,25 @@
+<HTML>
+  <HEAD>
+    <TITLE>Level{modify_LEVEL}</TITLE></HEAD>
+
+<BODY background="{modify_IMAGES}/gray.gif">
+
+<TABLE border=2 width=100%>
+<TR>
+<TD align=center bgcolor=cyan><H3>Modify Father Level</H3></TD>
+<TD width=100%>
+<TABLE border=2 width=100%>
+
+<INPUT type=hidden name=uid value='{modify_FID}'>
+
+{modify_HELP1}
+
+{modify_HELP2}
+
+</TABLE>
+</TD>
+<TD align=center bgcolor=cyan>
+<INPUT type=submit name=submit value=MODIFY>
+</TD>
+</TR>
+</TABLE>

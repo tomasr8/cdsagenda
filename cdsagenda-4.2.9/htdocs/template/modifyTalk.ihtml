@@ -1,0 +1,272 @@
+<HTML>
+<HEAD>
+<TITLE>Modify Talk</TITLE>
+
+
+    <SCRIPT>
+      function changeMonth()
+      {
+      document.forms[0].endm.selectedIndex=document.forms[0].stdm.selectedIndex;
+      }
+
+              function tester()
+              {
+                if (document.forms[0].thstart.value > 23)
+                {
+                        alert("Starting hour should be between 0 and 23");
+                        return false;
+                }
+                else if (document.forms[0].tmstart.value > 59)
+                {
+                        alert("Starting minutes should be between 0 and 59");
+                        return false;
+                }
+        }
+
+
+    </SCRIPT>
+  <link rel="stylesheet" href="{images}/stylemodify.css">
+
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+
+<FORM action="agendaFactory.php" method=POST>
+
+<TR><TD colspan=2 class=header align="left"><TABLE width="100%" border=0 cellpadding=0 cellspacing=0><TR><TD width="1%"><IMG  hspace=0 vspace=0 border=0 SRC="{images}/edit.gif" alt="edit talk data" align=right></TD><TD width="1%"><A HREF="../guide/english/modify_talk.php" target="top"><IMG SRC="{images}/help.gif" ALT="help!" HSPACE=2 BORDER=0></A></TD><TD><B><SMALL>&nbsp;[Edit Talk Data]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Title:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_topicFieldsOnStart}
+<INPUT size=50 name=title></SMALL>
+{modifyTalk_topicFieldsOnEnd}
+</TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Category:</SMALL></B><BR><small>(This field is mainly used for the "Seminar" base - it creates an highlighted header over the title)</small></TD><TD><SMALL><INPUT size=50 name=category></SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Speaker:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_topicFieldsOnStart}
+<INPUT size=50 name=tspeaker value='{modifyTalk_speaker}' >
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Speaker's affiliation:</SMALL></B></TD><TD><SMALL><INPUT size=50 name=affiliation value='{modifyTalk_affiliation}'></SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Speaker's email:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_topicFieldsOnStart}
+<INPUT size=50 name=temail value='{modifyTalk_temail}' >
+</SMALL></TD></TR>
+{modifyTalk_keywordsStart}<TR><TD align=right class=headerselected valign=top><SMALL><B>Keywords</B><BR>(separated by blank):</SMALL></B></TD><TD><SMALL><INPUT size=50 name=keywords value="{modifyTalk_keywords}" ></SMALL></TD></TR>{modifyTalk_keywordsEnd}
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Timing:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_date}
+<BR>starts at
+{modifyTalk_topicFieldsOnStart}
+<SELECT name=thstart>
+<OPTION VALUE="00">0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12" selected>12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+</SELECT>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_thstart}:
+{modifyTalk_topicFieldsOffEnd}
+{modifyTalk_topicFieldsOnStart}
+<SELECT NAME="tmstart">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_tmstart}
+{modifyTalk_topicFieldsOffEnd}
+ and lasts
+{modifyTalk_topicFieldsOnStart}
+<SELECT name=durationh>
+<OPTION VALUE="00" selected>0 h
+<OPTION VALUE="01">1 h
+<OPTION VALUE="02">2 h
+<OPTION VALUE="03">3 h
+<OPTION VALUE="04">4 h
+<OPTION VALUE="05">5 h
+<OPTION VALUE="06">6 h
+<OPTION VALUE="07">7 h
+<OPTION VALUE="08">8 h
+<OPTION VALUE="09">9 h
+<OPTION VALUE="10">10 h
+<OPTION VALUE="11">11 h
+<OPTION VALUE="12">12 h
+<OPTION VALUE="13">13 h
+<OPTION VALUE="14">14 h
+<OPTION VALUE="15">15 h
+<OPTION VALUE="16">16 h
+<OPTION VALUE="17">17 h
+<OPTION VALUE="18">18 h
+<OPTION VALUE="19">19 h
+<OPTION VALUE="20">20 h
+<OPTION VALUE="21">21 h
+<OPTION VALUE="22">22 h
+<OPTION VALUE="23">23 h
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_durationh}:
+{modifyTalk_topicFieldsOffEnd}
+</SELECT>
+{modifyTalk_topicFieldsOnStart}
+<SELECT NAME="durationm">
+<OPTION>00
+<OPTION>05
+<OPTION>10
+<OPTION selected>15
+<OPTION>20
+<OPTION>25
+<OPTION>30
+<OPTION>35
+<OPTION>40
+<OPTION>45
+<OPTION>50
+<OPTION>55
+</SELECT>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_durationm}
+{modifyTalk_topicFieldsOffEnd}
+ minutes</SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>location:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_topicFieldsOnStart}
+<INPUT size=50 name=location value="{modifyTalk_location}" >
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_location}&nbsp;
+{modifyTalk_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>room</SMALL></B><BR><SMALL>(only if at {modifyTalk_runningAT}):</SMALL></TD><TD><SMALL>
+Bld:
+{modifyTalk_topicFieldsOnStart}
+<INPUT size=4 name=bld value="{modifyTalk_bld}" onFocus=document.forms[0].confRoom.selectedIndex=0;>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_bld}&nbsp;
+{modifyTalk_topicFieldsOffEnd}
+floor:
+{modifyTalk_topicFieldsOnStart}
+ <INPUT size=2 name=floor value="{modifyTalk_floor}">
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_floor}&nbsp;
+{modifyTalk_topicFieldsOffEnd}
+ room:
+{modifyTalk_topicFieldsOnStart}
+ <INPUT size=3 name=room value="{modifyTalk_room}"> or
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_room}&nbsp;
+{modifyTalk_topicFieldsOffEnd}
+{modifyTalk_topicFieldsOnStart}
+<SELECT name=confRoom>
+{modifyTalk_rooms}
+</SELECT>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_rooms}
+{modifyTalk_topicFieldsOffEnd}
+</SMALL>
+
+
+</TD></TR>
+<TR><TD align=right class=headerselected valign=top><B><SMALL>Type:</SMALL></B></TD><TD><SMALL>
+{modifyTalk_topicFieldsOnStart}
+<SELECT name=ttype><OPTION value=1 {ttype_talk}> Talk<OPTION value=2 {ttype_break}> Break</SELECT>
+{modifyTalk_topicFieldsOnEnd}
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_type}
+{modifyTalk_topicFieldsOffEnd}
+</SMALL></TD></TR>
+<TR>
+        <TD align=right class=headerselected valign=top><B><SMALL>report number:</SMALL></B><BR><SMALL>(optional)</SMALL></TD>
+        <TD>
+{modifyTalk_topicFieldsOnStart}	
+                <SMALL><INPUT size=20 name=repno value="{modifyTalk_repno}"></SMALL>
+{modifyTalk_topicFieldsOnEnd}		
+{modifyTalk_topicFieldsOffStart}
+{modifyTalk_repno}
+{modifyTalk_topicFieldsOffEnd}
+        </TD>
+</TR>
+<TR>
+        <TD align=right class=headerselected valign=top><B><SMALL>Description:</SMALL></B><BR><BR>
+        <FONT color=white><SMALL>(If you use html, make sure to include &lt;br&gt;s for carriage returns)</SMALL></font>
+        </TD>
+        <TD><SMALL><TEXTAREA wrap rows=20 cols=50 name=tcomment></TEXTAREA></SMALL>
+        </TD>
+</TR>
+
+<INPUT type=hidden name=ids value='{modTalk_IDS}'>
+<INPUT type=hidden name=idt value='{modTalk_IDT}'>
+<INPUT type=hidden name=ida value='{modTalk_IDA}'>
+<INPUT type=hidden name=AN value='{modTalk_AN}'>
+<INPUT type=hidden name=position value='{modTalk_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{modTalk_STYLESHEET}'>
+
+<TR bgcolor=white>
+<TD align=right colspan=2 class="header"><SMALL><SMALL>
+<INPUT type=submit name=request value="MODIFY TALK" onClick="if (
+tester() == false ) { return false; }">
+<INPUT type=submit name=request value=CANCEL onClick="document.forms[0].action='displayAgenda.php';"></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+{str_help}
+{str_help3}
+{str_help4}
+{str_help5}
+{str_help6}
+{str_help7}
+{str_help9}
+{str_help10}
+{str_help11}
+{str_help12}
+{str_help13}
+{str_help14}
+{str_help15}
+{str_help16}
+{str_help17}
+{str_help18}
+{str_help19}
+{str_help20}
+{modifyTalk_title}
+{str_duration}
+</SCRIPT>
+
+</BODY>
+</HTML>

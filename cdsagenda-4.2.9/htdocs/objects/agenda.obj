@@ -1,0 +1,342 @@
+<?php
+//$Id: agenda.obj,v 1.1.4.17 2004/07/29 10:06:08 tbaron Exp $
+
+// agenda.obj --- agenda
+//
+// Copyright (C) 2002  CDS Team <cds.support@cern.ch>
+//     http://cds.cern.ch
+//
+// Author(s): Thomas Baron <thomas.baron@cern.ch>
+//
+// agenda.obj is part of CDS Agenda.
+//
+// CDS Agenda is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// CDS Agenda is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with ; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+//
+// Commentary:
+//
+// T Baron 26/09/2001 functions return a value instead of standard output
+//
+
+class agenda {
+	var $className = "agenda";
+
+	var $id;
+	var $sessions;   //array which contains all sessions
+	var $files;      //array containing the files related to the agenda
+	var $minutes;    //minutes of the meeting
+	var $title;
+	var $stdate;
+	var $stime;
+	var $endate;
+	var $etime;
+	var $location;
+	var $chairman;
+	var $cem;
+	var $status;
+	var $an;
+	var $cd;
+	var $md;
+	var $stylesheet;
+	var $format;
+	var $confidentiality;
+	var $apassword;
+	var $repno;
+	var $fid;
+	var $acomments;
+	var $keywords;
+	var $visibility;
+	var $bld;
+	var $floor;
+	var $room;
+	var $category1;
+	var $category2;
+	var $category3;
+
+
+	// association managment
+	var $groupsEmpty;
+
+	//constructor
+	function agenda($ida) {
+		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$mapServerACTIVE,$mapServerAddress,$directDisplaySingleFiles;
+		$nbfiles = 0;
+		$nbsessions = 0;
+
+		// instantiate the logging object if not initialized
+		$db  = &AgeDB::getDB();
+
+        // fill in array structure with list of categories;
+        $sql = "SELECT categoryID,
+                       shortName,
+                       longName,
+                       preselected
+                FROM CATEGORY
+                ORDER BY categoryID";
+        $res = $db->query($sql);
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+        while ($row = $res->fetchRow()) {
+            $FILE_TYPES_ARRAY[$row['shortName']] = $row['longName'];
+            if ($row['preselected'] == 1) {
+                $FILE_TYPES_ARRAY_PRESELECTED = $row['categoryID'];
+            }
+        }
+        
+
+		$sql = "select confidentiality,apassword,stdate,title,chairman,acomments,location,cem,id,endate,repno,fid,keywords,status,format,md,an,cd,stylesheet,format,visibility,bld,floor,room,stime,etime from AGENDA where id='$ida'";
+		$res = $db->query($sql);
+
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+
+		$row = $res->fetchRow();
+		
+		// Data
+		///////////////////////////////////////////////////
+		$this->fid             = $row['fid']; // 11
+		$this->id              = $ida;
+		$this->cd              = $row['cd']; // 17
+		$this->title           = $row['title'];
+		$this->location        = $row['location'];
+		$this->chairman        = $row['chairman'];
+		$this->acomments       = $row['acomments'];
+		$this->cem             = $row['cem'];
+		$this->repno           = $row['repno'];
+		$this->keywords        = $row['keywords'];
+		$this->stdate          = $row['stdate'];
+		$this->stime           = $row['stime'];
+		$this->endate          = $row['endate'];
+		$this->etime           = $row['etime'];
+		$this->status          = $row['status'];
+		$this->an              = $row['an'];
+		$this->stylesheet      = $row['stylesheet'];
+		$this->format          = $row['format'];
+		$this->confidentiality = $row['confidentiality'];
+		$this->apassword       = $row['apassword'];
+		$this->visibility      = $row['visibility'];
+		$this->bld             = $row['bld'];
+		$this->floor           = $row['floor'];
+		$this->room            = $row['room'];
+
+        // If the map server is active, then we embed the map info in
+        // the room variable
+        if ($mapServerACTIVE && $this->bld != "" && $this->room != "0--" && $this->room != "") {
+            $this->room = "<a href=\"$mapServerAddress" . ( $this->bld!=0 ? $this->bld : ereg_replace(" ","+",$this->room) ) ."\" classinfo>".$this->room."</a>";
+        }
+        $this->room = formatfield($this->room);
+        
+		// Retrieve last update date
+		$res2 = $db->query("select TO_DAYS(MAX(md)) AS maxtalk from TALK where ida='$ida'");
+		$res3 = $db->query("select TO_DAYS(MAX(md)) AS maxsession from SESSION where ida='$ida'");
+		$res4 = $db->query("select TO_DAYS(md) AS maxagenda from AGENDA where id='$ida'");
+		$row2 = $res2->fetchRow();
+		$row3 = $res3->fetchRow();
+		$row4 = $res4->fetchRow();
+		$mdagenda = $row2['maxtalk'];
+		$mdsession = $row3['maxsession'];
+		$mdtalk = $row4['maxagenda'];
+		$lastupdate = max($mdagenda,$mdsession,$mdtalk);
+		$res = $db->query("select FROM_DAYS($lastupdate) AS lastupdate");
+		$row2 = $res->fetchRow();
+		$lastupdate = $row2['lastupdate'];
+		$this->md = $lastupdate;
+
+		$sql = "select title,fid from LEVEL where uid='" . $this->fid . "'";
+		$res2 = $db->query($sql);
+		//        if (( $res2 == 0 ) && ( ERRORLOG ))
+		//            $GLOBALS[ "log" ]->logError( __FILE__ . "." . __LINE__, "main", " Cannot find LEVEL  with uid '" . $res[ 0 ]->fid  ."' " );
+		if (DB::isError($res2)) {
+			die ($res2->getMessage());
+		}
+		$row = $res2->fetchRow();
+		$this->category1 = $row['title'];
+
+		$sql = "select title,fid from LEVEL where uid='" . $row['fid'] . "'";
+		$res3 = $db->query($sql);
+
+		if (DB::isError($res3)) {
+			die ($res3->getMessage());
+		}
+
+		$row = $res3->fetchRow();
+		//        if (( $res3 == 0 ) && ( ERRORLOG ))
+		//          $GLOBALS[ "log" ]->logError( __FILE__ . "." . __LINE__, "main", " Cannot find LEVEL  with uid '" . $res2[ 0 ]->fid  ."' " );
+
+		$this->category2 = $row['title'];
+
+		$sql = "select title,fid from LEVEL where uid='" . $row['fid'] . "'";
+		$res4 = $db->query($sql);
+		
+		if (DB::isError($res4)) {
+			die ($res4->getMessage());
+		}
+
+		$row = $res4->fetchRow();
+		$this->category3 = $row['title'];
+
+		$this->category1 = str_replace("\r","<br>",$this->category1);
+		$this->category1 = formatfield($this->category1);
+		$this->category2 = str_replace("\r","<br>",$this->category2);
+		$this->category2 = formatfield($this->category2);
+		$this->category3 = str_replace("\r","<br>",$this->category3);
+		$this->category3 = formatfield($this->category3);
+
+		$this->title = formatfield($this->title);
+		$this->chairperson = formatfield($this->chairman);
+		$this->location = formatfield($this->location);
+
+		if ($this->acomments == strip_tags($this->acomments)) {
+			$this->acomments = str_replace("\r\n","<br>",$this->acomments);
+			$this->acomments = str_replace("\n","<br>",$this->acomments);
+			$this->acomments = str_replace("\r","<br>",$this->acomments);
+			$this->acomments = str_replace("\037"," ",$this->acomments);
+		}
+		$this->acomments = formatfield($this->acomments);
+
+		$this->cem = formatfield($this->cem);
+		if (strlen($this->cem) < 2) {
+			 $this->cem = "";
+		}
+		$this->repno = formatfield($this->repno);
+		$this->keywords = formatfield($this->keywords);
+
+		// Attached Files + Minutes
+		///////////////////////////////////////////////////
+        $archive = new archive();
+        $categories = $archive->listFileCategories($ida);
+        asort($categories);
+        while ($category = current($categories)) {
+            if ($FILE_TYPES_ARRAY[$category] != "") {
+                $text = $FILE_TYPES_ARRAY[$category];
+            }
+            else {
+                $text = $category;
+            }
+            $catfiles = $archive->listFiles($ida,$category);
+            if (count($catfiles) == 1 && $directDisplaySingleFiles) {
+                $linkname = $catfiles[0]->name;
+            }
+            else {
+                $linkname = $text;
+            }
+                
+            $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida/$category" );
+            $nbfiles ++;
+            next($categories);
+        }
+        if ($stylesheet == "standard2") {
+            $mintext = "";
+            $minutesfiles = $archive->listFiles($ida,"minutes");
+            while (($minutesfile = current($minutesfiles)) && $mintext == "") {
+                $path = $minutesfile->getField("path");
+                $name = $minutesfile->getField("name");
+                if (ereg(".txt$",$name)) {
+                    $mintext = `cat $path/$name`;
+                }
+                elseif ((ereg(".htm$",$name) || ereg(".html$",$name)) && $HTML2TEXT != "") {
+                    $mintext = `$HTML2TEXT $path/$name`;
+                }
+                elseif (ereg(".ps$",$name) && $PS2ASCII != "") {
+                    $mintext = `$PS2ASCII $path/$name`;
+                    $mintext = ereg_replace("\%.*\%","",$mintext);
+                }
+                elseif (ereg(".pdf$",$name) && $PS2ASCII != "") {
+                    $mintext = `$PS2ASCII $path/$name`;
+                }
+                if ($mintext != "") {
+                    $mintext = ereg_replace("^\n*","",$mintext);
+                    $mintext = str_replace("\r\n","<br>",$mintext);
+                    $mintext = str_replace("\r","<br>",$mintext);
+                    $mintext = str_replace("\n","<br>",$mintext);
+                    $mintext = formatfield($mintext);
+                    $mintext = stripslashes($mintext);
+                    if (strlen($mintext) > 100000) {
+                        $mintext = substr($mintext,0,100000);
+                        $mintext .= " ####text too long... Please access the file directly to have the whole content####";
+                    }
+                    $this->minutes = $mintext;
+                }
+                next($minutesfiles); 
+            }
+        }
+
+		// Sessions
+		///////////////////////////////////////////////////
+
+		$sql = "select ids from SESSION where ida='$ida' order by speriod1,stime";
+		$res = $db->query($sql);
+		if (DB::isError($res)) {
+			die ($res->getMessage());
+		}
+		$numRows = $res->numRows();
+
+		if ( $numRows != 0 ) {
+			for ( $iSes = 0; $iSes < $numRows; $iSes++ ) {
+				$row = $res->fetchRow();
+				$this->sessions[$nbsessions] = new session($ida, $row['ids']);
+				$nbsessions++;
+			}
+		}
+	}
+
+
+
+	// function used for the display of the agenda (all items are displayed)
+	function displayXML() {
+		// agendaDTD from config.php
+		$xml = "<?xml version=\"1.0\" encoding='ISO-8859-1'?><!DOCTYPE agenda SYSTEM \"" . $GLOBALS[ "agendaDTD" ] . "\">\n";
+		$xml .= "<agenda  title=\"$this->title\"
+id=\"$this->id\"
+stdate=\"$this->stdate\"
+stime=\"$this->stime\"
+endate=\"$this->endate\"
+etime=\"$this->etime\"
+location=\"$this->location\"
+chairperson=\"$this->chairperson\"
+chairpersonemail=\"$this->cem\"
+repno=\"$this->repno\"
+fid=\"$this->fid\"
+comments=\"$this->acomments\"
+keyword=\"$this->keywords\"
+modified=\"$this->md\"
+category1=\"$this->category1\"
+category2=\"$this->category2\"
+category3=\"$this->category3\"
+status=\"$this->status\"
+type=\"$this->format\"
+building=\"$this->bld\"
+floor=\"$this->floor\"
+room=\"$this->room\">\n";
+
+		if ($this->minutes != "")
+			$xml .= "<minutes>" . $this->minutes . "</minutes>\n";
+
+		$nbFiles = count($this->files);
+		// Put here a sort to order the file by type
+		for ($i=0;$i<$nbFiles;$i++)
+			$xml .= $this->files[$i]->displayXML();
+		$nbSessions = count($this->sessions);
+		for ($i=0;$i<$nbSessions;$i++)
+			if ($this->sessions[$i]->stitle != "dummy session")
+				$xml .= $this->sessions[$i]->displayXML();
+		$xml .= "</agenda>";
+
+		//return final value
+		return $xml;
+	}
+}
+?>

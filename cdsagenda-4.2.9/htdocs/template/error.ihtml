@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDAS</TITLE>
+  <link rel="stylesheet" href="{error_imageDIR}/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+<center>
+<BR><BR><BR><BR>
+<table border="0">
+  <tr> 
+    <td align="center"><img src="{error_imageDIR}/dec.agendas.gif"></td>
+    <td valign="bottom">
+	<table border="1" height="100%">
+	  <tr>
+	    <td>
+	      <font size="-1" color="#FF0000"><b>ERROR {error_code}:</b><BR>{error_msg}</font>
+	    </td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+</table>
+<!--
+<p align="center"><font size="-1" color="#000000">For more details send an email to
+  <a href="mailto:{error_emailAdmin}">{error_emailAdmin}</a> 
+  with the ERROR message and the error code ({error_code}) adding a brief explanation of what happened
+</font></p>
+-->
+<BR><BR>
+<font size=-1>
+  <a href="#" onclick="history.back();return false">Go Back To The Previous Page</a>
+</font>
+</center>
+</body>
+</html>

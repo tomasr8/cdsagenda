@@ -1,0 +1,84 @@
+<HTML>
+<HEAD>
+<TITLE>Set Up An Alarm</TITLE>
+<link rel="stylesheet" href="{images}/stylemodify.css">
+</HEAD>
+<BODY TEXT=black BGCOLOR="#FFFFFF" LINK="#009900" VLINK="#006600" ALINK="#FF0000">
+<TABLE border=0 bgcolor=silver align="center" width="75%" cellspacing=1>
+<FORM action="displayAgenda.php" method=POST>
+<TR><TD colspan=2 class=header align="left">
+<TABLE width="100%" border=0 cellpadding=0 cellspacing=2><TR><TD width="1%">
+<IMG  hspace=0 vspace=0 border=0 SRC="{images}/alert.gif" alt="set up an alarm" align=right>
+</TD>
+          <TD width="1%"><a href="../guide/english/alarm.php" target=top><img src="{images}/help.gif" border=0 ALT="help!"></a></TD>
+<TD><B><SMALL>&nbsp;[Set Up An Alarm]</SMALL></B></TD><TD align=right><SMALL><SMALL>
+<INPUT type=submit name=submit value=BACK></SMALL></SMALL></TD></TR></TABLE></TD></TR>
+<TR><TD colspan=2>
+<BR>
+<SMALL>
+You can set up an alarm to warn your collaborators by giving the system an email address and the day when you want the warning email to be sent (from 1 to 7 days before the meeting starts).<BR>
+Try this option by using the "Send me the email NOW" button.<BR><BR>
+</SMALL>
+
+<SMALL>This meeting is scheduled on {setUpAlarm_LSTDATE}<BR><CENTER>
+
+{str_help}
+
+{str_help2}
+
+{str_help3}
+
+{str_help4}
+
+</CENTER>
+<BR><BR>
+</SMALL>
+</TD></TR>
+<TR>
+<TD colspan=2><SMALL><BR>
+	New Alarm: <BR>
+	email address: <INPUT name="newaddress" size=50>
+	day: <SELECT name=period>
+		<OPTION value=1> D-1
+		<OPTION value=2> D-2
+		<OPTION value=3> D-3
+		<OPTION value=4> D-4
+		<OPTION value=5> D-5
+		<OPTION value=6> D-6
+		<OPTION value=7> D-7
+	</SELECT><BR>
+	additional note: <TEXTAREA name=newnote rows=5 cols=50></TEXTAREA><BR>
+	<input type=checkbox name=include_agenda> Include a text version of the agenda in the email
+	<INPUT type=submit value="Add this Alarm" name="request" onClick="if (document.forms[0].newaddress.value==''){alert('Please enter an email address'); return false;} else {document.forms[0].action='setUpAlarm.php';}">
+</SMALL></TD>
+</TR>
+<TR>
+<TD colspan=2><SMALL><BR>
+	Send me a test email NOW: <BR>
+	email address: <INPUT name="address" size=50><BR>
+	additional note: <TEXTAREA name=note rows=5 cols=50></TEXTAREA><BR>
+	<input type=checkbox name=include_agenda> Include a text version of the agenda in the email
+	<INPUT type=submit value="Send me the email NOW" name="request" onClick="if (document.forms[0].address.value==''){alert('Please enter your email address'); return false;} else {document.forms[0].action='setUpAlarm.php';}">
+</SMALL></TD>
+</TR>
+<TR>
+<TD class=header colspan=2 align=right>
+
+<INPUT type=hidden name=ida value='{setUpAlarm_IDA}'>
+<INPUT type=hidden name=fid value='{setUpAlarm_FID}'>
+<INPUT type=hidden name=level value='{setUpAlarm_LEVEL}'>
+<INPUT type=hidden name=position value='{setUpAlarm_POSITION}'>
+<INPUT type=hidden name=stylesheet value='{setUpAlarm_STYLESHEET}'>
+
+<SMALL><SMALL>
+<INPUT type=submit name=submit value=BACK></SMALL></SMALL>
+</TD>
+</TR>
+</TABLE>
+</FORM>
+</font>
+
+{str_help5}
+
+</BODY>
+</HTML>

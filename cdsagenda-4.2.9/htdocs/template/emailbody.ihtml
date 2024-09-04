@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<HTML>
+<HEAD>
+  <TITLE>CDS AGENDAS</TITLE>
+  <link rel="stylesheet" href="images/style.css">
+        <SCRIPT TYPE="text/javascript">
+        var bgmenucolor = "#9cf";
+        </SCRIPT>
+	<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></HEAD>
+<BODY onLoad="allLoaded = 1;"
+      class=list>
+<center>
+<BR><BR><BR><BR>
+<table border="0">
+  <tr> 
+    <td align="center"><img src="{email_imageDIR}/dec.agendas.gif"></td>
+    <td valign="bottom">
+	<table border="1" height="100%">
+	  <tr>
+	    <td>
+	      <font size="-1" color="#FF0000"><b>EMAIL:</b><BR>{email_msg}</font>
+	    </td>
+	  </tr>
+	</table>
+    </td>
+  </tr>
+</table>
+<BR><BR>
+<font size=-1>
+  <a href="#" onclick="history.back();return false">Go Back To The Previous Page</a>
+</font>
+</center>
+</body>
+</html>
