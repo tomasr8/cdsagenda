@@ -40,7 +40,7 @@ define('FETCHMODE', DB_FETCHMODE_ASSOC);
 
 class AgeDB {
 
-    function AgeDB(){
+    function __construct(){
     }
 
     function & getDB(){

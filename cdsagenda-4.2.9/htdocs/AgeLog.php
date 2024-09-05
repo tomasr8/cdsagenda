@@ -33,7 +33,7 @@ require_once 'platform/system/logManager.inc';
 
 class AgeLog {
 
-    function AgeLog() {
+    function __construct() {
     }
 
     function &getLog() {
