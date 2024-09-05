@@ -236,7 +236,7 @@ function createGuestUser() {
     $res = $db->query("INSERT INTO user (id) VALUES ($newid)");
     if ($db->affectedRows()) { # to check whether the above insert failed or not
         $userid = $newid;
-        session_register("userid");
+        $_SESSION['userid'] = $userid;
     } else {
         $userid = 0;
     }
@@ -272,13 +272,13 @@ function login(&$userid,&$userid_email,$username,$password)
                 } else {
                     $userid=$duserid_id;
                     $userid_email=getEmail($userid);
-                    session_register("userid");
+                    $_SESSION['userid'] = $userid;
                 }
             } else { // pw not needed
                 $userid=$duserid_id;
                 $userid_email=getEmail($userid);
-                session_register("userid");
-                $status = 0;            
+                $_SESSION['userid'] = $userid;
+                $status = 0;
             }
         }
         else {
