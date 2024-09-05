@@ -35,8 +35,8 @@ require_once( "config/config.php" );
 //===========================
 //  DB related
 //===========================
-define(DSN, "mysql://$mysql_userid:$mysql_password@$mysql_machine:$mysql_port/$dbName");
-define(FETCHMODE, DB_FETCHMODE_ASSOC);
+define('DSN', "mysqli://$mysql_userid:$mysql_password@$mysql_machine:$mysql_port/$dbName");
+define('FETCHMODE', DB_FETCHMODE_ASSOC);
 
 class AgeDB {
 
