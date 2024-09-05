@@ -18,4 +18,4 @@ services:
   web:
     build: .
     ports:
-      - 9090:80
+      - 9090:9090
