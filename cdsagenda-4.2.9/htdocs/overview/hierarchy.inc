@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once "$AGE/AgeDB.php";
@@ -45,7 +45,7 @@ function getChildren($fid)
         die ($res->getMessage());
     }
     $numRows = $res->numRows();
-    
+
     if ($numRows != 0) {
         for ($i=0; $numRows > $i;$i++) {
             $row = $res->fetchRow();
@@ -66,7 +66,8 @@ function createTextFromArray($array)
     while (list($key,$value) = each($array)) {
         $text .= ",'".$value."'";
     }
-    $text .= ")";
+
+    $text .= ")"; // Close the parentheses
     return $text;
 }
 
@@ -107,7 +108,7 @@ function getFatherTree($uid)
 
 // given a hierarchical tree, this function returns the highest level
 // id which icon field is not empty
-function getIconLevel($array,$maxlevel)
+function getIconLevel($array, $maxlevel)
 {
     $iconlevel = "";
     reset($array);
@@ -116,6 +117,7 @@ function getIconLevel($array,$maxlevel)
             $iconlevel = $val[uid];
         }
     }
+
     return $iconlevel;
 }
 
@@ -123,9 +125,9 @@ function getIconLevel($array,$maxlevel)
 //given a level id, this function returns the corresponding icon
 //picture name
 function getIcon($uid)
-{		
+{
     global $IMAGES,$AGE;
-    
+
     if (file_exists("$AGE/$IMAGES/levelicons/$uid.gif")) {
         return $uid;
     }
@@ -139,7 +141,7 @@ function getAgendaNumber($array)
 {
     $levelsettext = createTextFromArray($array);
     $db = &AgeDB::getDB();
-    $sql = "	SELECT COUNT(id) as count 
+    $sql = "	SELECT COUNT(id) as count
 		FROM AGENDA
 		WHERE fid in $levelsettext and fid!=''";
     $res = $db->query($sql);

@@ -26,12 +26,8 @@
 //
 // Commentary:
 //
-// 
 //
-
-require_once('mainmenu.inc');
-
-$AGE = "/var/www/html/cdsagenda/data/cdsagenda";
+//
 
 function CreateMenuBar( $menuArray ) {
   global $VERSION,$IMAGES_WWW,$authentication,$stylesheetdesc,$leveltext,$focustext,$makePDFparam,$ida,$stylesheet,$dl,$dd;
@@ -100,7 +96,7 @@ function CreateTopBarCell( $menuName, $menuText )
 {
     $topbarcell = "
    <TD CLASS=\"topbarheader\"
-       ID=\"" . $menuName ."Tip\" 
+       ID=\"" . $menuName ."Tip\"
        CLASS=\"menutop\"><A HREF=\"\" onmouseover=\"clearTimeout(timerID);timerID=setTimeout('if (document.getElementById){document.getElementById(\'" . $menuName . "Tip\').style.backgroundColor=\'#006\';document.getElementById(\'" . $menuName . "TipText\').style.color=\'white\';};popStaticMenuUp(\'" . $menuName . "\',true)',opentimer);\" onmouseout=\"clearTimeout(timerID);timerID=setTimeout('closeOpened()',closetimer);\" onclick=\"return false;\"><FONT color=black><SMALL><SPAN ID='" . $menuName . "TipText'>[" . $menuText . "]</SPAN></SMALL></FONT></A>&nbsp;&nbsp;</TD>";
     return $topbarcell;
 }

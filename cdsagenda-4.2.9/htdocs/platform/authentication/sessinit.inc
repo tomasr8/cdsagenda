@@ -23,7 +23,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 ##
@@ -183,8 +183,8 @@ function getEmail($userid) {
           elseif ($useLDAP) {
             $userid_email = getLDAPemail($row[email]);
           }
-       }         
-    } 
+       }
+    }
     return($userid_email);
 }
 
@@ -197,8 +197,8 @@ function getPW($userid) {
     if ($row = $res->fetchRow()) {
         if ($row[password]) {
             $userid_pw = $row[password];
-        }            
-    } 
+        }
+    }
     return($userid_pw);
 }
 
@@ -206,15 +206,15 @@ function getPW($userid) {
 function getID($username) {
     global $db;
     $userid = "";
-    $query = "SELECT id 
-              FROM user 
+    $query = "SELECT id
+              FROM user
               WHERE email='$username'";
     $res = $db->query($query);
     if ($row = $res->fetchRow()) {
         if ($row[id]) {
             $userid = $row[id];
-        }            
-    } 
+        }
+    }
     return($userid);
 }
 
@@ -238,7 +238,7 @@ function createGuestUser() {
     return $userid;
 }
 
-function login(&$userid,&$userid_email,$username,$password) 
+function login(&$userid,&$userid_email,$username,$password)
 {
     global $db, $useIMAP;
     $error = "";
@@ -262,7 +262,7 @@ function login(&$userid,&$userid_email,$username,$password)
                        $error = "Cannot login... Please contact the site administrator.";
                     }
                 }
-                elseif ($duserid_pw != $password) { 
+                elseif ($duserid_pw != $password) {
                     $error = "<p>Sorry, password mismatch.  Please try again.";
                 } else {
                     $userid=$duserid_id;
@@ -275,7 +275,7 @@ function login(&$userid,&$userid_email,$username,$password)
                 session_register("userid");
                 $status = 0;            
             }
-        } 
+        }
         else {
             // if the user does not exist, we try to register him
             $error = register($userid,$userid_email,$username,$password);
@@ -297,11 +297,11 @@ function register(&$userid,&$userid_email,$username,$password)
     $error = "";
     if ($username) {
        // first test whether this address is already used
-       $query = "SELECT id 
-                 FROM user 
+       $query = "SELECT id
+                 FROM user
                  WHERE email='$username'";
        $res = $db->query($query);
-       if ($res->numRows()) {            
+       if ($res->numRows()) {
           $error = "Sorry, user <strong class=headline>$username</strong> already exists.  Please use the <span class=headline>login</span> button instead.";
        }
        elseif(checkEmail($username)==false) {
@@ -309,11 +309,11 @@ function register(&$userid,&$userid_email,$username,$password)
                // try to register an IMAP user
                $error = IMAPLogin($username,$password);
                if ($error == "") {
-                   $query = "UPDATE user 
-                             SET email='$username',password='IMAP' 
+                   $query = "UPDATE user
+                             SET email='$username',password='IMAP'
                              WHERE id='$userid'";
                    $db->query($query);
-                   $userid_email=getEmail($userid); 
+                   $userid_email=getEmail($userid);
                }
            }
            else {
@@ -322,17 +322,17 @@ function register(&$userid,&$userid_email,$username,$password)
        }
        else {
           // register a normal CDS Agenda user
-          $query = "UPDATE user 
-                    SET email='$username',password='$password' 
+          $query = "UPDATE user
+                    SET email='$username',password='$password'
                     WHERE id='$userid'";
           $db->query($query);
           $userid_email=getEmail($userid);
        }
-    } 
+    }
     else {
        $error = "No user name specified.  Please try again.";
     }
-   
+
     return $error;
 }
 
@@ -341,7 +341,7 @@ function checkEmail($email)
     $pos = strpos($email,"@");
     $em = preg_grep("/^.+@.+\\..+$/",array($email));
 
-    if($em[0] != "") {  // regular expression was good 
+    if($em[0] != "") {  // regular expression was good
         if(strpos($email,"@") != strrpos($email,"@")) {
             return false;
         }
@@ -420,7 +420,7 @@ function authorize($userid,$rule,$item)
     $type = getAuthItemType($rule);
 
     // Check with individual permissions
-    $sql = "SELECT * 
+    $sql = "SELECT *
             FROM user_authorization_item
             LEFT JOIN authorization on id=authID
             WHERE name='$rule' and
@@ -555,7 +555,7 @@ function unsetUserAuthorization($userid,$rule,$item)
                 WHERE authID='$ruleID'
                      ".($item == "*"?"":" and itemID='$item'")."
                      ".($userid == "*"?"":" and userID='$userid'");
- 
+
         $res = $db->query($sql);
         return true;
     }
@@ -583,7 +583,7 @@ function unsetGroupAuthorization($groupid = "*",$rule = "*",$item = "*")
                 WHERE authID='$ruleID'
                      ".($item == "*"?"":" and itemID='$item'")."
                      ".($groupid == "*"?"":" and groupID='$groupid'");
- 
+
         $res = $db->query($sql);
         return true;
     }
@@ -727,8 +727,8 @@ function listCategoriesGroupCanManage($groupid)
 function canModifyAgenda($userid,$ida)
 {
     global $db;
-    $sql = "SELECT fid 
-            FROM AGENDA 
+    $sql = "SELECT fid
+            FROM AGENDA
             WHERE id='$ida'";
     $res = $db->query($sql);
     $row = $res->fetchRow();
@@ -939,7 +939,7 @@ function listGroupMembers($groupid)
             }
         }
     }
-    
+
     return $result;
 }
 
@@ -985,7 +985,7 @@ function listAllGroups()
 {
     global $db;
     $result = array();
-    $sql = "SELECT id,name 
+    $sql = "SELECT id,name
             FROM groups";
     $res = $db->query($sql);
     while ($row = $res->fetchRow()) {
@@ -998,7 +998,7 @@ function listAllGroups()
 function addGroup($name,$description,$special)
 {
     global $db;
-    $sql = "SELECT id 
+    $sql = "SELECT id
             FROM groups
             WHERE name='$name'";
     $res = $db->query($sql);
@@ -1029,11 +1029,11 @@ function deleteGroup($groupname)
         $groupid = $row[id];
 
         // delete group
-        $sql = "DELETE 
+        $sql = "DELETE
                 FROM groups
                 WHERE id='$groupid'";
         $res = $db->query($sql);
-        
+
         // delete user associations
         $sql = "DELETE
                 FROM user_groups
@@ -1052,11 +1052,11 @@ function deleteGroup($groupname)
 
 // this function adds user $userid to group $groupid
 // $groupid must be a local group (not LDAP)
-function addUserToGroup($userid, $groupid) 
+function addUserToGroup($userid, $groupid)
 {
     global $db;
-    $sql = "SELECT special 
-            FROM groups 
+    $sql = "SELECT special
+            FROM groups
             WHERE id='$groupid'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -1094,7 +1094,7 @@ function listAllUsers()
 {
     global $db;
     $result = array();
-    $sql = "SELECT id 
+    $sql = "SELECT id
             FROM user
             WHERE email!=''";
     $res = $db->query($sql);
@@ -1105,7 +1105,7 @@ function listAllUsers()
 }
 
 // this function checks if user $username is registered
-function isRegisteredUser($username) 
+function isRegisteredUser($username)
 {
     global $db;
     if ($username == "") {

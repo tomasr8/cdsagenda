@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once( "DB.php" );
@@ -49,7 +49,7 @@ class AgeDB {
 		if(!isset($db)){
 			$db= DB::connect( DSN );
 			if(DB::isError($db)){
-				die($db->getMessage());  
+				die($db->getMessage());
 			}
 			$db->setFetchMode(FETCHMODE);
 		}

@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -38,7 +38,7 @@ $db = &AgeDB::getDB();
 $Template = new Template($PathTemplate);
 $Template->set_file(array("mainpage"  => "search.ihtml",
                           "JSMenuTools" => "JSMenuTools.ihtml",
-						  "AGEfooter" => "AGEfooter_template.inc"));	
+						  "AGEfooter" => "AGEfooter_template.inc"));
 
 $Template->set_var("search_supportEmail", $support_email);
 $Template->set_var("search_runningAT", $runningAT);
@@ -46,7 +46,7 @@ $Template->set_var("images", $IMAGES_WWW );
 $Template->parse( "search_jsmenutools", "JSMenuTools", true );
 
 // Prepare menu creation
-$topbarStr .= 
+$topbarStr .=
 "<table border=0 cellspacing=1 cellpadding=0 width=\"100%\">
 <tr>";
 include 'menus/topbar.php';
@@ -79,7 +79,7 @@ if ( $newSearchMode ) {
 	// New search mode, with all the categories but by title every
 	// title should appear only once but the search will be done
 	// inside all the category of each level with the specified title
-	
+
 	$sql = " select title from LEVEL GROUP BY title ";
 	$resCat = $db->query($sql);
 
@@ -93,12 +93,12 @@ if ( $newSearchMode ) {
 			$title = $row['title'];
 
 			if ($base == $title)
-				$core .= "   <OPTION value=\"" . $title 
-					. "\" selected> " . $title 
+				$core .= "   <OPTION value=\"" . $title
+					. "\" selected> " . $title
 					. "\n";
 			else
-				$core .= "   <OPTION value=\"" . $title 
-					. "\"> " . $title 
+				$core .= "   <OPTION value=\"" . $title
+					. "\"> " . $title
 					. "\n";
 		}
 	}
@@ -151,12 +151,12 @@ else {
 			die ($res->getMessage());
 		}
 		$numRows = $res->numRows();
-		if ( $numRows != 0 ) { 
+		if ( $numRows != 0 ) {
 			// One or more records retrieved
 			$core .= "<SELECT onChange=\"document.forms[0].submit();\" name=\"id[$i]\">\n";
 			$core .= "   <OPTION value=\"all\"> all categories\n";
 
-			for ( $j = 0; $j < $numRows; $j++ ) { 
+			for ( $j = 0; $j < $numRows; $j++ ) {
 				$row = $res->fetchRow();
 				$uid   = $row['uid'];
 				$title = $row['title'];
@@ -382,14 +382,14 @@ $core .= createSearchWord();
 if ($search == "Search" && $keywords != "")
 {
     searchCategory($id,"");
-    
+
     if (isset($num) && $num != 0)
 		{
 			$core .= "
 <H1 class=\"headline\">Results:</H1>\n";
 			$core .= "$num record(s) found.<BR>";
 			$core .= "<TABLE bgcolor=silver>\n";
-            
+
 			$core .= $result;
 
 			$core .= "</TABLE>\n";
@@ -421,10 +421,10 @@ $Template->pparse("final-page", "mainpage");
 // SEARCH FUNCTIONS
 
 function createSearchWord() {
-	global $period, $startbet, $endbet, $day, $month, $year, $years, 
+	global $period, $startbet, $endbet, $day, $month, $year, $years,
 		$search, $keywords, $logop, $field, $whichweek;
 	global $searchWord;
-	
+
     if ($keywords == "") {
         $keywords = "%";
     }
@@ -445,12 +445,12 @@ function createSearchWord() {
 		$text .= " document.forms[0].startbet.value='$startbet';\n";
 		$text .= " document.forms[0].endbet.value='$endbet';\n";
 		$text .= "</SCRIPT>\n";
-		
+
 		$startdate=explode("-",$startbet);
 		$enddate=explode("-",$endbet);
 		$textperiod=" and TO_DAYS(AGENDA.stdate) >= TO_DAYS('$startbet') and TO_DAYS(AGENDA.stdate) <= TO_DAYS('$endbet')";
 	}
-	
+
 	if ($period == "period") {
 		$text .= "<SCRIPT>\n";
 		$text .= " document.forms[0].period[0].checked=true;\n";
@@ -458,7 +458,7 @@ function createSearchWord() {
 		$text .= " document.forms[0].month.selectedIndex=$month;\n";
 		$text .= " document.forms[0].year.selectedIndex=$year;\n";
 		$text .= "</SCRIPT>\n";
-		
+
 		if ($day != 0) {
 			$textperiod=" and ( DAYOFMONTH(AGENDA.stdate)=$day or DAYOFMONTH(SESSION.speriod1)=$day or DAYOFMONTH(TALK.tday)=$day )";
 		}
@@ -470,17 +470,17 @@ function createSearchWord() {
 		if ($year != 0) {
 			$textperiod="$textperiod and ((YEAR(AGENDA.stdate) = $year+($years[0]-1)) or (YEAR(SESSION.speriod1) = $year+($years[0]-1)) or (YEAR(TALK.tday) = $year))";
 		}
-	}	
+	}
 	if ($period == "byweek") {
 		$text .= "<SCRIPT>\n";
 		$text .= " document.forms[0].period[2].checked=true;\n";
 		$text .= " document.forms[0].whichweek.selectedIndex=$whichweek;\n";
 		$text .= "</SCRIPT>\n";
-				
+
 		$now=time();
 		$today=strftime("%Y-%m-%d",$now);
 		$weekday=strftime("%w",$now);
-		
+
 		//Search this week
 		if ($whichweek == 0) {
 			$textperiod=" and (TO_DAYS(AGENDA.stdate) BETWEEN (TO_DAYS('$today') - $weekday) and (TO_DAYS('$today')+7-$weekday))";
@@ -501,17 +501,17 @@ function createSearchWord() {
 	$words=explode(" ",$keywords);
 
 	$searchWord="
-select DISTINCT 
+select DISTINCT
 	AGENDA.title,
 	AGENDA.stdate,
 	AGENDA.endate,
 	AGENDA.fid,
-	AGENDA.id 
-from 
+	AGENDA.id
+from
 	AGENDA
 	left join TALK on AGENDA.id=TALK.ida
 	left join SESSION on AGENDA.id=SESSION.ida
-where 
+where
 	fid='<ID>'
 	and (";
 
@@ -564,7 +564,7 @@ function searchCategory($id,$text)
 			$row = $res->fetchRow();
 			$uid = $row['uid'];
 			$title = $row['title'];
-			searchCategory($uid,"$text > <A HREF=\"displayLevel.php?fid=" 
+			searchCategory($uid,"$text > <A HREF=\"displayLevel.php?fid="
 						   . $uid . "\">" . $title . "</A>");
 		}
 	}
@@ -584,7 +584,7 @@ function searchCategory($id,$text)
 			$result .= "</TABLE></CENTER>
 <BR><font size=-1><B>$text</B> ($numRows result(s))</font><BR>&nbsp
 <CENTER><TABLE bgcolor=lightgrey>\n";
-		}	
+		}
 
 		// store results
 		$i=0;

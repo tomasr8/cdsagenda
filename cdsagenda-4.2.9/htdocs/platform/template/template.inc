@@ -22,10 +22,10 @@ class Template {
    * "keep"    => keep undefined variables
    */
   var $unknowns = "remove";
-  
+
   /* "yes" => halt, "report" => report error, continue, "no" => ignore error quietly */
   var $halt_on_error  = "yes";
-  
+
   /* last error message is retained here */
   var $last_error     = "";
 
@@ -42,13 +42,13 @@ class Template {
 
   /* public: setroot(pathname $root)
    * root:   new template directory.
-   */  
+   */
   function set_root($root) {
     if (!is_dir($root)) {
       $this->halt("set_root: $root is not a directory.");
       return false;
     }
-    
+
     $this->root = $root;
     return true;
   }
@@ -84,7 +84,7 @@ class Template {
   }
 
   /* public: set_block(string $parent, string $handle, string $name = "")
-   * extract the template $handle from $parent, 
+   * extract the template $handle from $parent,
    * place variable {$name} instead.
    */
   function set_block($parent, $handle, $name = "") {
@@ -102,7 +102,7 @@ class Template {
     $this->set_var($handle, $m[1][0]);
     $this->set_var($parent, $str);
   }
-  
+
   /* public: set_var(array $values)
    * values: array of variable name, value pairs.
    *
@@ -140,13 +140,13 @@ class Template {
     $str = @preg_replace($this->varkeys, $this->varvals, $str);
     return $str;
   }
-  
+
   /* public: psubst(string $handle)
    * handle: handle of template where variables are to be substituted.
    */
   function psubst($handle) {
     print $this->subst($handle);
-    
+
     return false;
   }
 
@@ -171,15 +171,15 @@ class Template {
         $this->set_var($target, $str);
       }
     }
-    
+
     return $str;
   }
-  
+
   function pparse($target, $handle, $append = false) {
     print $this->parse($target, $handle, $append);
     return false;
   }
-  
+
   /* public: get_vars()
    */
   function get_vars() {
@@ -187,10 +187,10 @@ class Template {
     while(list($k, $v) = each($this->varkeys)) {
       $result[$k] = $this->varvals[$k];
     }
-    
+
     return $result;
   }
-  
+
   /* public: get_var(string varname)
    * varname: name of variable.
    *
@@ -205,11 +205,11 @@ class Template {
       while(list($k, $v) = each($varname)) {
         $result[$k] = $this->varvals[$k];
       }
-      
+
       return $result;
     }
   }
-  
+
   /* public: get_undefined($handle)
    * handle: handle of a template.
    */
@@ -218,7 +218,7 @@ class Template {
       $this->halt("get_undefined: unable to load $handle.");
       return false;
     }
-    
+
     preg_match_all("/\{([^}]+)\}/", $this->get_var($handle), $m);
     $m = $m[1];
     if (!is_array($m))
@@ -229,7 +229,7 @@ class Template {
       if (!isset($this->varkeys[$v]))
         $result[$v] = $v;
     }
-    
+
     if (count($result))
       return $result;
     else
@@ -243,7 +243,7 @@ class Template {
     switch ($this->unknowns) {
       case "keep":
       break;
-      
+
       case "remove":
         $str = preg_replace('/{[^ \t\r\n}]+}/', "", $str);
       break;
@@ -252,7 +252,7 @@ class Template {
         $str = preg_replace('/{([^ \t\r\n}]+)}/', "<!-- Template $handle: Variable \\1 undefined -->", $str);
       break;
     }
-    
+
     return $str;
   }
 
@@ -266,7 +266,7 @@ class Template {
   function get($varname) {
     return $this->finish($this->get_var($varname));
   }
-    
+
   /***************************************************************************/
   /* private: filename($filename)
    * filename: name to be completed.
@@ -275,13 +275,13 @@ class Template {
     if (substr($filename, 0, 1) != "/") {
       $filename = $this->root."/".$filename;
     }
-    
+
     if (!file_exists($filename))
       $this->halt("filename: file $filename does not exist.");
 
     return $filename;
   }
-  
+
   /* private: varname($varname)
    * varname: name of a replacement variable to be protected.
    */
@@ -309,7 +309,7 @@ class Template {
     }
 
     $this->set_var($handle, $str);
-    
+
     return true;
   }
 
@@ -319,16 +319,16 @@ class Template {
    */
   function halt($msg) {
     $this->last_error = $msg;
-    
+
     if ($this->halt_on_error != "no")
       $this->haltmsg($msg);
-    
+
     if ($this->halt_on_error == "yes")
       die("<b>Halted.</b>");
-    
+
     return false;
   }
-  
+
   /* public, override: haltmsg($msg)
    * msg: error message to show.
    */

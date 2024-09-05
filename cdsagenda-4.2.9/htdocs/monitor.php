@@ -27,7 +27,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -63,12 +63,12 @@ if ($categories == "") {
 elseif (!is_array($categories)) {
     $categories = split(" ",$categories);
 }
-$colorcodes = array( "FFCC99", 
-                     "99CC99", 
-                     "99CCFF", 
-                     "FF9900", 
-                     "FFCCCC", 
-                     "CCFFCC", 
+$colorcodes = array( "FFCC99",
+                     "99CC99",
+                     "99CCFF",
+                     "FF9900",
+                     "FFCCCC",
+                     "CCFFCC",
                      "FFFFCC",
                      "000000" );
 $colormultiple = "FF9999";
@@ -78,7 +78,7 @@ $colormultiple = "FF9999";
 $Template = new Template($PathTemplate);
 $Template->set_file(array("mainpage"  => "monitor.ihtml",
                           "JSMenuTools" => "JSMenuTools.ihtml",
-						  "AGEfooter" => "AGEfooter_template.inc"));	
+						  "AGEfooter" => "AGEfooter_template.inc"));
 
 $Template->set_var("list_supportEmail", $support_email);
 $Template->set_var("list_runningAT", $runningAT);
@@ -86,7 +86,7 @@ $Template->set_var("images", $IMAGES_WWW );
 $Template->parse( "list_jsmenutools", "JSMenuTools", true );
 
 // Prepare menu creation
-$topbarStr .= 
+$topbarStr .=
 "<table border=0 cellspacing=1 cellpadding=0 width=\"100%\">
 <tr>";
 include 'menus/topbar.php';
@@ -122,8 +122,8 @@ function getCategoryName($id)
 {
     global $db;
 
-    $sql = "SELECT title 
-            FROM LEVEL 
+    $sql = "SELECT title
+            FROM LEVEL
             WHERE uid='$id'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -137,7 +137,7 @@ function getCategoryName($id)
 function CreateMonthNbSelector()
 {
     global $Template,$nbofmonths;
-    
+
     $text = "";
     for ($i=1;$i<=12;$i++) {
         $text .= "<OPTION ".($i==$nbofmonths?"selected":"").">$i\n";
@@ -164,9 +164,9 @@ function ColorCodeText($color,$categoryID)
     global $AGE_WWW;
     $name = getCategoryName($categoryID);
     return "
-                <td> 
+                <td>
                   <table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
-                    <tr> 
+                    <tr>
                       <td width=\"30\" bgcolor=\"#$color\">&nbsp;</td>
                       <td class=\"calcell\">&nbsp;<a href=\"$AGE_WWW/displayLevel.php?fid=$categoryID\">$name</a></td>
                     </tr>
@@ -189,14 +189,14 @@ function CreateCalendar()
         $endmonth = $endmonth - 12;
         $endyear++;
     }
-    
+
     $sdate = "01/" . (strlen($thismonth) < 2 ? "0$thismonth" : $thismonth) ."/".$thisyear;
     $edate = "01/" . (strlen($endmonth) < 2 ? "0$endmonth" : $endmonth) ."/".$endyear;
 
     for ($i=0;$i<sizeof($categories);$i++) {
         ReadAgendaCategory($categories[$i]);
     }
-    
+
     $sec = 0;
     $min = 0;
     $hours = 0;
@@ -231,7 +231,7 @@ function CreateCalendar()
             }
             $nextmonthtime = mktime($hours,$min,$sec,$fmon+1,$mday,$fmyear);
             list($sec, $min, $hours, $mday, $fmon, $fmyear, $fmwday, $yday, $isdst) = localtime($nextmonthtime);
-            
+
             // change reference for week days numbering to get sunday last instead of first
             if ($fmwday == 0) {$fmwday = 6;} else {$fmwday = $fmwday - 1;}
 
@@ -239,10 +239,10 @@ function CreateCalendar()
             $calendartext .= "
     <td align=\"center\" valign=\"top\">
       <table border=\"0\" cellspacing=\"2\" cellpadding=\"2\">
-        <tr> 
+        <tr>
           <td align=\"center\" colspan=\"7\" class=\"calcell\"><b><font color=\"#006699\">$monthyearstr</font></b></td>
         </tr>
-        <tr> 
+        <tr>
           <td align=\"right\" width=\"22\" bgcolor=\"#CCCCCC\" class=\"calcell\">Mo</td>
           <td align=\"right\" width=\"22\" bgcolor=\"#CCCCCC\" class=\"calcell\">Tu</td>
           <td align=\"right\" width=\"22\" bgcolor=\"#CCCCCC\" class=\"calcell\">We</td>
@@ -277,16 +277,16 @@ function CreateCalendar()
                                 $dayfontcolor ="#CCCCCC";
                             } else {
                                 $dayfontcolor ="#000000";
-                                
+
                                 $monthrealnb = $mon+1;
                                 $yearrealnb = $year + 1900;
                                 $todaystr = $yearrealnb."-";
-                                if ($monthrealnb < 10) {$leader = "0";} else {$leader = "";} 
+                                if ($monthrealnb < 10) {$leader = "0";} else {$leader = "";}
                                 $todaystr .= $leader.$monthrealnb."-";
-                                if ($monthday < 10) {$leader = "0";} else {$leader = "";} 
+                                if ($monthday < 10) {$leader = "0";} else {$leader = "";}
                                 $todaystr .= $leader.$monthday;
                                 $daybgcolor ="#FFFFFF";
-                                
+
                                 foreach(array_keys($meetings) as $meetcategory) {
                                     foreach(array_keys($meetings[$meetcategory]) as  $meetst) {
                                         if ( $meetst == $todaystr ) {
@@ -294,13 +294,13 @@ function CreateCalendar()
                                             foreach(array_keys($meetings[$meetcategory][$meetst]) as $meetid) {
                                                 array_push($todaysevents[$meetcategory],array( "categ" => $meetcategory, "link" => "$AGE_WWW/fullAgenda.php?ida=$meetid", "title" => $meetings[$meetcategory][$meetst][$meetid]));
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                    
+
                     $events = array_keys($todaysevents);
                     if (sizeof($events) == 0) {
                         $daybgcolor ="#FFFFFF";
@@ -329,23 +329,23 @@ menudivs[\"d$dateid\"].menuOn       = false;
 menudivs[\"d$dateid\"].onAnchor     = false;
 //-->
 </script>";
-                        
+
 
                         $divtext .= "
 <div id=d$dateid style=\"Z-INDEX: 1; LEFT: 180px; TOP: 380; VISIBILITY: hidden; POSITION: absolute\">
   <layer>
   <table cellSpacing=0 cellPadding=1 bgcolor=\"#A0A0A0\" border=0>
-    <tr> 
+    <tr>
       <td valign=top>
         <table cellSpacing=0 cellPadding=4 bgcolor=\"#FFFFFF\" border=0>";
 
                         foreach(array_keys($todaysevents) as $categ ) {
                             foreach(array_keys($todaysevents[$categ]) as $ev ) {
-                                $evlink = $todaysevents[$categ][$ev]['link']; 
+                                $evlink = $todaysevents[$categ][$ev]['link'];
                                 $evtitle = $todaysevents[$categ][$ev]['title'];
                                 $bgcolor = $colorcodes[array_search($todaysevents[$categ][$ev]['categ'],$categories)];
                                 $divtext .= "
-          <tr bgcolor=$bgcolor> 
+          <tr bgcolor=$bgcolor>
             <td valign=top><a href=\"$evlink\">$evtitle</a></td>
           </tr>";
                             }
@@ -371,7 +371,7 @@ menudivs[\"d$dateid\"].onAnchor     = false;
             if ($monthcol < 2) {
                 $calendartext .= "
     <td>&nbsp;</td>";
-            } 
+            }
 
             if ($mon == $lastmonth) {$done = 1;}
             $mon = $mon + 1;
@@ -389,7 +389,7 @@ menudivs[\"d$dateid\"].onAnchor     = false;
     $Template->set_var("list_divs", $divtext);
 }
 
-function ReadAgendaCategory($categ) 
+function ReadAgendaCategory($categ)
 {
     global $sdate,$edate,$meetings,$db;
 
@@ -406,7 +406,7 @@ function ReadAgendaCategory($categ)
         list($eday,$emonth,$eyear) = split("/",$edate,3);
         $edaterequest = "and endate <= '$eyear-$emonth-$eday'";
     }
-    
+
     // create the set of levels in which the agendas may be searched
     $levelset = array();
     $levelset = getChildren($categ);
