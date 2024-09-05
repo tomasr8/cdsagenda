@@ -63,7 +63,7 @@ RUN chgrp -R 0 /var/www && \
 RUN sed -i "s/Listen 80/Listen 9090/g" /etc/apache2/httpd.conf
 RUN sed -i "s/User apache/User nobody/g" /etc/apache2/httpd.conf
 RUN sed -i "s/Group apache/Group nogroup/g" /etc/apache2/httpd.conf
-RUN sed -i "s/#ServerName.*/ServerName $HOST/g" /etc/apache2/httpd.conf
+RUN sed -i "s~#ServerName.*~ServerName $HOST~g" /etc/apache2/httpd.conf
 
 EXPOSE 9090
 
