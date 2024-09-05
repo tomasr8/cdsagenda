@@ -91,6 +91,11 @@ function sess_write($key, $val) {
 	$qry = "INSERT INTO auth_session VALUES ('$key', '$value', $expiry)";
 	$qid = $db->query($qry);
 
+    // TODO: This function must return true if the session was written
+    if($qid === 1) {
+        return true;
+    }
+
 	if (get_class($qid) == "db_error") {
 		$qry = "UPDATE auth_session SET session_expiry = $expiry, session_vars = '$value' WHERE session_key = '$key'";
 		$qid = $db->query($qry);
