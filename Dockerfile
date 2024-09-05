@@ -40,8 +40,8 @@ RUN ./configure \
 RUN make install
 
 COPY info.php /var/www/localhost/htdocs/info.php
-# Allow <? ?> tags in PHP
-RUN sed -i "s/short_open_tag = .*/short_open_tag = On/" /etc/php83/php.ini
+COPY configure_php.sh /configure_php.sh
+RUN /configure_php.sh
 
 EXPOSE 80
 
