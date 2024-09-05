@@ -1169,7 +1169,7 @@ function createListFromArray($array)
 ////////////////////////////////////////////////////
 
 session_start();
-if (!session_is_registered("userid")) {
+if (!isset($_SESSION['userid'])) {
     $userid = createGuestUser();
 }
 ?>
