@@ -43,7 +43,7 @@ class AgeDB {
     function __construct(){
     }
 
-    function & getDB(){
+    static function & getDB(){
 		static $db;
 
 		if(!isset($db)){

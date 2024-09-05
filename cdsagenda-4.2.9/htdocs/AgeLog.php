@@ -36,7 +36,7 @@ class AgeLog {
     function __construct() {
     }
 
-    function &getLog() {
+    static function &getLog() {
         static $instance;
 
         if (!isset($instance)) {
