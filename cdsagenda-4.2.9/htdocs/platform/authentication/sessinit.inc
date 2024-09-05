@@ -75,7 +75,7 @@ function sess_read($key) {
 	$qid = $db->query($qry);
 	$value = '';
 	if ($row = $qid->fetchRow()) {
-		$value = $row[session_vars];
+		$value = $row["session_vars"];
 	}
 
 	return $value;
@@ -223,7 +223,7 @@ function createGuestUser() {
     global $db;
     $res = $db->query("SELECT MAX(id) as maxid from user");
     if ($row = $res->fetchRow()) {
-    	$newid = $row[maxid] + 1;
+    	$newid = $row["maxid"] + 1;
     }
     else {
 	$newid = 1;
