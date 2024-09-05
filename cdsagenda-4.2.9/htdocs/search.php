@@ -515,30 +515,42 @@ where
 	fid='<ID>'
 	and (";
 
-	$word = each($words);
+	foreach ($words as $word) {
 
-	if ($field == "title") 
-		{ $field1="ttitle"; $field2="title"; $field3="stitle"; }
-	if ($field == "speaker") 
-		{ $field1="tspeaker"; $field2="chairman"; $field3="schairman"; }
-	if ($field == "agid") 
-		{ $field1="ida"; $field2="id"; $field3="ida"; }
+		if ($field == "title") {
+			$field1 = "ttitle";
+			$field2 = "title";
+			$field3 = "stitle";
+		} elseif ($field == "speaker") {
+			$field1 = "tspeaker";
+			$field2 = "chairman";
+			$field3 = "schairman";
+		} elseif ($field == "agid") {
+			$field1 = "ida";
+			$field2 = "id";
+			$field3 = "ida";
+		}
 
-	$searchWord .= " (TALK.$field1 LIKE '%$word[1]%' or AGENDA.$field2 LIKE '%$word[1]%' or SESSION.$field3 LIKE '%$word[1]%'";
+		// First search word condition
+		$searchWord = " (TALK.$field1 LIKE '%$word%' or AGENDA.$field2 LIKE '%$word%' or SESSION.$field3 LIKE '%$word%'";
 
-	//if field=title, we search also in the comments field.
-	if ($field == "title") 
-		{ $searchWord .= " or TALK.tcomment LIKE '%$word[1]%' or SESSION.scomment LIKE '%$word[1]%' or AGENDA.acomments LIKE '%$word[1]%')"; }
-	else
-		{ $searchWord .= ")"; }
+		// If field = title, include search in comment fields as well
+		if ($field == "title") {
+			$searchWord .= " or TALK.tcomment LIKE '%$word%' or SESSION.scomment LIKE '%$word%' or AGENDA.acomments LIKE '%$word%')";
+		} else {
+			$searchWord .= ")";
+		}
 
-	while ($word = each($words)) {
-		$searchWord .= " $logop (TALK.$field1 LIKE '%$word[1]%' or AGENDA.$field2 LIKE '%$word[1]%'";		
-		//if field=title, we search also in the comments field.
-		if ($field == "title") 
-			{ $searchWord .= " or TALK.tcomment LIKE '%$word[1]%' or AGENDA.acomments LIKE '%$word[1]%' or SESSION.scomment LIKE '%$word[1]%')"; }
-		else 
-			{ $searchWord .= ")"; }
+		// This is used for additional conditions if there are more words (using $logop, which I assume is a logical operator like 'AND' or 'OR')
+		foreach (array_slice($words, 1) as $additionalWord) {
+			$searchWord .= " $logop (TALK.$field1 LIKE '%$additionalWord%' or AGENDA.$field2 LIKE '%$additionalWord%'";
+
+			if ($field == "title") {
+				$searchWord .= " or TALK.tcomment LIKE '%$additionalWord%' or AGENDA.acomments LIKE '%$additionalWord%' or SESSION.scomment LIKE '%$additionalWord%')";
+			} else {
+				$searchWord .= ")";
+			}
+		}
 	}
 	$searchWord .= ") $textperiod";
 

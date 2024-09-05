@@ -12,7 +12,7 @@ function CreateMainMenu()
 	<SCRIPT TYPE=\"text/javascript\" LANGUAGE=\"JavaScript1.2\">";
 
     $i = 1;
-    while (list($title,$url) = each($mainmenulinks)) {
+    foreach ($mainmenulinks as $title => $url) {
         $textMenu .= "
 		addStaticMenuItem(\"mmtext$i\",\"$title\",\"$url\",document);";
         $i++;

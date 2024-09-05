@@ -61,9 +61,9 @@ function getChildren($fid)
 // bracket-enclosed, comma-separated list of all elements in the array
 function createTextFromArray($array)
 {
-    reset($array);
-    $text = "(''";
-    while (list($key,$value) = each($array)) {
+    $text = "(''"; // Start with (''
+
+    foreach ($array as $value) {
         $text .= ",'".$value."'";
     }
 
@@ -111,10 +111,10 @@ function getFatherTree($uid)
 function getIconLevel($array, $maxlevel)
 {
     $iconlevel = "";
-    reset($array);
-    while (list($key,$val) = each($array)) {
-        if ($val[icon] != "" && $val[level] >= $maxlevel) {
-            $iconlevel = $val[uid];
+
+    foreach ($array as $val) {
+        if (!empty($val['icon']) && $val['level'] >= $maxlevel) {
+            $iconlevel = $val['uid'];
         }
     }
 

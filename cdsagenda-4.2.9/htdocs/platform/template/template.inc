@@ -76,8 +76,7 @@ class Template {
       }
       $this->file[$handle] = $this->filename($filename);
     } else {
-      reset($handle);
-      while(list($h, $f) = each($handle)) {
+      foreach ($handle as $h => $f) {
         $this->file[$h] = $this->filename($f);
       }
     }
