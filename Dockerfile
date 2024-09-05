@@ -46,6 +46,17 @@ RUN /configure_php.sh
 RUN chgrp -R 0 /var/www && \
     chmod -R g=u /var/www
 
-EXPOSE 80
+RUN chgrp -R 0 /var/log/apache2 && \
+    chmod -R g=u /var/log/apache2
+
+RUN chgrp -R 0 /run/apache2 && \
+    chmod -R g=u /run/apache2
+
+RUN sed -i "s/Listen 80/Listen 9090/g" /etc/apache2/httpd.conf
+RUN sed -i "s/User apache/User nobody/g" /etc/apache2/httpd.conf
+RUN sed -i "s/Group apache/Group nogroup/g" /etc/apache2/httpd.conf
+# RUN sed -i "s/#ServerName.*/ServerName localhost/" /etc/apache2/httpd.conf
+
+EXPOSE 9090
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
