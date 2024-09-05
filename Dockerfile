@@ -16,11 +16,11 @@ COPY ./cdsagenda-4.2.9 /cdsagenda
 COPY java /usr/bin/java
 WORKDIR /cdsagenda
 
-ENV MYSQL_USER=root
-ENV MYSQL_PASSWORD=example
-ENV MYSQL_DBNAME=cdsagenda
-ENV MYSQL_HOST=db
-ENV PORT=9090
+ARG MYSQL_USER=root
+ARG MYSQL_PASSWORD=example
+ARG MYSQL_DBNAME=cdsagenda
+ARG MYSQL_HOST=db
+ARG PORT=9090
 
 # Remove the default index.html
 RUN rm -f /var/www/localhost/htdocs/index.html
@@ -42,6 +42,9 @@ RUN make install
 COPY info.php /var/www/localhost/htdocs/info.php
 COPY configure_php.sh /configure_php.sh
 RUN /configure_php.sh
+
+RUN chgrp -R 0 /var/www && \
+    chmod -R g=u /var/www
 
 EXPOSE 80
 

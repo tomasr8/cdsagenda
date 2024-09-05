@@ -1,12 +1,12 @@
 services:
   db:
-    image: mariadb
+    image: mysql:8.0-bookworm
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: example
     volumes:
       - type: bind
-        source: ./tabcreate.sql
+        source: ./db/tabcreate.sql
         target: /docker-entrypoint-initdb.d/000-tabcreate.sql
 
   adminer:
