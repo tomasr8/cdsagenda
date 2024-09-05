@@ -61,7 +61,7 @@ if ($categories == "") {
     $categories = array( '3l13','3l160','2l64' );
 }
 elseif (!is_array($categories)) {
-    $categories = split(" ",$categories);
+    $categories = explode(" ",$categories);
 }
 $colorcodes = array( "FFCC99",
                      "99CC99",
@@ -399,11 +399,11 @@ function ReadAgendaCategory($categ)
     $sdaterequest = "";
     $edaterequest = "";
     if ($sdate != "") {
-        list($sday,$smonth,$syear) = split("/",$sdate,3);
+        list($sday,$smonth,$syear) = explode("/",$sdate,3);
         $sdaterequest = "and stdate >= '$syear-$smonth-$sday'";
     }
     if ($edate != "") {
-        list($eday,$emonth,$eyear) = split("/",$edate,3);
+        list($eday,$emonth,$eyear) = explode("/",$edate,3);
         $edaterequest = "and endate <= '$eyear-$emonth-$eday'";
     }
 
@@ -427,7 +427,7 @@ function ReadAgendaCategory($categ)
         $id = $row['id'];
         $meetings[$categ][$stdate][$id] = $title;
         if ($endate != $stdate) {
-            list($y,$m,$d) = split ("-",$stdate,3);
+            list($y,$m,$d) = explode ("-",$stdate,3);
             $cdate = $stdate;
             while ($cdate != $endate) {
                 $d++;
