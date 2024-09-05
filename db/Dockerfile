@@ -1,0 +1,3 @@
+FROM mariadb:11-ubi9
+
+COPY tabcreate.sql /docker-entrypoint-initdb.d/000-tabcreate.sql
