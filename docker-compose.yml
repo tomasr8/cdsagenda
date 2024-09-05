@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: example
+    volumes:
+      - type: bind
+        source: ./tabcreate.sql
+        target: /docker-entrypoint-initdb.d/000-tabcreate.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  web:
+    build: .
+    ports:
+      - 9090:80
