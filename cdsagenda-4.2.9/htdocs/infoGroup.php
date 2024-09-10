@@ -46,7 +46,7 @@ $Template->set_file(array( "mainpage" => "infoGroup.ihtml",
                            "error" => "error.ihtml"));
 
 if (getGroupName($groupid) == "") {
-    outError("Unknown group...","01", &$Template );
+    outError("Unknown group...","01", $Template );
     exit;
 }
 

@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once '../AgeDB.php';
@@ -42,13 +42,20 @@ $idt = $_REQUEST[ "idt" ];
 $ifd = $_REQUEST[ "ifd" ];
 $position = $_REQUEST[ "position" ];
 $type = $_REQUEST[ "type" ];
-$delete = $_REQUEST[ "delete" ];	
+$delete = $_REQUEST[ "delete" ];
+
+$AN = $_REQUEST[ "an" ];
+$position = $_REQUEST[ "position" ];
+$stylesheet = $_REQUEST[ "stylesheet" ];
+$from = $_REQUEST[ "from" ];
+$nbFiles = $_REQUEST[ "nbFiles" ];
+
 
 // new template
 $Template = new Template( $PathTemplate );
 
 // Template set-up
-$Template->set_file(array( 	"mainpage"=> "file.ihtml", 
+$Template->set_file(array( 	"mainpage"=> "file.ihtml",
                             "error" => "error.ihtml" ));
 
 // New archive object
@@ -186,8 +193,8 @@ else {
 }
 $Template->set_var("file_eventprotection","<a href=\"\" onClick=\"document.forms[0].action='eventprotection.php';document.forms[0].submit();return false;\">".$file_eventprotection."</a>");
 
-
-chdir ("$agendadir/$ida$ids$idt/");
+// TODO this might've been important, but it crashes so..
+// chdir ("$agendadir/$ida$ids$idt");
 
 $str_help = "";
 
@@ -216,10 +223,10 @@ if ($createps != "" && $ACROREAD != "") {
                           filesize("$agendadir/$ida$ids$idt/$filetype/$newname"));
     }
 }
-	
+
 if ( $createtxtfrompdf != "" && $PS2ASCII != "") {
     $newname = ereg_replace(".pdf",".txt",$createtxtfrompdf);
-    `$PS2ASCII $agendadir/$ida$ids$idt/$filetype/$createtxtfrompdf $agendadir/$ida$ids$idt/$filetype/$newname`;	 
+    `$PS2ASCII $agendadir/$ida$ids$idt/$filetype/$createtxtfrompdf $agendadir/$ida$ids$idt/$filetype/$newname`;
     if (is_file("$agendadir/$ida$ids$idt/$filetype/$newname")) {
         @chmod("$agendadir/$ida$ids$idt/$filetype/$newname", $filmode);
         $result = $archive->addFile("$ida$ids$idt",
@@ -228,13 +235,13 @@ if ( $createtxtfrompdf != "" && $PS2ASCII != "") {
                           "$filetype",
                           filesize("$agendadir/$ida$ids$idt/$filetype/$newname"));
     }
-}	
+}
 
 // Change the type of the file
 if ($fileChange != "") {
     if (!@is_dir("$agendadir/$ida$ids$idt/$newfiletype")) { mkdir ("$agendadir/$ida$ids$idt/$newfiletype", $dirmode); }
     $name = basename($fileChange);
-    
+
     if ($newfiletype != $filetype) {
         $myfileID = $archive->getFileID("$ida$ids$idt","$agendadir/$ida$ids$idt/$filetype","$fileChange");
         $myfile = $archive->getFile($myfileID);
@@ -256,7 +263,7 @@ if ($delete != "") {
 if ($deleteall != "") {
     if ($archive->deleteAllFiles("$ida$ids$idt")) {
         modifyLastUpdate();
-    }   
+    }
 }
 
 
@@ -286,20 +293,20 @@ $Template->set_var("str_help","$str_help");
 /****************************************************************************
  * File uploads                **********************************************
  ****************************************************************************/
- 
+
 // Upload the files if requested by the user
 $i = 1;
 $filename = "Files$i";
 
-while (${$filename} != "")
+while ($_FILES[$filename] != "")
 {
-    $destname = "destname$i";
-    $copyright = "copyright$i";
-    $deny = "deny$i";
-    $limitdomain = "limitdomain$i";
-    $fdescription = "fdescription$i";
-    $newTypeSelect = "newTypeSelect$i";
-    uploadFile(${$filename},str_replace("\\","",${$filename."_name"}),${$destname},${$copyright},${$deny},${$limitdomain},${$fdescription},${$newTypeSelect});
+    $destname = $_POST["destname$i"];
+    $copyright = $_POST["copyright$i"];
+    $deny = $_POST["deny$i"];
+    $limitdomain = $_POST["limitdomain$i"];
+    $fdescription = $_POST["fdescription$i"];
+    $newTypeSelect = $_POST["newTypeSelect$i"];
+    uploadFile($_FILES[$filename]["tmp_name"],str_replace("\\","",$_FILES[$filename]["name"]),$destname,$copyright,$deny,$limitdomain,$fdescription,$newTypeSelect);
     modifyLastUpdate();
     $i++;
     $filename = "Files$i";
@@ -307,7 +314,7 @@ while (${$filename} != "")
 // Test if must go to a specific script
 if ( $i>1 && strcmp( $_REQUEST["query"], "" ) )
 {
-    Header( "Location: " . $_REQUEST["nextScript"] . "?" . ereg_replace( "__", "&", $_REQUEST["query"] ));
+    Header( "Location: " . $_REQUEST["nextScript"] . "?" . preg_replace( "/__/", "&", $_REQUEST["query"] ));
     exit;
 }
 
@@ -315,12 +322,12 @@ if ( $i>1 && strcmp( $_REQUEST["query"], "" ) )
 /****************************************************************************
  * File linkages               **********************************************
  ****************************************************************************/
- 
+
 // Link the files if requested by the user
 $i = 1;
 $filename = "URL$i";
 
-while (${$filename} != "")
+while ($_FILES[$filename] != "")
 {
     $destname = "destname$i";
     $copyright = "copyright$i";
@@ -328,7 +335,7 @@ while (${$filename} != "")
     $limitdomain = "limitdomain$i";
     $fdescription = "fdescription$i";
     $newTypeSelect = "newTypeSelect$i";
-    linkFile(${$filename},${$destname},${$copyright},${$deny},${$limitdomain},${$fdescription},${$newTypeSelect});
+    linkFile($_FILES[$filename],${$destname},${$copyright},${$deny},${$limitdomain},${$fdescription},${$newTypeSelect});
     modifyLastUpdate();
     $i++;
     $filename = "URL$i";
@@ -344,7 +351,7 @@ $archive->synchronize("$eventID");
 $categories = $archive->listFileCategories("$eventID");
 while ($category = current($categories)) {
     $files = $archive->listFiles($eventID, $category);
-    
+
     while ($file = current($files)) {
         $name = $file->getField("name");
         $path = $file->getField("path");
@@ -359,27 +366,27 @@ while ($category = current($categories)) {
         }
 
         $additional_text = "";
-        if ( ereg("(.*).ps",$name,$found) && !is_file("$path/$found[1].pdf")) {
+        if ( preg_match("/(.*)\.ps/",$name,$found) && !is_file("$path/$found[1].pdf")) {
             if ( $createPDFActive && $PS2PDF != "")
                 $additional_text = "[<A HREF=file.php?ida=$ida&ids=$ids&idt=$idt&createpdf=".urlencode("$name")."&filetype=".urlencode("$category")."&position=$position>create&nbsp;PDF</A>]";
             else
                 $additional_text = "";
         }
-        if ( ereg("(.*).pdf",$name,$found )) {
+        if ( preg_match("/(.*)\.pdf/",$name,$found )) {
             $additional_text = "";
             if (( $createPSActive && $ACROREAD != "") && ( !is_file("$path/$found[1].ps" )) && ( !is_file("$path/$found[1].ps.gz" )))
                 $additional_text .= "[<A HREF=file.php?ida=$ida&ids=$ids&idt=$idt&createps=".urlencode("$name")."&filetype=".urlencode("$category")."&position=$position>create&nbsp;PS</A>]";
             if ( $createTXTActive  && $PS2ASCII && ( !is_file( "$path/$found[1].txt" )))
                 $additional_text .= "[<A HREF=file.php?ida=$ida&ids=$ids&idt=$idt&createtxtfrompdf=".urlencode("$name")."&filetype=".urlencode("$category")."&position=$position>create&nbsp;TXT</A>]";
         }
-        
+
         $str_while .= "<TR><TD align=right><a href=\"\" onClick=\"document.forms[0].action='fileprotection.php';document.forms[0].fileID.value='$fileID';document.forms[0].submit();return false;\">".$fileprotectiontext."</a></TD><TD align=right><small><B>$name</B></small></TD><TD align=center><small>[<A HREF=file.php?ida=$ida&ids=$ids&idt=$idt&position=$position&delete=".urlencode("$fileID")."&filetype=".urlencode("$category")." onClick=\"return confirm('Are you sure you want to delete this file?');\">delete</A>]";
         if ( $displayFileActive )
             $str_while .="[<A HREF='$AGE_WWW/askArchive.php?base=agenda&categ=$ida&id=".urlencode("$eventID/$category/$name")."'>display</A>]$additional_text</small>\n";
-					
+
         $str_while .= "</TD><TD>\n";
         $nbEntries++;
-        
+
         $str_while .= "<small><SELECT name=\"filetype$nbEntries\" onChange=\"document.forms[0].fileChange.value='$name';document.forms[0].filetype.value='$category';document.forms[0].newfiletype.value=this.options[this.selectedIndex].value;document.forms[0].submit();\">\n";
 
         // fill in array structure with list of categories;
@@ -401,24 +408,23 @@ while ($category = current($categories)) {
         }
 
         $flag = false;
-        reset($FILE_TYPES_ARRAY);
-        while (list ($key, $val) = each ($FILE_TYPES_ARRAY)) {
-            if ($key == "$category") {
-                $str_while .= "	<OPTION value='$key' selected> $val\n";
+        foreach ($FILE_TYPES_ARRAY as $key => $val) {
+            if ($key == $category) {  // No need to wrap $category in quotes, it's already a variable
+                $str_while .= "    <OPTION value='$key' selected> $val\n";
                 $flag = true;
+            } else {
+                $str_while .= "    <OPTION value='$key'> $val\n";
             }
-            else
-                $str_while .= "	<OPTION value='$key'> $val\n";
         }
         if ( !$flag )
             $str_while .= "        <OPTION value='$category' selected> $category\n";
-        
-        $str_while .= "</SELECT></small>\n</TD>\n";  
+
+        $str_while .= "</SELECT></small>\n</TD>\n";
         next($files);
     }
     next ($categories);
 }
-                                            
+
 $flagsStr = "
 <TD bgcolor=#eeeeee align=\"center\"><font size=-1 color=#888888>CP</font></TD>
 <TD bgcolor=#eeeeee align=\"center\"><font size=-1 color=#888888>DL</font></TD>
@@ -446,7 +452,7 @@ closedir($d);
 function modifyLastUpdate()
 {
     global $ida,$ids,$idt;
-    
+
     $db = &AgeDB::getDB();
 
     $time=time();
@@ -470,7 +476,7 @@ function modifyLastUpdate()
 }
 
 function formatFileName($text)
-{		
+{
     $text = str_replace("\007","",$text);
     $text = str_replace("\010","",$text);
     $text = str_replace("\014","",$text);
@@ -491,7 +497,7 @@ function formatFileName($text)
     $text = str_replace("\034","",$text);
     $text = str_replace("\035","",$text);
     $text = str_replace("\036","",$text);
-    $text = str_replace("\037","",$text);	
+    $text = str_replace("\037","",$text);
     $text = str_replace("#","_",$text);
     return $text;
 }
@@ -514,11 +520,11 @@ function linkFile($URL,$destname,$copyright,$deny,$limitdomain,$fdescription,$ne
 
     // and the directory the file will be stored in
     $dirType = "$newType";
-    
+
     // create the directory
     if (!@is_dir("$agendadir/$ida$ids$idt/$dirType"))
         @mkdir ("$agendadir/$ida$ids$idt/$dirType", $dirmode);
-  
+
     // Create a redirection file to the given URL
     if ($URL != "") {
         if ($destname == "") {
@@ -535,7 +541,7 @@ function linkFile($URL,$destname,$copyright,$deny,$limitdomain,$fdescription,$ne
 	while (file_exists("$agendadir/$ida$ids$idt/$dirType/$destname.link")) {
 		$i++;
 		$destname = "$destname$i";
-	}	
+	}
 
         // Copy the file
         $output = fopen("$agendadir/$ida$ids$idt/$dirType/$destname.link","w" );
@@ -558,7 +564,7 @@ function linkFile($URL,$destname,$copyright,$deny,$limitdomain,$fdescription,$ne
                 // Failed to change the database, rollback the transaction
                 $db->rollback();
                 unlink("$agendadir/$ida$ids$idt/$dirType/$destname.link");
-                outError( " An error occured while archiving your file, try again later ", "02", &$Template );
+                outError( " An error occured while archiving your file, try again later ", "02", $Template );
                 exit;
             }
             elseif ($result == -1) {
@@ -586,12 +592,11 @@ function uploadFile($MainFile,$MainFile_name,$destname,$copyright,$deny,$limitdo
         $newType = $newTypeFreeText;
     else
         $newType = $newTypeSelect;
-    $newType = ereg_replace(" ",$replaceBlankINFileNameChar,$newType);
+    $newType = preg_replace("/ /",$replaceBlankINFileNameChar,$newType);
     $newType = formatFileName($newType);
 
     // and the directory the file will be stored in
     $dirType = "$newType";
-
     // if for a reason the type is not correct, return
     if (chop($dirType) == "") {
 	return;
@@ -606,13 +611,13 @@ function uploadFile($MainFile,$MainFile_name,$destname,$copyright,$deny,$limitdo
             $destname = $MainFile_name;
         }
         else {
-            $extension = ereg_replace(".*\.","",$MainFile_name);
-            if ($extension != "" && !ereg("\.$extension",$destname)) {
+            $extension = preg_replace("/.*\./","",$MainFile_name);
+            if ($extension != "" && !preg_match("/\.$extension/",$destname)) {
                 $destname = $destname . "." . $extension;
             }
         }
         $destname = str_replace( '%20', '_', $destname );
-        $destname = ereg_replace(" ",$replaceBlankINFileNameChar,$destname);
+        $destname = preg_replace("/ /",$replaceBlankINFileNameChar,$destname);
         $destname = formatFileName($destname);
         // Copy the file
         copy( "$MainFile","$agendadir/$ida$ids$idt/$dirType/$destname" );
@@ -630,7 +635,7 @@ function uploadFile($MainFile,$MainFile_name,$destname,$copyright,$deny,$limitdo
             if (!$result) {
                 // Failed to change the database, rollback the transaction
                 $db->rollback();
-                outError( " An error occured while archiving your file, try again later ", "02", &$Template );
+                outError( " An error occured while archiving your file, try again later ", "02", $Template );
                 exit;
             }
             elseif ($result == -1) {
@@ -638,7 +643,7 @@ function uploadFile($MainFile,$MainFile_name,$destname,$copyright,$deny,$limitdo
                 // Another entry with the same fileName is present cannot insert it
                 $db->rollback();
             }
-            else {	
+            else {
                 $db->commit();
             }
         }

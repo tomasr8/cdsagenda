@@ -49,7 +49,7 @@ $Template->set_file(array( "mainpage" => "adminGroups.ihtml",
 $logtext = "";
 
 if (!isSuperuser($userid)) {
-    outError("Action forbidden. You are not administrator", "02", &$Template);
+    outError("Action forbidden. You are not administrator", "02", $Template);
     exit;
 }
 

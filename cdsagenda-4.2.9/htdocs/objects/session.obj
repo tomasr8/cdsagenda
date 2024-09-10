@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 class session {
@@ -54,9 +54,9 @@ class session {
 	var $cd;
 	var $md;
 	var $scomments;
-		
+
 	//constructor
-	function session($ida,$ids) {
+	function __construct($ida,$ids) {
 		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$mapServerACTIVE,$mapServerAddress,$directDisplaySingleFiles;
 		$nbfiles = 0;
 		$nbtalks = 0;
@@ -121,14 +121,14 @@ class session {
 			$this->bld = $row['bld'];
 			$this->floor = $row['floor'];
 			$this->room = $row['room'];
-   
+
             // If the map server is active, then we embed the map info in
             // the room variable
             if ($mapServerACTIVE && $this->bld != "" && $this->room != "0--" && $this->room != "") {
                 $this->room = "<a href=\"$mapServerAddress". ( $this->bld!=0 ? $this->bld : ereg_replace(" ","+",$this->room) ) ."\" classinfo>".$this->room."</a>";
             }
             $this->room = formatfield($this->room);
-            
+
 			// Attached Files + Minutes
 			///////////////////////////////////////////////////
             $archive = new archive();
@@ -148,7 +148,7 @@ class session {
                 else {
                     $linkname = $text;
                 }
-                
+
                 $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida$ids/$category" );
                 $nbfiles ++;
                 next($categories);
@@ -185,7 +185,7 @@ class session {
                         }
                         $this->minutes = $mintext;
                     }
-                    next($minutesfiles); 
+                    next($minutesfiles);
                 }
             }
 
@@ -268,14 +268,14 @@ class session {
 					}
 				}
 			}
-			
+
 			$xml .= "
         </session>";
-	
+
 			//return final value
 			return $xml;
 		}
 	}
-	
+
 }
 ?>

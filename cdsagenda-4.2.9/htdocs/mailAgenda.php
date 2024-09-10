@@ -1,7 +1,7 @@
 <?php
 // $Id mailAgenda.php,v 1.1.1.1.4.14 2003/01/06 16:47:59 tbaron Exp $
 
-// mailAgenda.php --- 
+// mailAgenda.php ---
 //
 // Copyright (C) 2003  CDS Team <cds.support@cern.ch>
 //     http://cds.cern.ch
@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -39,18 +39,18 @@ require_once 'platform/system/commonfunctions.inc';
 $db  = & AgeDB::getDB();
 
 $Template = new Template( $PathTemplate );
-$Template->set_file(array("error" => "error.ihtml", 
+$Template->set_file(array("error" => "error.ihtml",
                           "email" => "emailbody.ihtml"));
-                    
+
 $stylesheet = "email";
-             
+
 if ($ida == "") {
-    outError("Error sending email. ida not defined","01",&$Template);
+    outError("Error sending email. ida not defined","01",$Template);
 }
 if ($dest == "") {
-    outError("Error sending email. destinator not defined","01",&$Template);
+    outError("Error sending email. destinator not defined","01",$Template);
 }
-       
+
 if ( $dest != "" ) {
 	$sql = "select title,id from AGENDA where id='$ida'";
 
@@ -62,7 +62,7 @@ if ( $dest != "" ) {
 	if ($numRowsTitle > 0) {
 		$rowTitle = $resTitle->fetchRow();
 	}
-							  
+
 	// Email request, send the resulting text string to the dest address
     // FIXME: To be reimplemented following Simone Grassi code
 	if ( EXECLOG)
@@ -73,7 +73,7 @@ if ( $dest != "" ) {
 	if ( !$GLOBALS[ "CMail" ]->sendfile( )) {
         if ( ERRORLOG)
             $log->logError( __FILE__, __LINE__, " '$error_msg' FALSE received sending email to '$dest' with body '$htmltext' " );
-        outError("There was an error when sending the email. <br>The email has not sent","01",&$Template);
+        outError("There was an error when sending the email. <br>The email has not sent","01",$Template);
 
     }
 	else {

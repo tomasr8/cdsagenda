@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once '../AgeDB.php';
@@ -40,25 +40,25 @@ $Template = new Template( $PathTemplate );
 $Template->set_file(array( "mainpage" => "TimeTableEdit.ihtml",
                            "JSMenuTools" => "JSMenuTools.ihtml",
                            "JSMenuToolsAdd" => "JSMenuToolsAdd.ihtml",
-                           "error"=>"error.ihtml" ));	
+                           "error"=>"error.ihtml" ));
 
 if ($minH == null) {
 	$minH = 7;
 }
-	
+
 if ($maxH == null) {
 	$maxH = 22;
 }
-	
+
 if ($sizefactor == null) {
-	$sizefactor = 1; 
+	$sizefactor = 1;
 }
 
 $colorsession[1] = "#90c0f0";
 $colorsession[2] = "#f0c090";
 $colorsession[3] = red;
 $colorsession[4] = cyan;
-	
+
 $db = &AgeDB::getDB();
 
 if ($todo == "save") {
@@ -72,7 +72,7 @@ if ($todo == "save") {
 				$newstart = $val/$sizefactor + 60*$minH - 50/$sizefactor;
 				$newhour = (int)($newstart/60);
 				$newmin = $newstart - $newhour*60;
-				$sql = "update TALK set stime='$newhour:$newmin:0' 
+				$sql = "update TALK set stime='$newhour:$newmin:0'
                         where ida='$ida' and ids='$ids' and idt='$idt'";
 				$res = $db->query($sql);
 				if (DB::isError($res)) {
@@ -96,7 +96,7 @@ $Template->parse( "timetableedit_jsmenutoolsadd", "JSMenuToolsAdd", true );
 $nbTalks = 0;
 
 if (!$thisday && !get_first_day($ida)) {
-	outError("Sorry, you cannot edit the time table for this agenda... No talk is available yet...","01",&$Template);
+	outError("Sorry, you cannot edit the time table for this agenda... No talk is available yet...","01",Template);
 	exit;
 }
 
@@ -114,8 +114,8 @@ $db = &AgeDB::getDB();
 $body = "";
 
 $sql = "select HOUR(stime),MINUTE(stime)
-        AS minutes,idt,ttitle,duration,ids 
-        from TALK 
+        AS minutes,idt,ttitle,duration,ids
+        from TALK
         where ida='$ida' and tday='$thisday'";
 $res = $db->query($sql);
 if (DB::isError($res)) {
@@ -126,9 +126,9 @@ $numRows = $res->numRows();
 if ($numRows != 0) {
 	for ( $i = 0; $numRows > $i; $i++ ) {
 		$row = $res->fetchRow();
-		$body .= "<INPUT type=hidden name=newstart" . 
-			$row['ids'] . 
-			$row['idt'] . 
+		$body .= "<INPUT type=hidden name=newstart" .
+			$row['ids'] .
+			$row['idt'] .
 			">\n";
 	}
 }
@@ -160,21 +160,21 @@ $body .= "
 </FORM>\n";
 
 
-$sql = "select TALK.ids,stitle 
+$sql = "select TALK.ids,stitle
         from TALK,
 	         SESSION
-        where TALK.ids=SESSION.ids and 
-              TALK.ida=SESSION.ida and 
-              TALK.ida='$ida' and 
-              TALK.tday='$thisday' 
-        group by TALK.ids 
+        where TALK.ids=SESSION.ids and
+              TALK.ida=SESSION.ida and
+              TALK.ida='$ida' and
+              TALK.tday='$thisday'
+        group by TALK.ids
         order by TALK.stime";
 $res = $db->query($sql);
 if (DB::isError($res)) {
     die ($res->getMessage());
 }
 $numRows = $res->numRows();
-$numsession = 0;  
+$numsession = 0;
 
 if ($numRows != 0) {
 	for ( $i = 0; $numRows > $i; $i++ ) {
@@ -184,7 +184,7 @@ if ($numRows != 0) {
 		$body .= "
 	<SCRIPT TYPE=\"text/javascript\" LANGUAGE=\"JavaScript1.2\">
 		sessions[$numsession] = new Array();
-		numtalks[$numsession] = 0; 
+		numtalks[$numsession] = 0;
 		numsession ++;
 	</SCRIPT>\n";
 
@@ -195,8 +195,8 @@ if ($numRows != 0) {
 
 		$sql = "select HOUR(stime) AS hours,
                        MINUTE(stime) AS minutes,
-                       idt,ttitle,duration,ids 
-                from TALK 
+                       idt,ttitle,duration,ids
+                from TALK
                 where ida='$ida' and ids='$ids'";
 		$res2 = $db->query($sql);
 		if (DB::isError($res2)) {
@@ -235,7 +235,7 @@ for ($i = 1;$i <= $nbTalks; $i++) {
 		}\n";
 }
 $jsfunctions .= "
-		changed = 0; 
+		changed = 0;
 	}\n";
 
 $jsfunctions .= "
@@ -271,7 +271,7 @@ for ($i = 1;$i <= $nbTalks; $i++) {
 $jsfunctions .= "
 	}
 
-function setIndic(Yvalue) {	
+function setIndic(Yvalue) {
    if (Yvalue%(5*$sizefactor) != 0) {
       Yvalue = Yvalue - Yvalue%(5*$sizefactor);
    }
@@ -299,17 +299,17 @@ function displayHourTable($hour, $num, $numsession) {
 	$top = 50 + ($num-1)*60*$sizefactor;
 	$left = 150 + ($numsession-1)*170;
 	$height = 60 * $sizefactor;
-	if ($hour < 10) { 
-		$hourtext = "0$hour"; 
-	} 
-	else { 
-		$hourtext = $hour; 
+	if ($hour < 10) {
+		$hourtext = "0$hour";
 	}
-	if ($sizefactor == 1) { 
-		$image = "smallhourtable.jpg"; 
+	else {
+		$hourtext = $hour;
 	}
-	else { 
-		$image = "bighourtable.jpg"; 
+	if ($sizefactor == 1) {
+		$image = "smallhourtable.jpg";
+	}
+	else {
+		$image = "bighourtable.jpg";
 	}
 	$text .= "
 	<DIV 	ID=\"hour$hour\"
@@ -321,16 +321,16 @@ function displayHourTable($hour, $num, $numsession) {
 		</TR>
 		</TABLE>
 	</DIV>\n";
-    
+
     return $text;
 }
 
-function displayTalk($hour, 
-					 $min, 
-					 $idt, 
-					 $ttitle, 
-					 $duration, 
-					 $ids, 
+function displayTalk($hour,
+					 $min,
+					 $idt,
+					 $ttitle,
+					 $duration,
+					 $ids,
 					 $numsession) {
 	global $minH,
 		$nbTalks,
@@ -353,11 +353,11 @@ function displayTalk($hour,
 	$sttitle = substr($ttitle,0,16);
 
 	$top = 50 + (($hour-$minH)*60 + $min)*$sizefactor;
-	if ($top < 50) { 
-		$top=50; 
+	if ($top < 50) {
+		$top=50;
 	}
 	$left = 200 + ($numsession-1)*170;
-			
+
 	$initialX[$nbTalks] = $left;
 	$initialY[$nbTalks] = $top;
 	$id[$nbTalks] = "$ids$idt";
@@ -391,7 +391,7 @@ function displayTalk($hour,
 		</TR>
 		</TABLE>
 	</DIV>
-	
+
 <SCRIPT TYPE=\"text/javascript\" LANGUAGE=\"JavaScript1.2\">
 	numtalks[$numsession] ++;
 	sessions[$numsession][numtalks[$numsession]] = getObject('$ids$idt');
@@ -432,7 +432,7 @@ function getdays($ida) {
     $text = "";
 
 	$db = &AgeDB::getDB();
-	$sql = "select tday from TALK where ida='$ida' 
+	$sql = "select tday from TALK where ida='$ida'
             group by tday order by tday";
 	$res = $db->query($sql);
 	if (DB::isError($res)) {
@@ -472,16 +472,16 @@ function displayKey($numsession) {
 
 	$db = &AgeDB::getDB();
 	$sql = "
-select 
-	stitle 
-from 
+select
+	stitle
+from
 	TALK
 	left join SESSION on TALK.ids=SESSION.ids and TALK.ida=SESSION.ida
-where 	
-	TALK.ida='$ida' and TALK.tday='$thisday' 
-group by 
-	TALK.ids 
-order by 
+where
+	TALK.ida='$ida' and TALK.tday='$thisday'
+group by
+	TALK.ids
+order by
 	TALK.stime";
 	$res = $db->query($sql);
 	if (DB::isError($res)) {
@@ -490,7 +490,7 @@ order by
 	$numRows = $res->numRows();
 
 	$num = 0;
-		
+
 	if ($numRows != 0) {
 		for ($i = 0; $numRows > $i; $i++) {
 			$row = $res->fetchRow();

@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 function CreateViewMenu() {
@@ -40,10 +40,9 @@ function CreateViewMenu() {
 	$text .= "
 		&nbsp;<font size=-1 class=headline><B>AVAILABLE&nbsp;VIEWS</B></font>
 		<SCRIPT TYPE=\"text/javascript\" LANGUAGE=\"JavaScript1.2\">\n";
-		
-	reset($stylesheets);
-	while (list ($key, $val) = each ($stylesheets)) {
-		$val = str_replace(" ","&nbsp;",$val);
+
+	foreach ($stylesheets as $key => $val) {
+		$val = str_replace(" ","&nbsp;", $val);
 		$text .= "
 		addStaticMenuItem(\"m5text$num\",\"$val\",\"fullAgenda.php?ida=$ida&amp;stylesheet=$key&amp;dl=$dl&amp;dd=$dd\",document);";
 		$num++;
@@ -58,7 +57,7 @@ function CreateViewMenu() {
 		{
 			document.write('<BR>&nbsp;<font size=-1 class=headline><B>OTHER&nbsp;FORMATS</B></font>');
 		} ";
-		
+
 	if ( $OtherFormatPSActive ) {
 		$text .= "		addStaticMenuItem(\"m5text$num\",\"PostScript...\",\"event.cancelBubble = true;javascript:center('PSMenu',true)\",document);";
 		$num++;
@@ -96,11 +95,11 @@ function CreateViewMenu() {
 	if ($dl != "session") {
 		$text .= "
 		addStaticMenuItem(\"m5text$num\",\"Hide&nbsp;all&nbsp;talks\",\"fullAgenda.php?ida=$ida&amp;stylesheet=$stylesheet&amp;dl=session&amp;dd=$dd\",document);\n";
-	} 
+	}
 	else {
 		$text .= "
 		addStaticMenuItem(\"m5text$num\",\"Display&nbsp;all&nbsp;talks\",\"fullAgenda.php?ida=$ida&amp;stylesheet=$stylesheet&amp;dl=talk&amp;dd=$dd\",document);\n";
-	} 
+	}
 
 	$text .= "
 		if (DOM == 1)
@@ -131,15 +130,15 @@ function CreateViewMenu() {
 	}
 	if ($dd != "" && $dd != "0000-00-00") {
 		$text .= "
-		addStaticMenuItem(\"m5text$num\",\"All Days\",\"fullAgenda.php?ida=$ida&amp;stylesheet=$stylesheet&amp;dl=$dl\",document);";  
+		addStaticMenuItem(\"m5text$num\",\"All Days\",\"fullAgenda.php?ida=$ida&amp;stylesheet=$stylesheet&amp;dl=$dl\",document);";
 	}
-    
+
 	$text .= "
       </SCRIPT>
 	  </SMALL>
 " . CreateMenuFooter() . "
 	  <!-- `menu5.inc' ends here -->";
-  
+
 	return $text;
 }
 

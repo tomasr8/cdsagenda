@@ -41,6 +41,12 @@ $ida = $_REQUEST[ "ida" ];
 $ids = $_REQUEST[ "ids" ];
 $idt = $_REQUEST[ "idt" ];
 
+$AN = $_REQUEST[ "an" ];
+$position = $_REQUEST[ "position" ];
+$stylesheet = $_REQUEST[ "stylesheet" ];
+$from = $_REQUEST[ "from" ];
+$nbFiles = $_REQUEST[ "nbFiles" ];
+
 // new template
 $templFileAg = new Template( $PathTemplate );
 
@@ -106,12 +112,12 @@ if ( $allowNewDocumentsType )
   // we select it also in the select box
   $str_help .= "Select: <SELECT name=\"newTypeSelect\">\n";
   // $FILE_TYPES_ARRAY from config.php
-  reset($FILE_TYPES_ARRAY);
-  while (list ($key, $val) = each ($FILE_TYPES_ARRAY)) {
-      if ($key == "moreinfo")
-          $str_help .= "	<OPTION value='$key' selected> $val\n";
-      else
-          $str_help .= "	<OPTION value='$key'> $val\n";
+  foreach ($FILE_TYPES_ARRAY as $key => $val) {
+    if ($key == "moreinfo") {
+        $str_help .= "<OPTION value='$key' selected> $val\n";
+    } else {
+        $str_help .= "<OPTION value='$key'> $val\n";
+    }
   }
   // and we close the select box...
   $str_help .= "</SELECT>";
@@ -142,12 +148,12 @@ for ($i=1;$i<=$nbFiles;$i++)
     $bgcolor = "#dddddd";
   $filelist .= "<tr bgcolor=$bgcolor><Td valign=top><small>Click on the \"Browse\" button and select file #$i:<br><INPUT TYPE=file NAME=Files$i VALUE=\"\" SIZE=30 MAXLENGTH=80></small></td><td><small>Destination name (if different from original):<br><input type=text name=destname$i size=20></small>";
   $filelist .= "<br><SMAll>Type of material:<br><SELECT name=\"newTypeSelect$i\">";
-  reset($FILE_TYPES_ARRAY);
-  while (list ($key, $val) = each ($FILE_TYPES_ARRAY)) {
-      if ($key == "moreinfo")
-          $filelist .= "	<OPTION value='$key' selected> $val\n";
-      else
-          $filelist .= "	<OPTION value='$key'> $val\n";
+  foreach ($FILE_TYPES_ARRAY as $key => $val) {
+    if ($key == "moreinfo") {
+        $filelist .= "<OPTION value='$key' selected> $val\n";
+    } else {
+        $filelist .= "<OPTION value='$key'> $val\n";
+    }
   }
   $filelist .= "</SELECT></td>";
   $filelist .= "</tr>";

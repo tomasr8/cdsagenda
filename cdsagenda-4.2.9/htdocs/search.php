@@ -609,8 +609,8 @@ function searchCategory($id,$text)
 			$endate = $row['endate'];
 
 			$num++;
-			$title = ereg_replace("<BR>"," ",$title);
-			$id = ereg_replace(" ","+",$id);
+			$title = preg_replace("/<BR>/"," ",$title);
+			$id = preg_replace("/ /","+",$id);
 			$result .= "	<TR><TD align=center>$num.</TD><TD><FONT size=\"-1\" class=\"headline\"><A HREF=\"fullAgenda.php?ida=" . $id . "&amp;fid=" . $fid . "\">" . $title . "</A><BR>(" . $stdate . " / " . $endate . ")</FONT><BR></TD></TR>\n";
 		}
 	}

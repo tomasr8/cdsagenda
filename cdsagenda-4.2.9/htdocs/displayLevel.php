@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -40,7 +40,7 @@ $db = &AgeDB::getDB();
 $Template = new Template($PathTemplate);
 $Template->set_file(array("mainpage"  => "displayLevel.ihtml",
                           "JSMenuTools" => "JSMenuTools.ihtml",
-						  "AGEfooter" => "AGEfooter_template.inc"));	
+						  "AGEfooter" => "AGEfooter_template.inc"));
 
 if ($alertText != "") {
 	$alertText = stripslashes($alertText);
@@ -52,9 +52,9 @@ $Template->parse( "displaylevel_jsmenutools", "JSMenuTools", true );
 // Are there any subcategories?
 $sql = "
       SELECT uid,
-             title 
-      FROM   LEVEL 
-      WHERE  fid='$fid' 
+             title
+      FROM   LEVEL
+      WHERE  fid='$fid'
       ORDER BY categorder,title";
 $res = $db->query($sql);
 if (DB::isError($res)) {
@@ -87,7 +87,7 @@ $Template->set_var("displaylevel_topmenubar", $topbarStr);
 $sql = "SELECT abstract,
                title,
                fid
-        FROM LEVEL 
+        FROM LEVEL
         WHERE uid='$fid'";
 $res = $db->query($sql);
 if (DB::isError($res)) {
@@ -105,7 +105,7 @@ if ($res->numRows() != 0) {
     else {
         $description = "";
     }
-    
+
     //Any managers?
     $managers = listUsersManageCategoryAuthorized($fid);
     $managertext = createUsersTextFromArray($managers);
@@ -126,13 +126,13 @@ if ($topid != "0") {
 else {
     $Template->set_var("displaylevel_topurl", "${AGE_WWW}/List.php");
 }
-		
+
 
 
 $sql = "SELECT uid,
-               title 
-        FROM LEVEL 
-        WHERE fid='$fid' 
+               title
+        FROM LEVEL
+        WHERE fid='$fid'
         ORDER BY categorder,title";
 $res = $db->query($sql);
 if (DB::isError($res)) {
@@ -140,7 +140,7 @@ if (DB::isError($res)) {
 }
 $numRows = $res->numRows();
 if ($numRows != 0) {
-	
+
 	//////////////////////////////////////////////////////////
 	//                                                       //
 	//        IF NOT DEAD-END, DISPLAY SUBCATEGORIES         //
@@ -150,7 +150,7 @@ if ($numRows != 0) {
 	$outputStr .=  "Subcategories:</font>";
 	$outputStr .=  "</TD></TR></TABLE>";
 	$outputStr .=  "<TABLE border=0 align=center>";
-	
+
 	$numRows = $res->numRows();
 	for ($i = 0; $i < $numRows; $i++) {
 		$row = $res->fetchRow();
@@ -167,7 +167,7 @@ if ($numRows != 0) {
   <TR>
   <TD class=headerselected>&nbsp;</TD>
   <TD><font size=-1>
-    <A HREF=\"${AGE_WWW}/displayLevel.php?fid=" . $uid . "\">" 
+    <A HREF=\"${AGE_WWW}/displayLevel.php?fid=" . $uid . "\">"
 			. $title . "
     </A>&nbsp;<font color=grey>($agendaNumber)</font>&nbsp;
     <A HREF=\"overview/overview.php?fid=" . $uid . "\">
@@ -198,11 +198,11 @@ else {
 
 	$outputStr .= "</TD><TD align=\"center\"><TABLE><TR><TD><img src=images/note.gif width=20 height=20 border=0 alt='Add to my personal scheduler' hspace=0 vspace=0></TD><TD><font size=-1>export to personal scheduler</font></TD><TD class=header width=25><font size=-1>&nbsp;</font></TD><TD><font size=-1>not yet finalized</font></TD><TD class=headerselected width=25><font size=-1>&nbsp;</font></TD><TD><font size=-1>finalized</font></TD></TR></TABLE></TD><TD align=\"right\"><font size=\"-2\">\n";
 	$outputStr .= $newAgenda;
-	
+
 	$sql = "
-select YEAR(stdate) AS year 
-from AGENDA 
-where fid='$fid' 
+select YEAR(stdate) AS year
+from AGENDA
+where fid='$fid'
 order by stdate";
 
 	$res = $db->query($sql);
@@ -210,37 +210,37 @@ order by stdate";
 	if (DB::isError($res)) {
 		die ($res->getMessage());
 	}
-	
+
 	$numRows = $res->numRows();
 	if ($numRows != 0) {
 		for ($i = 0; $i < $numRows; $i++) {
 			$row = $res->fetchRow();
 			$year = $row['year'];
 			if ($year != $lastyear) {
-				$outputStr .= "&nbsp;<a href=\"#" 
-					. $year . "\">" 
+				$outputStr .= "&nbsp;<a href=\"#"
+					. $year . "\">"
 					. $year . "</a>&nbsp;\n";
 			}
 			$lastyear = $year;
 		}
-		
+
 		$outputStr .= "</font></TD></TR></TABLE>\n";
-		
+
 		// previously used list of fields:
 		// stdate,endate,cd,status,title,confidentiality,id,
 		// cem,deadrequest,expparts,secretary,laboratories,venues,
 		// limitedpartecipations,localorganizers,organizers,
 		// collaborations,hosted,chairman
 		$sql = "
-select * from AGENDA 
-where fid='$fid' 
+select * from AGENDA
+where fid='$fid'
 order by stdate DESC,endate DESC";
-		
+
 		$res = $db->query($sql);
 		if (DB::isError($res)) {
 			die ($res->getMessage());
 		}
-		
+
 		$numRows = $res->numRows();
 		if ($numRows == 0) {
 			$outputStr .= "No agenda yet";
@@ -265,15 +265,15 @@ order by stdate DESC,endate DESC";
 				$confidentiality = $row['confidentiality'];
 				$id              = $row['id'];
 
-				$sinfo = split("-", $stdate, 5 );
+				$sinfo = explode("-", $stdate, 5 );
 				$smonth = $sinfo[1];
 				$syear = $sinfo[0];
 				$sday = $sinfo[2];
-				$einfo = split("-", $endate, 5 );
+				$einfo = explode("-", $endate, 5 );
 				$emonth = $einfo[1];
 				$eday = $einfo[2];
 				$eyear = $einfo[0];
-				$cd = split ("-", $cd, 3);
+				$cd = explode("-", $cd, 3);
 				$cdate = mktime(0,0,0, $cd[1], $cd[2], $cd[0]);
 				$today = time();
 				if ( ($today - $cdate) <= 604800 ) {
@@ -324,9 +324,9 @@ order by stdate DESC,endate DESC";
 				else {
 					$outputStr .= "<TD class=headerselected ALIGN=CENTER><font size=-1><b>&nbsp;$text&nbsp;</b></font></TD>";
 				}
-				$ncateg = ereg_replace(" ","+",$categ);
-				$ntype = ereg_replace(" ","+",$type);
-				$nbase = ereg_replace(" ","+",$base);
+				$ncateg = preg_replace("/ /","+",$categ);
+				$ntype = preg_replace("/ /","+",$type);
+				$nbase = preg_replace("/ /","+",$base);
 				$atitle=stripslashes( $title );
 				if ( $globalprotect != "" || $confidentiality == "password") {
 					// Classical output (not report)
@@ -386,7 +386,7 @@ function &retrieveFields( $uid, &$outList, $tag ) {
 	if ($numRows != 0) {
 		for ($indF = 0; $indF < $numRows; $indF++) {
 			$row = $retFid->getRow();
-			retrieveFields($row['uid'], &$outList, $tag );
+			retrieveFields($row['uid'], $outList, $tag );
 		}
 	}
 	return $outList;
@@ -401,7 +401,7 @@ function createUsersTextFromArray($array)
     while (list($key,$value) = each($array)) {
         $text .= getEmail($value).", ";
     }
-    $text = ereg_replace(", $","",$text);
+    $text = preg_replace("/, $/","",$text);
     return $text;
 }
 
@@ -411,7 +411,7 @@ function createCategText($uid)
 
     $sql = "SELECT title,
                    fid
-            FROM LEVEL 
+            FROM LEVEL
             WHERE uid='$uid'";
     $res = $db->query($sql);
     if (DB::isError($res)) {
@@ -420,8 +420,8 @@ function createCategText($uid)
     if ($row = $res->fetchRow()) {
         $title    = $row['title'];
         $topid    = $row['fid'];
-        $category = ereg_replace("[\n\r ]+","&nbsp;",$title);
-        $category = eregi_replace("<br>","&nbsp;",$category);
+        $category = preg_replace("/[\n\r ]+/","&nbsp;",$title);
+        $category = preg_replace("/<br>/i","&nbsp;",$category);
 
         // current category
         if ($uid != $fid) {

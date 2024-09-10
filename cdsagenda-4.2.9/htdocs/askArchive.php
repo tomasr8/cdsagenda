@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 //////////////////////////////////////////////////////////////////////
@@ -52,36 +52,40 @@ $Template = new Template( $PathTemplate );
 $Template->set_file( array( "mainpage"=> "askArchive.ihtml",
 							"element" => "askArchiveElement.ihtml",
 							"error"   => "error.ihtml" ));
-				 
+
 $archive = new archive();
 $db = &AgeDB::getDB();
 
 $Template->set_var( "askArchive_title", " Archive retriving system " );
 
-if (ereg("\.\./",$QUERY_STRING)){
-    outError("This access is not allowed.","01",&$Template);
+if (preg_match("/\.\.\//",$QUERY_STRING)){
+    outError("This access is not allowed.","01",$Template);
     mail($support_email,"strange call on askArchive","$AGE_WWW/askArchive?".$QUERY_STRING);
     exit;
-}   
+}
 
-if (!ereg("=",$QUERY_STRING)) {
+if (!preg_match("/=/",$QUERY_STRING)) {
 	$base = "agenda";
 	$QUERY_STRING = urldecode($QUERY_STRING);
 	$QUERY_STRING = str_replace(" ","+",$QUERY_STRING);
-	$categ = ereg_replace("/.*","",$QUERY_STRING);
-	$id = ereg_replace("^$categ/","",$QUERY_STRING);
+	$categ = preg_replace("/\/.*/","",$QUERY_STRING);
+	$id = preg_replace("/^$categ\//","",$QUERY_STRING);
 }
 
+$base = $_GET['base'];
+$categ = $_GET['categ'];
+$id = $_GET['id'];
+
 if ($categ == "") {
-    outError("Sorry... Parameter <i>categ</i> needed","01",&$Template);
+    outError("Sorry... Parameter <i>categ</i> needed","01",$Template);
     exit;
 }
 elseif ($id == "") {
-    outError("Sorry... Parameter <i>id</i> needed","01",&$Template);
+    outError("Sorry... Parameter <i>id</i> needed","01",$Template);
     exit;
 }
 elseif (!file_exists("$ARCHIVE/$categ")) {
-    outError("Sorry... Cannot find agenda $categ","01",&$Template);
+    outError("Sorry... Cannot find agenda $categ","01",$Template);
     exit;
 }
 else {
@@ -89,7 +93,7 @@ else {
     $numfiles = 0;
     $id = str_replace("\\","",$id);
     $additionalfiletext = "<blockquote><table border=0 cellspacing=2>";
-    
+
     if (is_file("$ARCHIVE/$categ/$id")) {
         $lastfile = "$ARCHIVE/$categ/$id";
         $numfiles = 1;
@@ -98,11 +102,11 @@ else {
         // first open base directory
         $dp = opendir ("$ARCHIVE/$categ/$id");
         while ($addfile = readdir($dp)) {
-            if (is_file("$ARCHIVE/$categ/$id/$addfile") && $addfile != "." && $addfile != ".." && !ereg("^icon-.*.gif",$addfile)) {
+            if (is_file("$ARCHIVE/$categ/$id/$addfile") && $addfile != "." && $addfile != ".." && !preg_match("/^icon-.*.gif/",$addfile)) {
                 $numfiles++;
                 $lastfile = "$ARCHIVE/$categ/$id/$addfile";
                 $size = filesize("$ARCHIVE/$categ/$id/$addfile");
-                $filename = ereg_replace("([^\.]*)\..*","\\1",$addfile);
+                $filename = preg_replace("/([^\.]*)\..*/","\\1",$addfile);
                 if (file_exists("$ARCHIVE/$categ/$id/icon-$filename.gif")) {
                     $imagesrc = "$ARCHIVEURL/$categ/$id/icon-$filename.gif";
                 }
@@ -114,14 +118,14 @@ else {
         }
         closedir($dp);
         $additionalfiletext .= "</table></blockquote>";
-    
+
         if ($numfiles != 0) {
             $numberoffilestext = "$numfiles";
             $Template->set_var( "askArchive_number", $numberoffilestext );
             $Template->set_var( "askArchive_element", $additionalfiletext );
         }
         else {
-            outError("file not found...","01",&$Template);
+            outError("file not found...","01",$Template);
             exit;
         }
     }
@@ -129,15 +133,15 @@ else {
 }
 
 if ($numfiles == 0) {
-	outError("file not found...","01",&$Template);
+	outError("file not found...","01",$Template);
         exit;
 }
 elseif ($numfiles != 1) {
     $Template->pparse( "final-page", "mainpage" );
 }
 else {
-    if (ereg("\.",$lastfile)) {
-        $extension = strtolower(ereg_replace(".*\.","",$lastfile));
+    if (preg_match("/\./",$lastfile)) {
+        $extension = strtolower(preg_replace("/.*\./","",$lastfile));
     }
     else {
         $extension = "";
@@ -149,7 +153,7 @@ else {
 
     // Authorization
     // First check if a password is associated with the single file
-    $eventID = ereg_replace("\/.*","",$id);
+    $eventID = preg_replace("/\/.*/","",$id);
     $apassword = "";
     $fileID = $archive->getFileIDFromFullPath($eventID,$lastfile);
     if ($fileID) {
@@ -166,7 +170,7 @@ else {
     }
     if (!$apassword) {
         // Then check if a password is associated with the event
-        $sql = "SELECT password 
+        $sql = "SELECT password
                 FROM EVENT_PASSWORD
                 WHERE eventID='$eventID'";
         $res = $db->query($sql);
@@ -244,7 +248,7 @@ else {
     }
     header("Content-Length: ".filesize("$lastfile"));
     header("Content-Type: $mimetype");
-    header("Content-Disposition: inline; filename=\"".ereg_replace(".*\/","",$lastfile)."\"");
+    header("Content-Disposition: inline; filename=\"".preg_replace("/.*\//","",$lastfile)."\"");
 
     $fp = fopen("$lastfile","r");
     while ($chunk = fread($fp,1024)) {
@@ -252,5 +256,5 @@ else {
     }
     fclose($fp);
 }
-	 
+
 ?>

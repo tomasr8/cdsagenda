@@ -209,7 +209,7 @@ else {
 	$row = $res->fetchRow();
 
 	$row['slocation'] = stripslashes($row['slocation']);
-	$row['slocation'] = ereg_replace("'", "\'", $row['slocation']);
+	$row['slocation'] = preg_replace("/'/", "\'", $row['slocation']);
 	$str_help="
        document.forms[0].location.value='" . $row['slocation'] . "';
        document.forms[0].bld.value='" . $row['bld'] . "';

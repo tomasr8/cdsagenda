@@ -39,7 +39,7 @@ function CreateModifyMenus()
                                   "Agenda&nbsp;Toolbar",
                                   "../guide/english/agenda_toolbar.php");
     if ( $canAddSubEvent ) {
-        if (ereg("nosession",$stylesheet)) {
+        if (preg_match("/nosession/",$stylesheet)) {
             $modifyMenuText .= "
 		addMenuItem(\"toolagendatext1\",\"add&nbsp;new&nbsp;talk\",\"document.forms[0].ids.value='$sessionid';javascript:openAddTalk();javascript:closeAll();return false;\",\"$IMAGES_WWW/add.gif\",\"\",\"ToolAgenda\",document);";
         }
@@ -49,7 +49,7 @@ function CreateModifyMenus()
         }
     }
     else {
-        if (ereg("nosession",$stylesheet)) {
+        if (preg_match("/nosession/",$stylesheet)) {
             $modifyMenuText .= "
 		addMenuItem(\"toolagendatext1\",\"add&nbsp;new&nbsp;talk\",\"\",\"$IMAGES_WWW/add.gif\",\"\",\"ToolAgenda\",document);";
         }
@@ -102,11 +102,11 @@ function CreateModifyMenus()
         $modifyMenuText .= "
 		addMenuItem(\"toolagendatext6\",\"set&nbsp;up&nbsp;an&nbsp;alarm\",\"javascript:AlarmSetUp();javascript:closeAll();return false;\",\"$IMAGES_WWW/alert.gif\",\"\",\"ToolAgenda\",document);";
     }
-    if (!ereg("nosession",$stylesheet)) {
+    if (!preg_match("/nosession/",$stylesheet)) {
         $modifyMenuText .= "
         addMenuItem(\"toolagendatext7\",\"compute&nbsp;sessions&nbsp;starting/ending&nbsp;time\",\"javascript:computeSessionTime();javascript:closeAll();return false;\",\"$IMAGES_WWW/time.gif\",\"\",\"ToolAgenda\",document);";
     }
-    if (ereg("nosession",$stylesheet)) {
+    if (preg_match("/nosession/",$stylesheet)) {
         $modifyMenuText .= "
                 addMenuItem(\"toolagendatext8\",\"agenda&nbsp;timing\",\"document.forms[0].ids.value='$sessionid';javascript:popUp('FileSession',false,event);setTimeScale(-1);popUp('Timing',true,event);return false;\",\"$IMAGES_WWW/time.gif\",\"Timing\",\"ToolAgenda\",document);";
     }
@@ -121,12 +121,12 @@ function CreateModifyMenus()
     /////////////////////////////////////////////////////
 	$modifyMenuText .= openMenu("FileAgenda",
                                   "Attach&nbsp;a&nbsp;File&nbsp;to&nbsp;an&nbsp;Agenda",
-                                  "");         
+                                  "");
     $modifyMenuText .= "
 		addMenuItem(\"fileagendatext1\",\"list&nbsp;of&nbsp;files...\",\"javascript:openFile();javascript:popUp('FileAgenda',false,event);javascript:closeAll();return false;\",\"\",\"\",\"FileAgenda\",document);
 		addMenuItem(\"fileagendatext2\",\"file&nbsp;upload...\",\"javascript:openUpload();javascript:popUp('FileAgenda',false,event);javascript:closeAll();return false;\",\"\",\"\",\"FileAgenda\",document);
 		addMenuItem(\"fileagendatext3\",\"file&nbsp;linkage...\",\"javascript:openLink();javascript:popUp('FileAgenda',false,event);javascript:closeAll();return false;\",\"\",\"\",\"FileAgenda\",document);\n";
-    
+
 	$modifyMenuText .= closeMenu();
 
     /////////////////////////////////////////////////////
@@ -235,7 +235,7 @@ function CreateModifyMenus()
         addMenuItem(\"tooltalktext5\",\"write&nbsp;minutes\",\"openMinWrit();javascript:closeAll();return false;\",\"$IMAGES_WWW/minutes.gif\",\"\",\"ToolTalk\",document);
         addMenuItem(\"tooltalktext6\",\"advance/delay&nbsp;talk\",\"javascript:popUp('TimeTalk',true,event);return false;\",\"$IMAGES_WWW/time.gif\",\"TimeTalk\",\"ToolTalk\",document);
         addMenuItem(\"tooltalktext7\",\"broadcast&nbsp;URL\",\"javascript:openBroadcastTalk();return false;\",\"$IMAGES_WWW/camera.gif\",\"\",\"ToolTalk\",document);";
-    $db = &AgeDB::getDB();	
+    $db = &AgeDB::getDB();
     $sql = "select * from SESSION where ida='$ida'";
     $res = $db->query($sql);
     if (DB::isError($res)) {
@@ -252,12 +252,12 @@ function CreateModifyMenus()
     $modifyMenuText .= closeMenu();
 
     /////////////////////////////////////////////////////
-    // Move Talk 
+    // Move Talk
     /////////////////////////////////////////////////////
     $modifyMenuText .= openMenu("MoveTalk",
                                   "Move&nbsp;Talk",
                                   "../guide/english/talk_toolbar.php");
-    $db = &AgeDB::getDB();		
+    $db = &AgeDB::getDB();
     $sql = "select stitle,ids from SESSION where ida='$ida' order by speriod1,stime";
     $res = $db->query($sql);
     if (DB::isError($res)) {
@@ -268,14 +268,14 @@ function CreateModifyMenus()
     if ($numRows != 0 ) {
         for ( $i = 0 ; $i < $numRows; $i++ ) {
             $row = $res->fetchRow();
-            $modifyMenuText .= "addMenuItem(\"movetalktext$numsessions\",\"to&nbsp;session&nbsp;#$numsessions&nbsp;(<b>'" . ereg_replace("[\n\r\"]+","",$row['stitle']) . "'</b>)\",\"javascript:MoveTalkTo('" . $row['ids'] . "');return false;\",\"$IMAGES_WWW/movetalk.gif\",\"\",\"MoveTalk\",document);\n";
+            $modifyMenuText .= "addMenuItem(\"movetalktext$numsessions\",\"to&nbsp;session&nbsp;#$numsessions&nbsp;(<b>'" . preg_replace("/[\n\r\"]+/","",$row['stitle']) . "'</b>)\",\"javascript:MoveTalkTo('" . $row['ids'] . "');return false;\",\"$IMAGES_WWW/movetalk.gif\",\"\",\"MoveTalk\",document);\n";
             $numsessions++;
         }
     }
     $modifyMenuText .= closeMenu();
 
     /////////////////////////////////////////////////////
-    // Time Talk 
+    // Time Talk
     /////////////////////////////////////////////////////
     $modifyMenuText .= openMenu("TimeTalk",
                                         "advance/delay&nbsp;talk",
@@ -314,9 +314,9 @@ function CreateModifyMenus()
 		</FORM>
         <SCRIPT>\n";
     $modifyMenuText .= closeMenu();
-    
+
     /////////////////////////////////////////////////////
-    // File Talk 
+    // File Talk
     /////////////////////////////////////////////////////
 	$modifyMenuText .= openMenu("FileTalk",
                                   "Attach&nbsp;a&nbsp;File&nbsp;to&nbsp;a&nbsp;Talk",
@@ -338,7 +338,7 @@ function CreateModifyMenus()
     /////////////////////////////////////////////////////
     $modifyMenuText .= openMenu("ToolSubPoint",
                                   "Sub&nbsp;Talk&nbsp;Toolbar",
-                                  ""); 
+                                  "");
     $modifyMenuText .= "
 		addMenuItem(\"toolsubpointtext1\",\"edit&nbsp;sub&nbsp;point&nbsp;data...\",\"javascript:popUp('FileTalk',false,event);openModSubTalk();javascript:closeAll();return false;\",\"$IMAGES_WWW/edit.gif\",\"\",\"ToolSubPoint\",document);
 		addMenuItem(\"toolsubpointtext2\",\"delete&nbsp;agenda&nbsp;item\",\"javascript:popUp('FileTalk',false,event);deleteSubTalk();javascript:closeAll();return false;\",\"$IMAGES_WWW/delete.gif\",\"\",\"ToolSubPoint\",document);
@@ -346,7 +346,7 @@ function CreateModifyMenus()
 		addMenuItem(\"toolsubpointtext4\",\"write&nbsp;minutes\",\"openMinWrit();javascript:closeAll();return false;\",\"$IMAGES_WWW/minutes.gif\",\"\",\"ToolSubPoint\",document);
 		addMenuItem(\"toolsubpointtext5\",\"move&nbsp;up\",\"MoveSubTalkUp();javascript:closeAll();return false;\",\"$IMAGES_WWW/upicon.gif\",\"\",\"ToolSubPoint\",document);
 		addMenuItem(\"toolsubpointtext6\",\"move&nbsp;down\",\"MoveSubTalkDown();javascript:closeAll();return false;\",\"$IMAGES_WWW/downicon.gif\",\"\",\"ToolSubPoint\",document);";
-	$modifyMenuText .= closeMenu(); 
+	$modifyMenuText .= closeMenu();
 
     /////////////////////////////////////////////////////
     // Give Report Number
@@ -359,7 +359,7 @@ function CreateModifyMenus()
 		addMenuItem(\"repnumber2\",\"CDS&nbsp;Number...\",\"\",\"\",\"\",\"RepNumber\",document);\n";
 	$modifyMenuText .= closeMenu();
 
-    
+
     /////////////////////////////////////////////////////
     // Special JS for Netscape 4 event handling
     /////////////////////////////////////////////////////
@@ -448,7 +448,7 @@ function openMenu($menuName,$menuText,$helpurl)
 	<TD>
 	<TABLE width=\"100%\" border=0 cellpadding=0 cellspacing=0>
      <SCRIPT TYPE=\"text/javascript\" LANGUAGE=\"JavaScript1.2\">";
-    
+
     return $createMenuRetStr;
 }
 

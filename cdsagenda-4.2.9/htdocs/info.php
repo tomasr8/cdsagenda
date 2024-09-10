@@ -46,9 +46,10 @@ $Template = new Template( $PathTemplate );
 // Template set-up
 $Template->set_file(array( "mainpage" => "info.ihtml",
                            "error" => "error.ihtml"));
+$userid = $_SESSION['userid'];
 
 if (getEmail($userid) == "guest") {
-    outError("User not logged... Cannot display information", "02", &$Template);
+    outError("User not logged... Cannot display information", "02", $Template);
     exit;
 }
 
@@ -61,7 +62,7 @@ $sql = "SELECT DISTINCT ida
         WHERE email='$userid_email'";
 $res = $db->query($sql);
 while ($row = $res->fetchRow()) {
-    array_push($meetings,$row[ida]);
+    array_push($meetings,$row["ida"]);
 }
 // search in talk
 $sql = "SELECT DISTINCT ida
@@ -69,7 +70,7 @@ $sql = "SELECT DISTINCT ida
         WHERE email='$userid_email'";
 $res = $db->query($sql);
 while ($row = $res->fetchRow()) {
-    array_push($meetings,$row[ida]);
+    array_push($meetings,$row["ida"]);
 }
 // search in session
 $sql = "SELECT DISTINCT ida
@@ -77,7 +78,7 @@ $sql = "SELECT DISTINCT ida
         WHERE scem='$userid_email'";
 $res = $db->query($sql);
 while ($row = $res->fetchRow()) {
-    array_push($meetings,$row[ida]);
+    array_push($meetings,$row["ida"]);
 }
 // search in agenda
 $sql = "SELECT DISTINCT id
@@ -85,7 +86,7 @@ $sql = "SELECT DISTINCT id
         WHERE cem='$userid_email'";
 $res = $db->query($sql);
 while ($row = $res->fetchRow()) {
-    array_push($meetings,$row[id]);
+    array_push($meetings,$row["id"]);
 }
 if (count($meetings)) {
     $meetingtext = "(".createListFromArray($meetings).")";
@@ -95,13 +96,13 @@ if (count($meetings)) {
             ORDER BY AGENDA.stdate";
     $res = $db->query($sql);
     while ($row = $res->fetchRow()) {
-        $listmeetings .= "<a href='fullAgenda.php?ida=".$row[id]."'>".$row[title]."</a> (".$row[stdate].")<br>";
+        $listmeetings .= "<a href='fullAgenda.php?ida=".$row["id"]."'>".$row["title"]."</a> (".$row["stdate"].")<br>";
     }
 }
 if ($listmeetings == "") {
     $listmeetings = "none";
 }
-    
+
 
 
 
@@ -124,7 +125,7 @@ if (count($agendas) == 0) {
 }
 else {
     while ($agenda = current($agendas)) {
-        $listagendas .= "<a href=\"\" onClick=\"window.open('$AGE_WWW/access.php?ida=".$agenda[id]."','modification');return false;\">".$agenda[title]."</a>(".$agenda[stdate].")<br>";
+        $listagendas .= "<a href=\"\" onClick=\"window.open('$AGE_WWW/access.php?ida=".$agenda["id"]."','modification');return false;\">".$agenda["title"]."</a>(".$agenda["stdate"].")<br>";
         next($agendas);
     }
 }
@@ -136,7 +137,7 @@ if (count($categories) == 0) {
 }
 else {
     while ($category = current($categories)) {
-        $listcategories .= "<a href='manager/admin.php?fid=".$category[uid]."'>".$category[title]."</a><br>";
+        $listcategories .= "<a href='manager/admin.php?fid=".$category["uid"]."'>".$category["title"]."</a><br>";
         next($categories);
     }
 }

@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 $ida = $_REQUEST[ "ida" ];
@@ -39,14 +39,14 @@ require_once '../platform/system/logManager.inc';
 require_once "../platform/system/archive.inc";
 require_once "../platform/system/commonfunctions.inc";
 require_once "../platform/authentication/sessinit.inc";
-        
+
 $thisScriptName = "modification/displayAgenda.php";
-	
+
 // new template
 $Template = new Template( $PathTemplate );
 $Template->set_file(array("error" => "error.ihtml",
                           "mainpage"  => "displayAgenda.ihtml",
-                          "JSMenuTools" => "JSMenuTools.ihtml"));	
+                          "JSMenuTools" => "JSMenuTools.ihtml"));
 
 $Template->set_var("display_supportEmail", $support_email);
 $Template->set_var("display_runningAT", $runningAT);
@@ -54,12 +54,12 @@ $Template->set_var("display_ida",$ida);
 $Template->set_var( "images", "$IMAGES_WWW" );
 $Template->parse( "display_jsmenutools", "JSMenuTools", true );
 
-$canAddSubEvent   = 
-$canEditAgenda    = 
+$canAddSubEvent   =
+$canEditAgenda    =
 $canDeleteAgenda  =
 $canCloneAgenda   =
-$canEditTimeTable = 
-$canManageFiles   = 
+$canEditTimeTable =
+$canManageFiles   =
 $canUpload        = true;
 
 deletecache();
@@ -75,7 +75,7 @@ if ( $numRows == 0 ) {
 	if ( ERRORLOG ) {
 		$log->logError( __FILE__ . "." . __LINE__, "main", " Retrieved 0 elements with select '" . $sql . "' " );
 	}
-    outError( "$ida: Agenda does not exist", "01", &$Template );
+    outError( "$ida: Agenda does not exist", "01", $Template );
 	exit;
 }
 $row = $res->fetchRow();
@@ -120,7 +120,7 @@ $globalprotect = $row2['modifyPassword'];
 $AN = $HTTP_COOKIE_VARS["AN$ida"];
 if ($an != $AN) {
     if ($globalprotect != "" && $globalprotect != $AN) {
-        outError( "Access to agenda $ida refused: Bad Password", "01", &$Template );
+        outError( "Access to agenda $ida refused: Bad Password", "01", $Template );
         exit;
     }
 }
@@ -149,7 +149,7 @@ if (isset($newstylesheet)) {
 if ($stylesheet == "") {
 	$stylesheet = "standard";
 }
-     
+
 $core .= "<INPUT type=hidden name=ida value='$ida'>\n";
 $core .= "<INPUT type=hidden name=ids value=''>\n";
 $core .= "<INPUT type=hidden name=idt value=''>\n";
@@ -186,8 +186,8 @@ require_once "../XMLoutput.php";
 if ( DEBUGGING ) {
    $log->logDebug( __FILE__, __LINE__, " color style '$stylesheet' " );
 }
- 
-$agenda = new agenda($ida);   
+
+$agenda = new agenda($ida);
 $xml = $agenda->displayXML();
 
 $fp = fopen("$AGE/tmp/processXML_$pid.xml","w+");
@@ -198,23 +198,23 @@ $endtime1 = time();
 // use the stylesheet to create the html output
 //////////////////////////////////////////////////////
 $help = "$AGE/stylesheets/$stylesheet.xsl";
-       
+
 $htmltext = `$XTXSL $AGE/tmp/processXML_$pid.xml $help 2>> $AGE/tmp/errors_$pid`;
 
 // insert the full image path into this stylesheet (PostScript + PDF creation)
-$htmltext = ereg_replace("<img([^>]*) src=\"images/","<img\\1 src=\"${AGE_WWW}/images/",$htmltext);
+$htmltext = preg_replace('/<img([^>]*) src="images\//', '<img\\1 src="' . $AGE_WWW . '/images/', $htmltext);
 
 if ( DEBUGGING ) {
 	 $log->logDebug( __FILE__, __LINE__, " $XTXSL $AGE/tmp/processXML_$pid.xml $help 2>> $AGE/tmp/errors_$pid " );
 }
-	       
+
 // modify the html output (insert modif access points)
 //////////////////////////////////////////////////////
 
 // agenda modification
 $htmltext = preg_replace("/\[modifyagenda\]/","<a href=\"\" onClick=\"document.forms[0].ids.value='';event.cancelBubble = true;javascript:closeAll();javascript:popUp('ToolAgenda',true,event);return false;\"><img hspace=\"5\" vspace=\"0\" border=\"0\" src=\"../images/link.gif\" alt=\"click here\" width=\"11\" height=\"11\"/>",$htmltext);
 $htmltext = str_replace("[/modifyagenda]","</a>",$htmltext);
-	 
+
 // session modification
 $htmltext = preg_replace("/\[modifysession ids=\"(s[0-9]*)\"\]/","<a href=\"\" onClick=\"document.forms[0].idt.value='';document.forms[0].ids.value='\\1';event.cancelBubble = true;javascript:closeAll();javascript:popUp('ToolSession',true,event);return false;\"><img hspace=\"5\" vspace=\"0\" border=\"0\" src=\"../images/link.gif\" alt=\"click here\" width=\"11\" height=\"11\"/>",$htmltext);
 $htmltext = str_replace("[/modifysession]","</a>",$htmltext);
@@ -244,12 +244,12 @@ $core .= "<BR><BR><SMALL>XML creation in $time1 seconds<BR>";
 $core .= "XSLt processing in $time2 seconds</SMALL><BR>";
 
 $errors = `cat $AGE/tmp/errors_$pid`;
-if (ereg(".xsl",$errors)) {
-    outError( "<b>An error has occured during the XML processing (in the XSL stylesheet):</b><br><i>$errors</i>", "01", &$Template );
+if (preg_match("/\.xsl/",$errors)) {
+    outError( "<b>An error has occured during the XML processing (in the XSL stylesheet):</b><br><i>$errors</i>", "01", $Template );
 	exit;
 }
-else if (ereg(".xml",$errors)) {
-    outError( "<b>An error has occured during the XML processing (probably in the XML output, please contact $support_email):</b><br><i>$errors</i>", "01", &$Template );
+else if (preg_match("/\.xml/",$errors)) {
+    outError( "<b>An error has occured during the XML processing (probably in the XML output, please contact $support_email):</b><br><i>$errors</i>", "01", $Template );
 	exit;
 }
 if ( filesize( "$AGE/tmp/errors_$pid" ) == 0 ) {
@@ -284,7 +284,7 @@ function deletecache()
     $url_array = parse_url($AGE_WWW);
     $path = $url_array['path'];
 	$cachekey = md5("POST=a:0:{} GET=a:1:{s:3:\"ida\";s:".strlen("$ida").":\"$ida\";}");
-	$masterkey = ereg_replace("_$","",str_replace("/","_",str_replace("//","/","$path"))) . "_fullAgenda_php";
+	$masterkey = preg_replace('/_$/', '', str_replace("/", "_", str_replace("//", "/", $path))) . "_fullAgenda_php";
 	$key = "jpcache-$masterkey:$cachekey";
 	if (file_exists("$TMPDIR/$key"))
 	{

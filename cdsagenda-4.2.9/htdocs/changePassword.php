@@ -39,12 +39,12 @@ require_once 'platform/authentication/sessinit.inc';
 $Template = new Template( $PathTemplate );
 // Template set-up
 $Template->set_file(array("mainpage" => "changePassword.ihtml",
-                          "error"    => "error.ihtml" ));	
+                          "error"    => "error.ihtml" ));
 
 $Template->set_var("images","$IMAGES_WWW");
 
 if (getEmail($userid) == "guest") {
-    outError("User not logged... Cannot change password", "02", &$Template);
+    outError("User not logged... Cannot change password", "02", $Template);
     exit;
 }
 

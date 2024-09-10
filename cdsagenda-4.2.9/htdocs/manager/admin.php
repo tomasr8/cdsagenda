@@ -1,7 +1,7 @@
 <?
 // $Id: admin.php,v 1.2.2.5 2002/10/23 08:56:26 tbaron Exp $
 
-// admin.php --- Displays the list of bases, sub-categories or agendas for a 
+// admin.php --- Displays the list of bases, sub-categories or agendas for a
 //              given parent and level, allowing the user to perform management
 //              actions over them.
 //
@@ -37,12 +37,12 @@
 //=============================================================================
 // function: getNavigator
 //
-// purpose: builds the HTML navigator for quick access to any of the 
+// purpose: builds the HTML navigator for quick access to any of the
 //	sub-categories of the hierarchy to the current item
-// params: cur_fid (string) -> current parent uid 
-//	   cur_level (int) --> current level 
-// return value: (string) HTML code corresponding to the navigator for the 
-//	current parent sub-category including links to each of the 
+// params: cur_fid (string) -> current parent uid
+//	   cur_level (int) --> current level
+// return value: (string) HTML code corresponding to the navigator for the
+//	current parent sub-category including links to each of the
 //	sub-categories from the base to the current item
 //=============================================================================
 function getNavigator($cur_fid)
@@ -59,7 +59,7 @@ function getNavigator($cur_fid)
         $res = $db->getRow( "select fid,title
                              from LEVEL
 					         where uid='$cur_fid'" );
-        $cur_title=$res["title"]; 
+        $cur_title=$res["title"];
         if($first == 1) {
             $str="<font size=\"-1\">".$cur_title."</font>";
             $first = 0;
@@ -78,16 +78,16 @@ function getNavigator($cur_fid)
     else {
         $str="<font size=\"-1\">BASES</font>&gt;$str";
     }
-  
+
     return $str;
 }
-  
+
 //=============================================================================
 // Main script
 //=============================================================================
 
 $Template = new Template( $PathTemplate );
-$Template->set_file(array( "mainpage"=> "adminMain.ihtml", 
+$Template->set_file(array( "mainpage"=> "adminMain.ihtml",
                            "error"=>"error.ihtml" ));
 $db = & AgeDB::getDB();
 
@@ -96,7 +96,7 @@ if ($fid == "") {
 }
 
 if ($authentication && !canManageCategory($userid,$fid)) {
-    outError("Sorry, you are not allowed to manage this category","10",&$Template);
+    outError("Sorry, you are not allowed to manage this category","10",$Template);
     exit;
 }
 
@@ -104,7 +104,7 @@ if ($request == "moveup" && $modid != "") {
     // retrieve all categs
     $categs = array();
     $sql = "select uid
-            from LEVEL 
+            from LEVEL
 			where fid='$fid'
 			order by categorder,title";
     $res = $db->query($sql);
@@ -133,7 +133,7 @@ if ($request == "movedown" && $modid != "") {
     // retrieve all categs
     $categs = array();
     $sql = "select uid
-            from LEVEL 
+            from LEVEL
 			where fid='$fid'
 			order by categorder,title";
     $res = $db->query($sql);
@@ -146,7 +146,7 @@ if ($request == "movedown" && $modid != "") {
     if ($myplace != count($categs)-1) {
         $categs[$myplace] = $categs[$myplace+1];
         $categs[$myplace+1] = "$modid";
-        
+
         // then update the orders
         for ($i=0;$i<count($categs);$i++) {
             $sql = "UPDATE LEVEL
@@ -163,11 +163,11 @@ if ($request == "movedown" && $modid != "") {
 //-----------------------------------------------------------------------
   if( (isset($fid) || (trim($fid)!="")) && $fid!="0" )
   {
-    
-    $parent_fid = $db->getOne("select fid 
-                               from LEVEL 
+
+    $parent_fid = $db->getOne("select fid
+                               from LEVEL
                                where uid='$fid'");
-    
+
     if (canManageCategory($userid,$parent_fid)) {
         $Template->set_var( "up_button", "<a href=\"".getMainURL($parent_fid)."\"><img src=\"".AGE_ADMIN_IMG_UP."\" align=\"middle\" alt=\"Go to upper category\" border=\"0\"></a>&nbsp;");
     }
@@ -177,8 +177,8 @@ if ($request == "movedown" && $modid != "") {
 
 
     //display subcategories or agendas for the given parameters
-    $res = $db->query( "select uid,title 
-                        from LEVEL 
+    $res = $db->query( "select uid,title
+                        from LEVEL
 					    where fid='$fid'
 					    order by categorder,title" );
 //-----------------------------------------------------------------------
@@ -216,14 +216,14 @@ if ($request == "movedown" && $modid != "") {
     else
     {
       $Template->set_var( "recover_button", '<a href="JavaScript:openwindowlink(\''.getRecoverURL( $fid ).'\', \'recover\')"><img border="0" align="middle" src="'.AGE_ADMIN_IMG_TRASH.'" height="20" width="20" alt="Restore deleted agendas to this sub-category"></a>' );
-      
+
       $res = $db->query( "select id, title, stdate
       					  from AGENDA
 					      where fid='$fid'
 					      order by stdate desc" );
       if( $res->numRows()==0 )
       {
-        $str_help="no agendas or subcategories to be shown"; 
+        $str_help="no agendas or subcategories to be shown";
         $cat_name="subcategory";
         $cat_name_plural="subcategories";
       }
@@ -255,10 +255,10 @@ if ($request == "movedown" && $modid != "") {
     $title="BASES";
     $fid=0;
 
-    //display bases 
-    $res = $db->query( "select uid,title 
-                        from LEVEL 
-                        where fid='0' 
+    //display bases
+    $res = $db->query( "select uid,title
+                        from LEVEL
+                        where fid='0'
 			order by categorder,title" );
     $str_help = "";
     while( $row = $res->fetchRow( DB_FETCHMODE_OBJECT ) )
@@ -279,7 +279,7 @@ if ($request == "movedown" && $modid != "") {
     $cat_name="base";
     $cat_name_plural="bases";
     $Template->set_var( "bases", $str_help );
-    $Template->set_var( "up_button", "");  
+    $Template->set_var( "up_button", "");
     $Template->set_var( "recover_button", "" );
     $Template->set_var( "reall_url", getReallURLLevel() );
     $fid="0";

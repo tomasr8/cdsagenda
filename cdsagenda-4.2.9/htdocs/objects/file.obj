@@ -26,15 +26,15 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 class xmlfile {
 	var $type;
 	var $url;
-        
+
 	//constructor
-	function xmlfile($type,$url)
+	function __construct($type,$url)
         {
 			$this->type = $type;
 			$this->url = $url;
@@ -45,7 +45,7 @@ class xmlfile {
 			$xml = "
         <link         url=\"$this->url\" $col
 		type=\"$this->type\"></link>\n";
-		
+
 			//return final value
 			return $xml;
         }

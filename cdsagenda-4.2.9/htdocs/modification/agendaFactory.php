@@ -27,7 +27,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 // required scripts
 
@@ -65,6 +65,8 @@ if ((($request == "CANCEL") || ($request == "Go Back to Agenda")) &&
     Header("Location: ../displayLevel.php?fid=$fid");
 }
 
+$submit = $_POST["submit"];
+$request = $_POST["request"];
 ##########################################################
 #                                                        #
 #	Part I: DELETE AN AGENDA                         #
@@ -104,6 +106,36 @@ require_once 'agendaFactory_clone.php';
 ###############################
 
 if ($submit == "ADD AGENDA") {
+    $startinghour = $_POST["startinghour"];
+    $startingminutes = $_POST["startingminutes"];
+    $endinghour = $_POST["endinghour"];
+    $endingminutes = $_POST["endingminutes"];
+    $stdy = $_POST["stdy"];
+    $stdm = $_POST["stdm"];
+    $stdd = $_POST["stdd"];
+    $endy = $_POST["endy"];
+    $endm = $_POST["endm"];
+    $endd = $_POST["endd"];
+    $title = $_POST["title"];
+    $acomment = $_POST["acomment"];
+    $mpassword = $_POST["mpassword"];
+    $bld = $_POST["bld"];
+    $floor = $_POST["floor"];
+    $room = $_POST["room"];
+    $confRoom = $_POST["confRoom"];
+    $stylesheet = $_POST["stylesheet"];
+    $cem = $_POST["cem"];
+    $chairman = $_POST["chairman"];
+    $location = $_POST["location"];
+    $format = $_POST["format"];
+    $confidentiality = $_POST["confidentiality"];
+    $apassword = $_POST["apassword"];
+    $repno = $_POST["repno"];
+    $visibility = $_POST["visibility"];
+    $fid = $_POST["fid"];
+    $agendaCreatorEmail = $_POST["agendaCreatorEmail"];
+    $warningEmail = $_POST["warningEmail"];
+
     $time = time();
     $today = strftime("%Y-%m-%d", $time);
     $thisyear = strftime("%Y", $time);
@@ -143,15 +175,15 @@ if ($submit == "ADD AGENDA") {
     if ($mpassword == "") {
         $sec = microtime();
         $pid = getmypid();
-        $msec = split(" ", $sec, 2);
+        $msec = explode(" ", $sec, 2);
         $part1 = substr($msec[0], 2, 11);
     } else {
         $part1 = "$mpassword";
     }
-    
+
     // Fix the possible presence of SMR inside the smr
-    $smr = eregi_replace('smr', '', $smr);
-    
+    $smr = preg_replace('/smr/i', '', $smr);
+
     $acomment = addslashes($acomment);
     if ($bld == "") {
         $bld = 0;
@@ -202,7 +234,7 @@ if ($submit == "ADD AGENDA") {
                            '$website', '$directorsandorganizers') ";} else {
                                // Without calendar extension
                                $sql =
-                                   "insert into AGENDA (title,id,stdate,endate,location,chairman,cem,status,an,cd,md,stylesheet,format,confidentiality,apassword,repno,fid,acomments,keywords,visibility,bld,floor,room,nbsession,stime,etime) values('$title','$newid','$startd','$endd','$location','$chairman','$cem','open','$part1','$today','$today','$stylesheet','$format','$confidentiality','$apassword','$repno','$fid','$acomment','','$visibility','$bld','$floor','$bld-$floor-$room',0,'$stime','$etime')";
+                               "insert into AGENDA (title,id,stdate,endate,location,chairman,cem,`status`,an,cd,md,stylesheet,`format`,confidentiality,apassword,repno,fid,acomments,keywords,visibility,bld,floor,room,nbsession,stime,etime) values('$title','$newid','$startd','$endd','$location','$chairman','$cem','open','$part1','$today','$today','$stylesheet','$format','$confidentiality','$apassword','$repno','$fid','$acomment','','$visibility','$bld','$floor','$bld-$floor-$room',0,'$stime','$etime')";
                            }
         $res = $db->query($sql);
         if (DB::isError($res)) {
@@ -266,7 +298,7 @@ if ($submit == "ADD AGENDA") {
         mail("${warningEmail}", "new agenda $newid", "$message");
     }
     Header("Location: ../displayLevel.php?fid=$fid&alertText=".
-           urlencode($alertText)); 
+           urlencode($alertText));
 exit;
 }
 ###############################
@@ -275,6 +307,34 @@ exit;
 
 if ($submit == "ADD EVENT") {
     setcookie("SuE", "$SuE", time() + 31104000);
+
+    $stdy = $_POST["stdy"];
+    $stdm = $_POST["stdm"];
+    $stdd = $_POST["stdd"];
+    $endy = $_POST["endy"];
+    $endm = $_POST["endm"];
+    $endd = $_POST["endd"];
+    $title = $_POST["title"];
+    $acomment = $_POST["acomment"];
+    $mpassword = $_POST["mpassword"];
+    $bld = $_POST["bld"];
+    $floor = $_POST["floor"];
+    $room = $_POST["room"];
+    $confRoom = $_POST["confRoom"];
+    $stylesheet = $_POST["stylesheet"];
+    $chairman = $_POST["chairman"];
+    $location = $_POST["location"];
+    $format = $_POST["format"];
+    $confidentiality = $_POST["confidentiality"];
+    $apassword = $_POST["apassword"];
+    $visibility = $_POST["visibility"];
+    $fid = $_POST["fid"];
+    $thstart = $_POST["thstart"];
+    $tmstart = $_POST["tmstart"];
+    $thend = $_POST["thend"];
+    $tmend = $_POST["tmend"];
+    $SuE = $_POST["SuE"];
+
     $time = time();
     $today = strftime("%Y-%m-%d", $time);
     $thisyear = strftime("%Y", $time);
@@ -312,7 +372,7 @@ if ($submit == "ADD EVENT") {
     if ($mpassword == "") {
         $sec = microtime();
         $pid = getmypid();
-        $msec = split(" ", $sec, 2); $part1 = substr($msec[0], 2, 11);}
+        $msec = explode(" ", $sec, 2); $part1 = substr($msec[0], 2, 11);}
     else {
         $part1 = "$mpassword";}
 
@@ -388,7 +448,7 @@ if ($submit == "ADD EVENT") {
             alert(\"You have just created a new event!\\nIts modification will be restricted with the following password:\\n\\n   $part1\\n\\nEnter the password into the MODIFY input box on its display page in order to modify it.\");
              </SCRIPT> ";
     $Submessage =
-        "You have just created a new event!\n\nTitle:$title\nAccess: ". ($shortAgendaURL != "" ? $shortAgendaURL : "${AGE_WWW}/fullAgenda.php?ida=") . "$newid\n\nThe modification password for this event is: $part1\n\n".$newEventMSG1; 
+        "You have just created a new event!\n\nTitle:$title\nAccess: ". ($shortAgendaURL != "" ? $shortAgendaURL : "${AGE_WWW}/fullAgenda.php?ida=") . "$newid\n\nThe modification password for this event is: $part1\n\n".$newEventMSG1;
     mail("$SuE", "new event $newid created", "$Submessage");
     $message =
         "A new event has just been created!\n\nTitle: $title\nDate: $today\nAccess: ". ($shortAgendaURL != "" ? $shortAgendaURL : "${AGE_WWW}/fullAgenda.php?ida=") . "$newid\nCreator: $SuE";
@@ -439,13 +499,13 @@ if ($submit == "ADD LECTURE") {
     if ($mpassword == "") {
         $sec = microtime();
         $pid = getmypid();
-        $msec = split(" ", $sec, 2); $part1 = substr($msec[0], 2, 11);}
+        $msec = explode(" ", $sec, 2); $part1 = substr($msec[0], 2, 11);}
     else {
         $part1 = "$mpassword";}
 
     $acomment = addslashes($acomment);
-    $stime = "$thstart:$tmstart:0"; 
-    $etime = "$thend:$tmend:0"; 
+    $stime = "$thstart:$tmstart:0";
+    $etime = "$thend:$tmend:0";
 
     if ($bld == "") {$bld = 0;}
 
@@ -554,6 +614,26 @@ if ($submit == "ADD LECTURE") {
 ############################################################
 
 if ($request == "ADD SESSION") {
+    $startinghour = $_POST["startinghour"];
+    $startingminutes = $_POST["startingminutes"];
+    $endinghour = $_POST["endinghour"];
+    $endingminutes = $_POST["endingminutes"];
+    $stdy = $_POST["stdy"];
+    $stdm = $_POST["stdm"];
+    $stdd = $_POST["stdd"];
+    $stitle = $_POST["stitle"];
+    $scomment = $_POST["scomment"];
+    $bld = $_POST["bld"];
+    $floor = $_POST["floor"];
+    $room = $_POST["room"];
+    $confRoom = $_POST["confRoom"];
+    $scem = $_POST["scem"];
+    $chairman = $_POST["chairman"];
+    $slocation = $_POST["slocation"];
+    $broadcasturl = $_POST["broadcasturl"];
+    $position = $_POST["position"];
+    $stylesheet = $_POST["stylesheet"];
+    $AN = $_POST["AN"];
 
     $speriod1 = "$stdy-$stdm-$stdd";
     $eperiod1 = "$speriod1";
@@ -613,15 +693,15 @@ if ($request == "MODIFY AGENDA") {
     $topicFields = true;
 
     $sql = "select stdate,room,an from AGENDA where id='$ida'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
     $time = time();
     $today = strftime("%Y-%m-%d", $time);
     $startd = "$stdy-$stdm-$stdd";
@@ -629,23 +709,23 @@ if ($request == "MODIFY AGENDA") {
     $etime = "$endinghour:$endingminutes:0";
     $acomment = str_replace("\037", " ", $acomment);
     $GLOBALS["log"]->logDebug(__FILE__, __LINE__, "SMR: '$smr' ");
-    $smr = eregi_replace('smr', '', $smr);
+    $smr = preg_replace('/smr/i', '', $smr);
     $GLOBALS["log"]->logDebug(__FILE__, __LINE__, "SMR: '$smr' ");
-    $row = $res->fetchRow(); 
+    $row = $res->fetchRow();
     $oldroom = $row['room'];
     $oldan = $row['an'];
     //if starting date changes, we also change the sessions and talks.
     if ($row['stdate'] != "$startd" && $globalchange == "on") {
         $sql =
             "update SESSION set speriod1=FROM_DAYS(TO_DAYS(speriod1) + (TO_DAYS('$startd') - TO_DAYS('".$row['stdate']."'))),eperiod1=FROM_DAYS(TO_DAYS(eperiod1) + (TO_DAYS('$startd') - TO_DAYS('".$row['stdate']."'))) where ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
 
         $sql =
             "update TALK set tday=FROM_DAYS(TO_DAYS(tday) + (TO_DAYS('$startd') - TO_DAYS('".$row['stdate']."'))) where ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
@@ -653,37 +733,37 @@ if ($request == "MODIFY AGENDA") {
     }
     if ($stylesheet == "nosession") {
         $sql = "
-            UPDATE SESSION 
+            UPDATE SESSION
             SET speriod1='$startd',
-                eperiod1='$startd' 
+                eperiod1='$startd'
             WHERE ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
         $sql ="
-            UPDATE TALK 
-            SET tday='$startd' 
+            UPDATE TALK
+            SET tday='$startd'
             WHERE ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
     }
-        
+
 
     if ($stylesheet != "nosession")
         $endd = "$endy-$endm-$endd";
     else
-        $endd = "$startd"; 
+        $endd = "$startd";
     if ($confRoom != "Select:") {
         $bld = 0; $floor = ""; $room = $confRoom;}
     else
-        $room = "$bld-$floor-$room"; 
+        $room = "$bld-$floor-$room";
     if (!$calendarActive) {
         // Not active the calendar
         if ($topicFields) {
-            $sql = "update AGENDA set 
+            $sql = "update AGENDA set
              title = '$agenda', stdate = '$startd', endate =
              '$endd', location = '$location', chairman = '$chairman', cem =
              '$cem', md = '$today', status = '$status', format =
@@ -695,36 +775,36 @@ if ($request == "MODIFY AGENDA") {
              , visibility = '$visibility' where id = '$ida' ";
         }
         else {
-            $sql = "update AGENDA set 
+            $sql = "update AGENDA set
              md = '$today', status = '$status', format =
              '$format', confidentiality = '$confidentiality', acomments =
              '$acomment', stylesheet = '$newstylesheet', stime = '$stime',
-             etime = '$etime', visibility = '$visibility' where id = '$ida' ";	    
+             etime = '$etime', visibility = '$visibility' where id = '$ida' ";
         }
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
 
-        $sql = "update SESSION set 
+        $sql = "update SESSION set
              bld = '$bld', floor = '$floor', room = '$room' where ida =
-             '$ida' and room = '$oldroom' "; 
+             '$ida' and room = '$oldroom' ";
         $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());}
 
-        $sql = "update TALK set 
+        $sql = "update TALK set
              bld = '$bld', floor = '$floor', room = '$room' where ida =
-             '$ida' and room = '$oldroom' "; 
+             '$ida' and room = '$oldroom' ";
         $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());}
 
         if ($stylesheet == "nosession") {
-            $sql = "update SESSION set 
+            $sql = "update SESSION set
              bld = '$bld', floor = '$floor', room = '$room', eperiod1='$startd' where ida =
-             '$ida' "; 
-            $res = $db->query($sql); 
+             '$ida' ";
+            $res = $db->query($sql);
             if (DB::isError($res)) {
                 die($res->getMessage());}
         }
@@ -785,14 +865,14 @@ if ($request == "MODIFY AGENDA") {
              $cosponsoredFlag, websitelink =
              '$websiteLink' ".( $websiteLink != ", webSite =
              1 " ? ", webSite = 0 " : " ")." where id = '$ida' ";}
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());}
     }
 
     if ($status == "close") {
         $sql = "update SESSION set sstatus='$status' where ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
@@ -812,14 +892,14 @@ if ($request == "COMPUTE SESSION TIME") {
     $db->autocommit(false);
     //$GLOBALS[ "table" ]->startTransaction();
     $sql = "select ids from SESSION where ida='$ida'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if ($numRows != 0) {
         for ($i = 0; $numRows > $i; $i++) {
-            $row = $res->fetchRow(); 
+            $row = $res->fetchRow();
             updateSessionStartTime($row['ids']);
         }
     }
@@ -853,7 +933,7 @@ if ($request == "DELETE SESSION") {
                                       " Cannot delete session '$request' with id '$ida$ids' ");
         outError
             (" An Error Occurred while deleting SESSION with id '$ida$ids' ",
-             "10b", &$Template); exit;}
+             "10b", $Template); exit;}
     $db->commit();
     lastModifiedAgenda();
     Header
@@ -864,19 +944,40 @@ if ($request == "DELETE SESSION") {
 #        MODIFY SESSION
 ############################################################
 if ($request == "MODIFY SESSION") {
+    $startinghour = $_POST["startinghour"];
+    $startingminutes = $_POST["startingminutes"];
+    $endinghour = $_POST["endinghour"];
+    $endingminutes = $_POST["endingminutes"];
+    $stdy = $_POST["stdy"];
+    $stdm = $_POST["stdm"];
+    $stdd = $_POST["stdd"];
+    $stitle = $_POST["stitle"];
+    $scomment = $_POST["scomment"];
+    $bld = $_POST["bld"];
+    $floor = $_POST["floor"];
+    $room = $_POST["room"];
+    $confRoom = $_POST["confRoom"];
+    $scem = $_POST["scem"];
+    $chairman = $_POST["chairman"];
+    $slocation = $_POST["slocation"];
+    $broadcasturl = $_POST["broadcasturl"];
+    $position = $_POST["position"];
+    $stylesheet = $_POST["stylesheet"];
+    $AN = $_POST["AN"];
+
     $sql =
         "select speriod1,slocation,room from SESSION where ida='$ida' and ids='$ids'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
                                   $sql."' "); $time = time();
     $today = strftime("%Y-%m-%d", $time);
-    $startd = "$stdy-$stdm-$stdd"; 
+    $startd = "$stdy-$stdm-$stdd";
     if ($bld == "") {
         $bld = 0;
     }
@@ -894,8 +995,8 @@ if ($request == "MODIFY SESSION") {
     //We also modify the location of all talks being at the same
     //previous location.
     if ($row['slocation'] != "$slocation") {
-        $sql = "update TALK set location='$slocation' 
-             where ida = '$ida' and ids = '$ids' and location = '" . 
+        $sql = "update TALK set location='$slocation'
+             where ida = '$ida' and ids = '$ids' and location = '" .
             $row['slocation']."'";
         $res = $db->query($sql); if (DB::isError($res)) {
             die($res->getMessage());}
@@ -920,7 +1021,7 @@ if ($request == "MODIFY SESSION") {
         }
 
 
-    $endd = "$startd"; 
+    $endd = "$startd";
     if ($startinghour == "") {
         $startinghour = 0;}
     if ($startingminutes == "") {
@@ -977,10 +1078,10 @@ if ($request == "DELETE TALK") {
                                       " Cannot delete talk or subtalk '$request' with id '$idaids$idt'");
         outError
             (" An Error Occurred while deleting TALK/SUBTALK with id '$ida$ids$idt' ",
-             "12b", &$Template); exit;}
+             "12b", $Template); exit;}
 
     $db->commit();
-    lastModifiedSession($ids); 
+    lastModifiedSession($ids);
     if ($stylesheet == "nosession")
         updateSessionStartTime($ids);
     Header
@@ -1004,7 +1105,7 @@ if ($request == "DELETE SUB TALK") {
                                       " Error removing Subtalk '$request' ");
         outError
             (" An Error occurred while removing the SubTalk with id '$ida$ids$idt' ",
-             "13b", &$Template); exit;}
+             "13b", $Template); exit;}
     $db->commit();
     Header
         ("Location: displayAgenda.php?ida=$ida&position=$position");
@@ -1056,7 +1157,7 @@ if ($request == "ADD TALK") {
     $res = $db->query($sql); if (DB::isError($res)) {
         die($res->getMessage());}
 
-    lastModifiedSession($ids); 
+    lastModifiedSession($ids);
     if ($stylesheet == "nosession")
         updateSessionStartTime($ids);
     Header
@@ -1124,7 +1225,7 @@ if ($request == "SET BROADCAST LINK ON TALK") {
     $today = strftime("%Y-%m-%d", $time);
     $sql =
         "update TALK set broadcasturl='$broadcasturl' where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
@@ -1151,22 +1252,22 @@ if ($request == "MODIFY TALK") {
     $duration = "$durationh:$durationm:0";
     $sql =
         "select ttitle,tday,stime from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
     if ($numRows != 0) {
-        $row = $res->fetchRow(); 
+        $row = $res->fetchRow();
         if ($row['ttitle'] != "") {
             $sql =
                 "update TALK set tday='$startd',stime='$stime' where ttitle='' and tday='".
                 $row['tday']."' and stime='".$row['stime']."'";
-            $res = $db->query($sql); 
+            $res = $db->query($sql);
             if (DB::isError($res)) {
                 die($res->getMessage());
             }
@@ -1182,11 +1283,11 @@ if ($request == "MODIFY TALK") {
         $sql =
             "update TALK set ttitle='$title'$keywordsStr,tspeaker='$tspeaker',tcomment='$tcomment',location='$location',bld='0',floor='',room='$confRoom',type=$ttype,md='$today',repno='$repno',affiliation='$affiliation',stime='$stime',category='$category',duration='$duration',email='$temail' where ida='$ida' and ids='$ids' and idt='$idt'";
     }
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    lastModifiedSession($ids); 
+    lastModifiedSession($ids);
     if ($stylesheet == "nosession")
         updateSessionStartTime($ids);
     Header("Location: displayAgenda.php?ida=$ida&position=$position");
@@ -1200,17 +1301,17 @@ if ($request == "MODIFY TALK") {
 if ($request == "MODIFY LECTURE") {
     $time = time();
     $today = strftime("%Y-%m-%d", $time);
-    $startd = "$stdy-$stdm-$stdd"; 
+    $startd = "$stdy-$stdm-$stdd";
     if ($thstart == "") {
         $thstart = "0";}
     if ($tmstart == "") {
-        $tmstart = "0";} 
+        $tmstart = "0";}
     if ($thend == "") {
         $thend = "0";}
     if ($tmend == "") {
         $tmend = "0";}
-    $stime = "$thstart:$tmstart:0"; 
-    $etime = "$thend:$tmend:0"; 
+    $stime = "$thstart:$tmstart:0";
+    $etime = "$thend:$tmend:0";
     if ($bld == "") {
         $bld = 0;
     }
@@ -1237,7 +1338,7 @@ if ($request == "MODIFY SUB TALK") {
     $tcomment = str_replace("\037", " ", $tcomment);
     $sql =
         "update SUBTALK set ttitle='$title',tspeaker='$tspeaker',tcomment='$tcomment',md='$today',repno='$repno',affiliation='$affiliation',duration='$duration',email='$temail' where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
@@ -1255,7 +1356,7 @@ if ($request == "COMPUTE DURATION") {
 	$sql = "SELECT ids
                 FROM SESSION
 	        WHERE ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
@@ -1266,7 +1367,7 @@ if ($request == "COMPUTE DURATION") {
     else {
 	ComputeTalkDuration($ids,$ida,$sessionscale);
     }
-    lastModifiedSession($ids); 
+    lastModifiedSession($ids);
     Header
         ("Location: displayAgenda.php?ida=$ida&position=$position");
     exit;
@@ -1279,14 +1380,14 @@ function ComputeTalkDuration($ids,$ida,$sessionscale)
 
     $sql =
         "select idt,tday,TIME_TO_SEC(stime) AS stimeinsec from TALK where ida='$ida' and ids='$ids'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
     while( $row = $res->fetchRow() ) {
         $idt = $row['idt'];
         $stime = $row['stimeinsec'];
@@ -1297,14 +1398,14 @@ function ComputeTalkDuration($ids,$ida,$sessionscale)
         if (DB::isError($res2)) {
             die($res2->getMessage());
         }
-        $numRows2 = $res2->numRows(); 
+        $numRows2 = $res2->numRows();
         if ($numRows2 != 0) {
             $row2 = $res2->fetchRow();
             $etime = $row2['stimeinsec'];
             if ($etime - $stime - 60 * $sessionscale > 0) {
                 $sql =
                     "update TALK set duration=SEC_TO_TIME($etime-$stime-60*$sessionscale) where ida='$ida' and ids='$ids' and idt='$idt'";
-                $res3 = $db->query($sql); 
+                $res3 = $db->query($sql);
                 if (DB::isError($res3)) {
                     die($res3->getMessage());
                 }
@@ -1324,7 +1425,7 @@ if ($request == "COMPUTE TIME") {
 	$sql = "SELECT ids
                 FROM SESSION
 	        WHERE ida='$ida'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
@@ -1336,7 +1437,7 @@ if ($request == "COMPUTE TIME") {
 	ComputeTalkStartingTime($ids,$ida,$sessionscale);
     }
     // update session's starting time and modification date
-    lastModifiedSession($ids); 
+    lastModifiedSession($ids);
     Header
         ("Location: displayAgenda.php?ida=$ida&position=$position");
     exit;
@@ -1349,31 +1450,31 @@ function ComputeTalkStartingTime($ids,$ida,$sessionscale)
 
     $sql =
         "select tday,stime,duration,idt from TALK where ida='$ida' and ids='$ids' order by tday,stime";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
     while ($row = $res->fetchRow()) {
         $sql =
             "select TIME_TO_SEC(stime) AS stimeinsec,TIME_TO_SEC(duration) AS durationinsec from TALK where tday='".
             $row['tday']."' and ida='$ida' and ids='$ids' and idt!='".
             $row['idt']."' and stime<='".$row['stime'].
-            "' order by stime DESC LIMIT 1"; 
+            "' order by stime DESC LIMIT 1";
         $res2 = $db->query($sql);
         if (DB::isError($res2)) {
             die($res2->getMessage());}
-        $numRows = $res2->numRows(); 
+        $numRows = $res2->numRows();
         if ($numRows != 0) {
             $row2 = $res2->fetchRow();
             $stimeinsec = $row2['stimeinsec'];
             $durationinsec = $row2['durationinsec'];
             $sql =
                 "update TALK set stime=SEC_TO_TIME($stimeinsec+$durationinsec+60*$sessionscale) where ida='$ida' and ids='$ids' and idt='".
-                $row['idt']."'"; 
+                $row['idt']."'";
             $res3 = $db->query($sql);
             if (DB::isError($res3)) {
                 die($res3->getMessage());}
@@ -1393,32 +1494,32 @@ if ($request == "moveto") {
         // New archive object
         $archive = new archive();
         $files = array();
-        
+
         $sql =
         "select snbtalks,speriod1 from SESSION where ida='$ida' and ids='$newsession'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());}
-        $numRows = $res->numRows(); 
+        $numRows = $res->numRows();
         if (($numRows == 0) && (ERRORLOG))
             $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                       " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
         $row = $res->fetchRow();
         $newdate = $row['speriod1'];
         $newmainidt = "t".$row['snbtalks'];
         $newNum = (int)($row['snbtalks']) + 1;
         $sql =
             "update SESSION set snbtalks=$newNum where ida='$ida' and ids='$newsession'";
-        $res2 = $db->query($sql); 
+        $res2 = $db->query($sql);
         if (DB::isError($res2)) {
             die($res2->getMessage());}
         $sql =
             "update TALK set ids='$newsession',idt='$newmainidt',tday='$newdate' where ida='$ida' and ids='$ids' and idt='$idt'";
-        $res3 = $db->query($sql); 
+        $res3 = $db->query($sql);
         if (DB::isError($res3)) {
             die($res3->getMessage());}
-        
+
         if (is_dir("$ARCHIVE/$ida/$ida$ids$idt")) {
             `mv $ARCHIVE/$ida/$ida$ids$idt $ARCHIVE/$ida/$ida$newsession$newmainidt `;
             // delete old files from database
@@ -1431,22 +1532,22 @@ if ($request == "moveto") {
             // add new ones
             $archive->synchronize("$ida$newsession$newmainidt");
         }
-        
+
         $sql =
             "select idt from SUBTALK where ida='$ida' and ids='$ids' and fidt='$idt'";
-        $res = $db->query($sql); 
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());}
-        $numRows = $res->numRows(); 
+        $numRows = $res->numRows();
         if (($numRows == 0) && (ERRORLOG))
             $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                       " Retrieved 0 elements with select '".
-                                      $sql."' "); 
+                                      $sql."' ");
         while ($row = $res->fetchRow()) {
             $oldidt = $row['idt'];
             $sql =
                 "select snbtalks from SESSION where ida='$ida' and ids='$newsession'";
-            $res2 = $db->query($sql); 
+            $res2 = $db->query($sql);
             if (DB::isError($res2)) {
                 die($res2->getMessage());}
             $numRows = $res2->numRows();
@@ -1455,13 +1556,13 @@ if ($request == "moveto") {
             $newNum = (int)($row2['snbtalks']) + 1;
             $sql =
                 "update SESSION set snbtalks=$newNum where ida='$ida' and ids='$newsession'";
-            $res3 = $db->query($sql); 
+            $res3 = $db->query($sql);
             if (DB::isError($res3)) {
                 die($res3->getMessage());}
-            
+
             $sql =
                 "update SUBTALK set ids='$newsession',idt='$newidt',fidt='$newmainidt' where ida='$ida' and ids='$ids' and idt='$oldidt' and fidt='$idt'";
-            $res4 = $db->query($sql); 
+            $res4 = $db->query($sql);
             if (DB::isError($res4)) {
                 die($res4->getMessage());}
             if (is_dir("$ARCHIVE/$ida/$ida$ids$oldidt")) {
@@ -1477,7 +1578,7 @@ if ($request == "moveto") {
                 $archive->synchronize("$ida$newsession$newidt");
             }
         }
-        
+
         lastModifiedTalk($newsession, $newmainidt);
         if ($stylesheet == "nosession") {
             updateSessionStartTime($ids);
@@ -1497,7 +1598,7 @@ if ($request == "subtalkup")
 {
     // First get father id
     $sql = "SELECT fidt,ida,ids
-            FROM SUBTALK 
+            FROM SUBTALK
             WHERE ida='$ida' and ids='$ids' and idt='$idt'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -1542,7 +1643,7 @@ if ($request == "subtalkdown")
 {
     // First get father id
     $sql = "SELECT fidt,ida,ids
-            FROM SUBTALK 
+            FROM SUBTALK
             WHERE ida='$ida' and ids='$ids' and idt='$idt'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -1586,13 +1687,13 @@ if ($request == "subtalkdown")
 if ($request == "delay") {
     $sql =
         "select stime from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
     $numRows = $res->numRows();
     $row = $res->fetchRow();
     $stime = $row['stime'];
-    $array = split(":", $stime, 3);
+    $array = explode(":", $stime, 3);
     $hours = $array[0];
     $minutes = $array[1];
     $newmin = $scale + $minutes; if ($newmin >= 60) {
@@ -1604,11 +1705,11 @@ if ($request == "delay") {
     $newtime = "$newhour:$newmin:0";
     $sql =
         "update TALK set stime='$newtime' where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
 
-    lastModifiedTalk($ids, $idt); 
+    lastModifiedTalk($ids, $idt);
     if ($stylesheet == "nosession")
         updateSessionStartTime($ids);
     Header
@@ -1624,10 +1725,10 @@ if ($request == "delayall") {
 
     $sql =
         "select stime,tday from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
@@ -1635,21 +1736,21 @@ if ($request == "delayall") {
     $day = "".$row['tday']; $stime = "".$row['stime'];
     $sql =
         "select stime,idt from TALK where ida='$ida' and ids='$ids' and tday='$day' and stime>='$stime' ";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
 
     while ($row = $res->fetchRow()) {
         $stime = $row['stime'];
-        $array = split(":", $stime, 3);
+        $array = explode(":", $stime, 3);
         $hours = $array[0];
         $minutes = $array[1];
-        $newmin = $scale + $minutes; 
+        $newmin = $scale + $minutes;
         if ($newmin >= 60) {
             $newmin = $newmin - 60; $newhour = $hours + 1;}
         else {
@@ -1659,11 +1760,11 @@ if ($request == "delayall") {
         $newtime = "$newhour:$newmin:0";
         $sql =
             "update TALK set stime='$newtime' where ida='$ida' and ids='$ids' and idt='".
-            $row['idt']."'"; 
+            $row['idt']."'";
         $res2 = $db->query($sql);
         if (DB::isError($res2)) {
             die($res2->getMessage());}
-        
+
         lastModifiedTalk($ids, $row['idt']);
     }
 
@@ -1682,15 +1783,15 @@ if ($request == "advance") {
 
     $sql =
         "select stime from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
                                   $sql."' "); $row = $res->fetchRow();
-    $stime = $row['stime']; $array = split(":", $stime, 3);
+    $stime = $row['stime']; $array = explode(":", $stime, 3);
     $hours = $array[0]; $minutes = $array[1];
     $newmin = $minutes - $scale; if ($newmin < 0) {
         $newmin = 60 + $newmin; $newhour = $hours - 1;}
@@ -1704,7 +1805,7 @@ if ($request == "advance") {
     $res = $db->query($sql); if (DB::isError($res)) {
         die($res->getMessage());}
 
-    lastModifiedTalk($ids, $idt); 
+    lastModifiedTalk($ids, $idt);
     if ($stylesheet == "nosession")
         updateSessionStartTime($ids);
     Header
@@ -1719,10 +1820,10 @@ if ($request == "advanceall") {
 
     $sql =
         "select stime,tday from TALK where ida='$ida' and ids='$ids' and idt='$idt'";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
@@ -1730,17 +1831,17 @@ if ($request == "advanceall") {
     $day = "".$row['tday']; $stime = "".$row['stime'];
     $sql =
         "select stime,idt from TALK where ida='$ida' and ids='$ids' and tday='$day' and stime>='$stime' ";
-    $res = $db->query($sql); 
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());}
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if (($numRows == 0) && (ERRORLOG))
         $GLOBALS["log"]->logError(__FILE__.".".__LINE__, "main",
                                   " Retrieved 0 elements with select '".
-                                  $sql."' "); 
+                                  $sql."' ");
     while ($row = $res->fetchRow()) {
         $stime = $row['stime'];
-        $array = split(":", $stime, 3);
+        $array = explode(":", $stime, 3);
         $hours = $array[0];
         $minutes = $array[1];
         $newmin = $minutes - $scale; if ($newmin < 0) {
@@ -1752,7 +1853,7 @@ if ($request == "advanceall") {
         $newtime = "$newhour:$newmin:0";
         $sql =
             "update TALK set stime='$newtime' where ida='$ida' and ids='$ids' and idt='".
-            $row['idt']."'"; 
+            $row['idt']."'";
         $res2 = $db->query($sql);
         if (DB::isError($res2)) {
             die($res2->getMessage());
@@ -1778,7 +1879,7 @@ if ($request == "advanceall") {
 if ($request == "checkDoc") {
     $msgs = "";
     // Adjust the query to the previous script
-    $QUERY = ereg_replace("__", "&", $QUERY);
+    $QUERY = preg_replace("/__/", "&", $QUERY);
     //print "loc '$thisScript' '$QUERY' ";exit;
     Header("Location: $thisScript?$QUERY");
 }
@@ -1792,14 +1893,14 @@ if ($request == "descriptionDoc") {
             "description".$idx}
                                     );
     // Adjust the query to the previous script
-    $QUERY = ereg_replace("__", "&", $QUERY);
+    $QUERY = preg_replace("/__/", "&", $QUERY);
     Header("Location: $thisScript?$QUERY");}
 
 if ($request == "deleteDoc") {
     $msgs = "";
     // Adjust the query to the previous script
-    $QUERY = ereg_replace("__", "&", $QUERY);
-    ereg_replace("&msgs=", "&old_msgs=", $QUERY);
+    $QUERY = preg_replace("/__/", "&", $QUERY);
+    preg_replace("/&msgs=/", "&old_msgs=", $QUERY);
     Header("Location: $thisScript?$QUERY&msgs=$msgs");}
 
 
@@ -1887,12 +1988,12 @@ function updateSessionStartTime($ids) {
              WHERE ida = '$ida' and
              ids = '$ids'
              ORDER BY tday, stime
-             LIMIT 1 "; 
-    $res = $db->query($sql); 
+             LIMIT 1 ";
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
-    $numRows = $res->numRows(); 
+    $numRows = $res->numRows();
     if ($numRows != 0) {
         $row = $res->fetchRow();
         $sql = "
@@ -1900,8 +2001,8 @@ function updateSessionStartTime($ids) {
              SET speriod1 = '".$row['tday']."',
              stime = '".$row['stime']."'
              WHERE ida = '$ida' and
-             ids = '$ids' "; 
-        $res = $db->query($sql); 
+             ids = '$ids' ";
+        $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());
         }
@@ -1915,8 +2016,8 @@ function updateSessionStartTime($ids) {
              WHERE ida = '$ida' and
              ids = '$ids'
              ORDER BY tday DESC, stime DESC
-             LIMIT 1 "; 
-    $res = $db->query($sql); 
+             LIMIT 1 ";
+    $res = $db->query($sql);
     if (DB::isError($res)) {
         die($res->getMessage());
     }
@@ -1928,7 +2029,7 @@ function updateSessionStartTime($ids) {
              etime =
              SEC_TO_TIME(TIME_TO_SEC('".$row['stime']."') +
                          TIME_TO_SEC('".$row['duration']."'))
-             WHERE ida = '$ida' and ids = '$ids' "; 
+             WHERE ida = '$ida' and ids = '$ids' ";
         $res = $db->query($sql);
         if (DB::isError($res)) {
             die($res->getMessage());

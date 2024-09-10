@@ -41,10 +41,10 @@ require_once '../platform/authentication/sessinit.inc';
 $Template = new Template( $PathTemplate );
 // Template set-up
 $Template->set_file(array("mainpage" => "adminAuth.ihtml",
-                          "error"    => "error.ihtml" ));	
+                          "error"    => "error.ihtml" ));
 
 if ($authentication && !canManageCategory($userid,$fid)) {
-    outError("You are not allowed to manage this category","10",&$Template);
+    outError("You are not allowed to manage this category","10",$Template);
     exit;
 }
 

@@ -69,7 +69,7 @@ class agenda {
 	var $groupsEmpty;
 
 	//constructor
-	function agenda($ida) {
+	function __construct($ida) {
 		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$mapServerACTIVE,$mapServerAddress,$directDisplaySingleFiles;
 		$nbfiles = 0;
 		$nbsessions = 0;
@@ -94,7 +94,7 @@ class agenda {
                 $FILE_TYPES_ARRAY_PRESELECTED = $row['categoryID'];
             }
         }
-        
+
 
 		$sql = "select confidentiality,apassword,stdate,title,chairman,acomments,location,cem,id,endate,repno,fid,keywords,status,format,md,an,cd,stylesheet,format,visibility,bld,floor,room,stime,etime from AGENDA where id='$ida'";
 		$res = $db->query($sql);
@@ -104,7 +104,7 @@ class agenda {
 		}
 
 		$row = $res->fetchRow();
-		
+
 		// Data
 		///////////////////////////////////////////////////
 		$this->fid             = $row['fid']; // 11
@@ -138,7 +138,7 @@ class agenda {
             $this->room = "<a href=\"$mapServerAddress" . ( $this->bld!=0 ? $this->bld : ereg_replace(" ","+",$this->room) ) ."\" classinfo>".$this->room."</a>";
         }
         $this->room = formatfield($this->room);
-        
+
 		// Retrieve last update date
 		$res2 = $db->query("select TO_DAYS(MAX(md)) AS maxtalk from TALK where ida='$ida'");
 		$res3 = $db->query("select TO_DAYS(MAX(md)) AS maxsession from SESSION where ida='$ida'");
@@ -180,7 +180,7 @@ class agenda {
 
 		$sql = "select title,fid from LEVEL where uid='" . $row['fid'] . "'";
 		$res4 = $db->query($sql);
-		
+
 		if (DB::isError($res4)) {
 			die ($res4->getMessage());
 		}
@@ -233,7 +233,7 @@ class agenda {
             else {
                 $linkname = $text;
             }
-                
+
             $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida/$category" );
             $nbfiles ++;
             next($categories);
@@ -270,7 +270,7 @@ class agenda {
                     }
                     $this->minutes = $mintext;
                 }
-                next($minutesfiles); 
+                next($minutesfiles);
             }
         }
 
@@ -325,11 +325,11 @@ room=\"$this->room\">\n";
 		if ($this->minutes != "")
 			$xml .= "<minutes>" . $this->minutes . "</minutes>\n";
 
-		$nbFiles = count($this->files);
+		$nbFiles = is_array($this->files) || $this->files instanceof Countable ? count($this->files) : 0;
 		// Put here a sort to order the file by type
 		for ($i=0;$i<$nbFiles;$i++)
 			$xml .= $this->files[$i]->displayXML();
-		$nbSessions = count($this->sessions);
+		$nbSessions = is_array($this->nbSessions) || $this->nbSessions instanceof Countable ? count($this->nbSessions) : 0;
 		for ($i=0;$i<$nbSessions;$i++)
 			if ($this->sessions[$i]->stitle != "dummy session")
 				$xml .= $this->sessions[$i]->displayXML();

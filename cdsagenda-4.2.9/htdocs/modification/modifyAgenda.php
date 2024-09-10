@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once '../AgeDB.php';
@@ -39,9 +39,9 @@ require_once '../platform/system/logManager.inc';
 $Template = new Template( $PathTemplate );
 
 // Template set-up
-$Template->set_file(array("mainpage"=>$templateNamesVec["modifyAgenda.php"][$calendarActive], 
-                          "error"=>"error.ihtml" ));	
-	
+$Template->set_file(array("mainpage"=>$templateNamesVec["modifyAgenda.php"][$calendarActive],
+                          "error"=>"error.ihtml" ));
+
 
 $Template->set_var( "images", "$IMAGES_WWW" );
 
@@ -60,9 +60,9 @@ else
     $Template->set_var( "modifyAgenda_topicFieldsOnEnd", "-->" );
     $Template->set_var( "modifyAgenda_topicFieldsOnStart", "<!--" );
     // Enable fixed text for topic fields
-    $Template->set_var( "modifyAgenda_topicFieldsOffStart", "" ); 
+    $Template->set_var( "modifyAgenda_topicFieldsOffStart", "" );
     $Template->set_var( "modifyAgenda_topicFieldsOffEnd", "" );
-}	    
+}
 if ( $otherFields )
 {
 }
@@ -93,7 +93,7 @@ if ( $numRows == 0 )
             $log->logError( __FILE__ . "." . __LINE__, "main", " Cannot find agenda with id='$ida' " );
         }
 
-    outError( " Cannot Find this Agenda ", "02", &$Template );
+    outError( " Cannot Find this Agenda ", "02", $Template );
     exit;
 
     // cutted echo
@@ -173,7 +173,7 @@ else
         $newstylesheet = "standard";
 
     reset($stylesheets);
-    while (list ($key, $val) = each ($stylesheets)) 
+    while (list ($key, $val) = each ($stylesheets))
         {
             if ($key == $newstylesheet)
                 $str_Stylesheets .= "<OPTION value=\"$key\" selected>$val\n";
@@ -259,7 +259,7 @@ else
 
     // cutted echo
     $Template->set_var( "agendaModify_accessPassword", $row['apassword'] );
-                
+
     // Currently not active the report number with the calendar extensions
     if ( !$calendarActive )
         $str_help21="document.forms[0].repno.value='" . $row['repno'] . "';\n";
@@ -274,9 +274,9 @@ else
     $Template->set_var( "modifyAgenda_title", $row['title']);
 
     $row['location']=stripslashes($row['location']);
-    $row['location']=ereg_replace("'","\'",$row['location']);		
+    $row['location']=ereg_replace("'","\'",$row['location']);
     $Template->set_var( "modifyAgenda_location", ( $row['location'] == "" ? "" : $row['location'] ));
-		
+
     $row['chairman']=stripslashes($row['chairman']);
     $row['chairman']=ereg_replace("'","\'",$row['chairman']);
     $Template->set_var( "modifyAgenda_chairman", ( $row['chairman'] == "" ? "" : $row['chairman'] ));
@@ -317,7 +317,7 @@ else
     // Fixed text, used when no topic field permission is on
     $Template->set_var( "modifyAgenda_endate", date("j F Y", mktime( 0 ,0, 0, $emonth, $eday, $eyear )));
     $Template->set_var( "modifyAgenda_endy", $eyear );
-    $Template->set_var( "modifyAgenda_endm", $emonth );		
+    $Template->set_var( "modifyAgenda_endm", $emonth );
     $str_help28="
         var enmonth=$emonth;\n
         var enyear=$eyear;\n

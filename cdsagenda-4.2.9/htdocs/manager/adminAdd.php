@@ -55,7 +55,10 @@ $db = & AgeDB::getDB();
 //----------------------------------------------
 // ADD to the DB
 //----------------------------------------------
-if(isset($action) && trim($action)=="add") {
+if(isset($_POST["action"]) && trim($_POST["action"])=="add") {
+    $fid = $_POST["fid"];
+    $level = $_POST["level"];
+    $title = $_POST["title"];
     //check the fid & level are there
     if( (!isset($fid)) || (trim($fid)=="") ) {
         die("error!! fid not specified or incorrect");
@@ -92,11 +95,9 @@ if(isset($action) && trim($action)=="add") {
         die("error!! can't create this item if it doesn't have title");
     }
     //format properly the fields
-    if( !get_magic_quotes_gpc() ) {
-        $title=addslashes($title);
-        $description=addslashes($description);
-        $stitle=addslashes($stitle);
-    }
+    $title=addslashes($title);
+    $description=addslashes($description);
+    $stitle=addslashes($stitle);
     //update DB
     $time=time();
     $today=strftime("%Y-%m-%d",$time);
@@ -112,26 +113,27 @@ if(isset($action) && trim($action)=="add") {
     if( DB::isError($res) ){
         die("error!! couldn't add item:".$res->getMessage());
     }
-    
-    $counter = mysql_insert_id();
-    //upload the icon file
-    if (is_uploaded_file($_FILES['icon']['tmp_name'])) {
-        copy($_FILES['icon']['tmp_name'], "$AGE/$IMAGES/levelicons/".$counter.".gif");
-    }
-    //check if there were already some agendas in the parent category and, in 
-    //  this case, move them to the newly created one
-    $res = $db->query("select id
-                       from AGENDA
-					   where fid='$fid'" );
-    if($res->numRows()!=0){
-        while( $row = $res->fetchRow( DB_FETCHMODE_OBJECT ) ){
-            $err = reallocat( $row->id, $counter );
-            if($err!="") {
-                $db->rollback();
-                die("error!! couldn't move agenda '".$row->id."' to the newly created category: $err. The sub-category couldn't be create");
-            }
-        }
-    }
+
+    // TODO FIX THIS
+    // $counter = mysqli_insert_id();
+    // //upload the icon file
+    // if (is_uploaded_file($_FILES['icon']['tmp_name'])) {
+    //     copy($_FILES['icon']['tmp_name'], "$AGE/$IMAGES/levelicons/".$counter.".gif");
+    // }
+    // //check if there were already some agendas in the parent category and, in 
+    // //  this case, move them to the newly created one
+    // $res = $db->query("select id
+    //                    from AGENDA
+	// 				   where fid='$fid'" );
+    // if($res->numRows()!=0){
+    //     while( $row = $res->fetchRow( DB_FETCHMODE_OBJECT ) ){
+    //         $err = reallocat( $row->id, $counter );
+    //         if($err!="") {
+    //             $db->rollback();
+    //             die("error!! couldn't move agenda '".$row->id."' to the newly created category: $err. The sub-category couldn't be create");
+    //         }
+    //     }
+    // }
     $db->commit();
     //close this window and refresh the caller one
         ?>
@@ -173,7 +175,7 @@ else {
         }
         else {
             // fid does not exist
-            outError("father category does not exist...","01",&$Template);
+            outError("father category does not exist...","01",$Template);
             exit;
         }
     }

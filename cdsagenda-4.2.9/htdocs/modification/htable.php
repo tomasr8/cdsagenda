@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 //----------------------------------------------------------------------
@@ -39,12 +39,12 @@ require_once "../platform/template/template.inc";
 // require_once "../platform/archive/archive.inc";
 
 $thisScript = "$AGE_WWW/modification/htable.php";
-	
-$Template = new Template( $PathTemplate );	
-$Template->set_file(array( 
-			  "mainpage"=>"htable.ihtml", 
+
+$Template = new Template( $PathTemplate );
+$Template->set_file(array(
+			  "mainpage"=>"htable.ihtml",
 			  "error"=>"error.ihtml" ));
-	
+
 /***************************************************************************
  * Check if we are using Cookies to make persistent the ********************
  * agenda/password  authorizations *****************************************
@@ -65,11 +65,11 @@ $Template->set_file(array(
 // {
 //   if ( LOGGING )
 //     $GLOBALS[ "log" ]->logDebug( __FILE__, __LINE__, " Cannot find the correct cookie for user authentication " );
-//   outError( " You are not allowed to see this context (you are not a recognized user '$id' '$idu') ", "01", &$Template );
-//   exit;	    
+//   outError( " You are not allowed to see this context (you are not a recognized user '$id' '$idu') ", "01", $Template );
+//   exit;
 // }
-	
-	
+
+
 // WILL BE MOVED INSIDE THE PARAMETERS, ACTUALLY CHECK WITH THESE IFs
 // ABOUT INFORMATION TO RETRIEVE
 print_r($objList);
@@ -110,14 +110,14 @@ $str_help = "";
 $str_tit = "";
 $str_head = "";
 $str_tab = "";
-	
+
 if ( $resDoc != 0 )
 {
   $str_tab .= "<table style=\"{{tabfontstili}}\" border=\"{tborder}\" bordercolor=\"{tabdcolor}\" bgcolor=\"{tabgcolor}\" align=\"{tabalign}\" cellpadding=\"{cpad}\" cellspacing=\"{cspace}\" width=\"{tabw}\" height=\"{tabh}\">";
   $Template->set_var("table", $str_tab);
   $str_head .= "<tr bgcolor=\"{tbgcolor}\" align=\"{talign}\">";
   $Template->set_var( "header", $str_head );
-	
+
   // riga dei titoli
   for ($j=0; $j<count($tabFieldsTitle[ $cat[$tp] ]); $j++)
     {
@@ -126,28 +126,28 @@ if ( $resDoc != 0 )
     }
 
   $Template->set_var("titoli","$str_tit");
-	
+
   $sf = $tabFieldsParam[ $cat[$tp] ][ "fbgcolor" ][0];
   for ($i=0; $i<count($resDoc); $i++)
     {
       $sf = $tabFieldsParam[ $cat[$tp] ][ "fbgcolor" ][($i) % count( $tabFieldsParam[ $cat[$tp] ][ "fbgcolor" ] )];
       if (count($tabFields[ $cat[$tp] ])!=0) {
 	$str_help .= "<tr bgcolor=\"".$sf."\">\n";
-			
-	// $tabFields è il numero di campi
+
+	// $tabFields ï¿½ il numero di campi
 	for ($j=0; $j<count($tabFields[ $cat[$tp] ]); $j++)
 	  {
 	    $help=$tabFields[ $cat[$tp] ][ $j ];
 
 	    switch ($tabFieldsType[ $cat[$tp] ][ $j ]){
 	    case "TEXT":{
-						
-	      // il nome della form è i primi 3 caratteri del nome del campo + l'indice i
+
+	      // il nome della form ï¿½ i primi 3 caratteri del nome del campo + l'indice i
 	      //$whichf = substr($tabFieldsTitle[ $cat[$tp] ][ $j ],0,3) . $i;
-						
-	      // il nome del textbox è = al nome del campo relativo
+
+	      // il nome del textbox ï¿½ = al nome del campo relativo
 	      $which = $tabFields[ $cat[$tp] ][ $j ] . $i;
-						
+
 	      $paramsval = explode( " ", $tabFieldsLinksParamsVal[ $cat[$tp] ][ $j ]);
 	      $params = explode( " ", $tabFieldsLinksParams[ $cat[$tp] ][ $j ]);
 	      $param_str = "";
@@ -167,11 +167,11 @@ if ( $resDoc != 0 )
 	      }
 	      $str_help .= "\n\n<td align=\"{calign}\">\n<input type='text' name='" . $which . "' value='" . ($resDoc[ $i ]->$help == "" ? "":$resDoc[ $i ]->$help) . "'><input type=\"button\" onClick=\"act('".$tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str . "&idx=$i" . "'); document.forma.submit();\" value=\"{modvalue}\" style=\"{{modstili}}\"></td>\n\n";
 	    } break;
-					
+
 	    case "STATIC":{
 	      $str_help .= "<td align=\"{calign}\">".($resDoc[ $i ]->$help == "" ? "&nbsp;":$resDoc[ $i ]->$help)."</td>";
 	    } break;
-					
+
 	    case "LINK":{
 	      $paramsval = explode( " ", $tabFieldsLinksParamsVal[ $cat[$tp] ][ $j ]);
 	      $params = explode( " ", $tabFieldsLinksParams[ $cat[$tp] ][ $j ]);
@@ -194,7 +194,7 @@ if ( $resDoc != 0 )
 		$str_help .= "<td align=\"{calign}\">&nbsp;<A HREF=\"" . $tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str . "\"></A></td>\n";
 	      else $str_help .= "<td align=\"{calign}\"><A HREF=\"" . $tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str . "\" " . $tabFieldsTypeParam[ $cat[$tp] ][ $j ] . ">" . $resDoc[ $i ]->$help . "</A></td>\n";
 	    } break;
-					
+
 	    case "CHECK":{
 	      $paramsval = explode( " ", $tabFieldsLinksParamsVal[ $cat[$tp] ][ $j ]);
 	      $params = explode( " ", $tabFieldsLinksParams[ $cat[$tp] ][ $j ]);
@@ -213,10 +213,10 @@ if ( $resDoc != 0 )
 		}
 		$hlp = "&";
 	      }
-	      // il nome del checkbox è = al nome del campo relativo
+	      // il nome del checkbox ï¿½ = al nome del campo relativo
 	      $which = $tabFields[ $cat[$tp] ][ $j ] . $i;
 
-	      // il nome della form è i primi 3 caratteri del nome del campo + l'indice i
+	      // il nome della form ï¿½ i primi 3 caratteri del nome del campo + l'indice i
 	      $whichf = substr($tabFieldsTitle[ $cat[$tp] ][ $j ],0,3) . $i;
 	      if (($resDoc[ $i ]->$help == "" ? "&nbsp;":$resDoc[ $i ]->$help) == "0")
 		$str_help .= "\n\n<td align=\"{calign}\">\n<input type='checkbox' name ='" . $which . "' onClick=\"act('".$tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str . "&idx_=$i');document.forma.submit();\"><input type=\"hidden\" name=\"selector\" value=\"" . $tabFields[ $cat[$tp] ][ $j ] . "\"></td>\n\n";
@@ -244,7 +244,7 @@ if ( $resDoc != 0 )
 						}
 						$str_help .= "\n\n<td align=\"{calign}\">\n<input type=\"submit\" value=\"" . $tabFieldsTitle[ $cat[$tp] ][ $j ] . "\"></td>\n";
 					} break;*/
-					
+
 	    case "BUTTON_DYN":{
 	      $paramsval = explode( " ", $tabFieldsLinksParamsVal[ $cat[$tp] ][ $j ]);
 	      $params = explode( " ", $tabFieldsLinksParams[ $cat[$tp] ][ $j ]);
@@ -288,13 +288,13 @@ if ( $resDoc != 0 )
 		}
 		$hlp = "&";
 	      }
-	      // il nome del checkbox è = al nome del campo relativo
+	      // il nome del checkbox ï¿½ = al nome del campo relativo
 	      $which = $tabFields[ $cat[$tp] ][ $j ] . $i;
-						
+
 	      // controllo di abilitazione/disabilitazione del check
 	      $ab = $tabFields[ $cat[$tp] ][ $j ] . "Flag";
 	      if ( $resDoc[ $i ]->$ab == 1) {
-		// il nome della form è i primi 3 caratteri del nome del campo + l'indice i
+		// il nome della form ï¿½ i primi 3 caratteri del nome del campo + l'indice i
 		$whichf = substr($tabFieldsTitle[ $cat[$tp] ][ $j ],0,3) . $i;
 		if (($resDoc[ $i ]->$help == "" ? "&nbsp;":$resDoc[ $i ]->$help) == "0")
 		  $str_help .= "\n\n<td align=\"{calign}\">\n<input type='checkbox' name ='" . $which . "' onClick=\"act('".$tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str."&idx_=$i');document.forma.submit();\"><input type=\"hidden\" name=\"selector\" value=\"" . $tabFields[ $cat[$tp] ][ $j ] . "\"></td>\n\n";
@@ -302,7 +302,7 @@ if ( $resDoc != 0 )
 		  $str_help .= "\n\n<td align=\"{calign}\">\n<input type='checkbox' CHECKED name ='" . $which . "' onClick=\"act('".$tabFieldsLinks[ $cat[$tp] ][ $j ] . $param_str."&idx_=$i');document.forma.submit();\"><input type=\"hidden\" name=\"selector\" value=\"" . $tabFields[ $cat[$tp] ][ $j ] . "\"></td>\n\n";
 	      }
 	      else {
-		// il nome della form è i primi 3 caratteri del nome del campo + l'indice i
+		// il nome della form ï¿½ i primi 3 caratteri del nome del campo + l'indice i
 		$whichf = substr($tabFieldsTitle[ $cat[$tp] ][ $j ],0,3) . $i;
 		if (($resDoc[ $i ]->$help == "" ? "&nbsp;":$resDoc[ $i ]->$help) == "0")
 		  $str_help .= "\n\n<td align=\"{calign}\">\n<input type='checkbox' DISABLED name ='" . $which . "' onClick=\"if (this.checked == true) this.checked=false; else this.checked=true; alert('" . $tabFieldsAlarm[ $cat[$tp] ][ $j ] . "');\"><input type=\"hidden\" name=\"selector\" value=\"" . $tabFields[ $cat[$tp] ][ $j ] . "\"></td>\n\n";
@@ -311,13 +311,13 @@ if ( $resDoc != 0 )
 	      }
 	    } break;
 	    case "TEXT_DYN":{
-						
-	      // il nome della form è i primi 3 caratteri del nome del campo + l'indice i
+
+	      // il nome della form ï¿½ i primi 3 caratteri del nome del campo + l'indice i
 	      //$whichf = substr($tabFieldsTitle[ $cat[$tp] ][ $j ],0,3) . $i;
-						
-	      // il nome del textbox è = al nome del campo relativo
+
+	      // il nome del textbox ï¿½ = al nome del campo relativo
 	      $which = $tabFields[ $cat[$tp] ][ $j ] . $i;
-						
+
 	      $paramsval = explode( " ", $tabFieldsLinksParamsVal[ $cat[$tp] ][ $j ]);
 	      $params = explode( " ", $tabFieldsLinksParams[ $cat[$tp] ][ $j ]);
 	      $param_str = "";

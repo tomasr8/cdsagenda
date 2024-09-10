@@ -23,7 +23,7 @@ function CreateModifyMenu()
       $text .= "<font size=-1 color=green>&nbsp;&nbsp;&nbsp;This agenda is <b>closed</B>.<br>&nbsp;&nbsp;&nbsp;If you want to modify it, please contact the category administrator<br></font>";
   }
   else {
-      $text .= "<FORM action=\"access.php\" method=POST target=\"modification\" onSubmit=\"window.open('access.php?ida=$ida&stylesheet=$stylesheet&AN='+this.AN.value);return false;\"><INPUT type=hidden name=ida value=$ida><INPUT type=hidden name=stylesheet value=$stylesheet>";
+      $text .= "<FORM action=\"access.php?ida=$ida&stylesheet=$stylesheet\" method=POST target=\"modification\" onSubmit=\"window.open('access.php?ida=$ida&stylesheet=$stylesheet&AN='+this.AN.value);return false;\"><INPUT type=hidden name=ida value=$ida><INPUT type=hidden name=stylesheet value=$stylesheet>";
       if ( $authentication && canModifyAgenda($userid,$ida) ){
           // USER LOGGED
           $text .= "<font size=-1>&nbsp;&nbsp;&nbsp;You are allowed to modify this agenda<BR><BR>\n";
@@ -36,10 +36,10 @@ function CreateModifyMenu()
       }
       $text .= "</FORM>";
   }
-  
+
   $text .= CreateMenuFooter() . "
 <!-- `modifymenu.inc' ends here -->";
-  
+
   return $text;
 }
 ?>

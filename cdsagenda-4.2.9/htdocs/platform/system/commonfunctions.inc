@@ -42,7 +42,7 @@
                  }
 
                 // Suppose $Template the instance of template.inc
-                function outError( $msg, $code, &$Template, $emailTO = "" )
+                function outError( $msg, $code, $Template, $emailTO = "" )
                 {
                     $Template->set_var( "error_msg", $msg );
                     $Template->set_var( "error_code", $CODE_ERROR[ "__FILE__" ] . " " . $code );

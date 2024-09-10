@@ -54,17 +54,17 @@ if ($ida != "" and !is_array($ida)) {
 // paths to images
 //===========================
 
-  define(AGE_ADMIN_IMG_ADD, "images/add.gif");
-  define(AGE_ADMIN_IMG_DEL, "images/delete.gif");
-  define(AGE_ADMIN_IMG_EDIT, "images/edit.gif");
-  define(AGE_ADMIN_IMG_AUTH, "$IMAGES_WWW/authorize.gif");
-  define(AGE_ADMIN_IMG_REALL, "images/movetalk.gif");
-  define(AGE_ADMIN_IMG_UP, "$IMAGES_WWW/upArrow.gif");
-  define(AGE_ADMIN_IMG_TREE_OPENED, "images/downArrow.gif");
-  define(AGE_ADMIN_IMG_TREE_CLOSED, "images/rightArrow.gif");
-  define(AGE_ADMIN_IMG_TRASH, "images/trash.gif");
-  define(AGE_ADMIN_IMG_MOVEUP, "$IMAGES_WWW/upicon.gif");
-  define(AGE_ADMIN_IMG_MOVEDOWN, "$IMAGES_WWW/downicon.gif");
+  define("AGE_ADMIN_IMG_ADD", "images/add.gif");
+  define("AGE_ADMIN_IMG_DEL", "images/delete.gif");
+  define("AGE_ADMIN_IMG_EDIT", "images/edit.gif");
+  define("AGE_ADMIN_IMG_AUTH", "$IMAGES_WWW/authorize.gif");
+  define("AGE_ADMIN_IMG_REALL", "images/movetalk.gif");
+  define("AGE_ADMIN_IMG_UP", "$IMAGES_WWW/upArrow.gif");
+  define("AGE_ADMIN_IMG_TREE_OPENED", "images/downArrow.gif");
+  define("AGE_ADMIN_IMG_TREE_CLOSED", "images/rightArrow.gif");
+  define("AGE_ADMIN_IMG_TRASH", "images/trash.gif");
+  define("AGE_ADMIN_IMG_MOVEUP", "$IMAGES_WWW/upicon.gif");
+  define("AGE_ADMIN_IMG_MOVEDOWN", "$IMAGES_WWW/downicon.gif");
 
 //============================================================================
 //  function: getHierarchy

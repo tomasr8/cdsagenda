@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -40,7 +40,7 @@ require_once 'platform/template/template.inc';
 // new template
 $Template = new Template( $PathTemplate );
 // Template set-up
-$Template->set_file(array( "error"=> "error.ihtml" ));	
+$Template->set_file(array( "error"=> "error.ihtml" ));
 
 $options = "-un";
 $options2 = "";
@@ -52,14 +52,14 @@ if ( $orientation == "" )
      $colors = "black&white";
      if ( $scale == "" )
      $scale = "1.0";
-     if ($orientation == "landscape") 
-{ 
-    $options .= "L"; 
+     if ($orientation == "landscape")
+{
+    $options .= "L";
     $htmlDocParam .= " --landscape ";
 }
-if ($colors == "colored") 
-{ 
-    $options .= "U"; 
+if ($colors == "colored")
+{
+    $options .= "U";
     $htmlDocParam .= " --color ";
 }
 if ($scale != "1.0") { $options2 = "-s $scale"; }
@@ -91,7 +91,7 @@ if ( $LYNX != "" ) {
 }
 
 else {
-    outError("Cannot output Excel. Neither htmldoc nor lynx are installed on the server","01",&$Template);
+    outError("Cannot output Excel. Neither htmldoc nor lynx are installed on the server","01",$Template);
 }
 
 ?>

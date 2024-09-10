@@ -53,7 +53,7 @@ class subtalk {
 	var $email;
 
 	//constructor
-	function subtalk($ida,$ids,$idt) {
+	function __construct($ida,$ids,$idt) {
 		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$directDisplaySingleFiles;
 		$nbfiles = 0;
         $log = &AGeLog::getLog();
@@ -131,7 +131,7 @@ class subtalk {
                 else {
                     $linkname = $text;
                 }
-                
+
                 $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida$ids$idt/$category" );
                 $nbfiles ++;
                 next($categories);
@@ -168,7 +168,7 @@ class subtalk {
                         }
                         $this->minutes = $mintext;
                     }
-                    next($minutesfiles); 
+                    next($minutesfiles);
                 }
             }
 		} else
@@ -213,7 +213,7 @@ class subtalk {
 
 			$xml .= "
                         </subtalk>";
-			
+
 			//return final value
 			return $xml;
         }

@@ -3,9 +3,9 @@ require_once("$AGE/platform/authentication/sessinit.inc");
 
 function CreateUserMenu()
 {
-  global $authentication,$userid,$AGE_WWW,$ida,$stylesheet,$fid;
+  global $authentication,$AGE_WWW,$ida,$stylesheet,$fid;
 
-  $userid_email = getEmail($userid);
+  $userid_email = getEmail($_SESSION["userid"]);
   $userMenuString = "
 <!-- `usermenu.inc' starts here -->\n
 <!-- $Id: usermenu.inc,v 1.1.1.1.4.3 2003/03/28 10:25:43 tbaron Exp $ -->
@@ -30,7 +30,7 @@ function CreateUserMenu()
               $userMenuString .= "      addStaticMenuItem(\"item6UserMenu\",\"manage groups\",\"${AGE_WWW}/manager/adminGroups.php?nextpage=".urlencode( $GLOBALS[ "PHP_SELF" ] )."&nextquery=".urlencode( $GLOBALS[ "QUERY_STRING" ] )."\",document,\"#9cf\");\n";
           }
               
-          if ((ereg("List.php", $GLOBALS[ "PHP_SELF" ]) || ereg("displayLevel.php", $GLOBALS[ "PHP_SELF" ])) && canManageCategory($userid,($fid!=""?$fid:"0"))) {
+          if ((preg_match("/List\.php/", $GLOBALS[ "PHP_SELF" ]) || preg_match("/displayLevel\.php/", $GLOBALS[ "PHP_SELF" ])) && canManageCategory($userid,($fid!=""?$fid:"0"))) {
               $userMenuString .= "      addStaticMenuItem(\"item4UserMenu\",\"manage category\",\"${AGE_WWW}/manager/admin.php?fid=$fid\",document,\"#9cf\");\n";
           }
           if ( $evt ) {

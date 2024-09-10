@@ -43,7 +43,7 @@ class archive
         $this->protocol = $protocol;
     }
 
-    function addFile($eventID, $path, $name, $category, $size = 0, $description = "", $numPages = "", $format = "") {
+    function addFile($eventID, $path, $name, $category, $size = 0, $description = "", $numPages = 0, $format = "") {
         global $db;
 
         if ($this->fileExists($eventID, $path, $name)) {
@@ -63,8 +63,8 @@ class archive
                            md)
                 VALUES ('$format',
                         '$category',
-                        '".mysql_escape_string($name)."',
-                        '".mysql_escape_string($path)."',
+                        '".$name."',
+                        '".$path."',
                         '$description',
                         '$numPages',
                         '$size',
@@ -75,7 +75,8 @@ class archive
         if (DB::isError($res)) {
             die ("$sql: ".$res->getMessage());
         }
-        $fileID = mysql_insert_id();
+        // $fileID = mysql_insert_id();
+        $fileID = $db->getOne("SELECT LAST_INSERT_ID()");
 
         // Add the FILE_EVENT entry
         $sql = "INSERT 
@@ -94,8 +95,8 @@ class archive
 
         $sql = "SELECT FILE.id
                 FROM FILE,FILE_EVENT
-                WHERE FILE.path = '".mysql_escape_string($path)."' and
-                      FILE.name = '".mysql_escape_string($name)."' and 
+                WHERE FILE.path = '".$path."' and
+                      FILE.name = '".$name."' and 
                       eventID = '$eventID' and
                       FILE.id = FILE_EVENT.fileID and
                       FILE.deleted = 0";
@@ -111,8 +112,8 @@ class archive
         global $db;
         $sql = "SELECT FILE.id
                 FROM FILE,FILE_EVENT
-                WHERE FILE.path = '".mysql_escape_string($path)."' and
-                      FILE.name = '".mysql_escape_string($name)."' and 
+                WHERE FILE.path = '".$path."' and
+                      FILE.name = '".$name."' and 
                       eventID = '$eventID' and
                       FILE.id = FILE_EVENT.fileID";
 
@@ -131,7 +132,7 @@ class archive
     function getFileIDFromFullPath($eventID, $fullpath) {
         global $db;
 
-        $name = ereg_replace(".*/","",$fullpath);
+        $name = preg_replace("/.*\//","",$fullpath);
         $path = str_replace("/$name","",$fullpath);
 
         return $this->getFileID($eventID, $path, $name);
@@ -296,7 +297,7 @@ class archive
         }
         $oldpath = $thisfile->path."/".$thisfile->name;
         $newpath = $ARCHIVETRASH;
-        $newname = ereg_replace("/","_",$oldpath);
+        $newname = preg_replace("/\//","_",$oldpath);
         if ($useTrash) {
             if (!file_exists("$newpath")) {
                 mkdir("$newpath", 0777);
@@ -307,7 +308,7 @@ class archive
             }
             $sql = "INSERT 
                     INTO FILETRASH (id, deletedName, deletedPath, deletionDate)
-                    values('$fileID', '".mysql_escape_string($newname)."', '".mysql_escape_string($newpath)."', NOW())";
+                    values('$fileID', '".$newname."', '".$newpath."', NOW())";
             $res = $db->query($sql);
             if (DB::isError($res)) {
                 die ("$sql: ".$res->getMessage());
@@ -391,7 +392,7 @@ class archive
     function synchronize($eventID) {
         global $ARCHIVE;
         
-        $ida = ereg_replace("s.*","",$eventID);
+        $ida = preg_replace("/s.*/","",$eventID);
         $agendadir="$ARCHIVE/$ida";
 
         $d = opendir("$agendadir/$eventID");

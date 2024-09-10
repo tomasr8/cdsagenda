@@ -26,14 +26,14 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'config/config.php';
 require_once 'platform/template/template.inc';
 
 $Template = new Template( $PathTemplate );
-$Template->set_file(array( "error"=> "error.ihtml" ));	
+$Template->set_file(array( "error"=> "error.ihtml" ));
 
 $html2psParam = "-un";
 $html2psParam2 = "";
@@ -50,24 +50,24 @@ if ( $scale == "" ) {
 }
 $format = strtolower($format);
 
-if ($orientation == "landscape") { 
-    $html2psParam .= "L"; 
+if ($orientation == "landscape") {
+    $html2psParam .= "L";
     $htmlDocParam .= " --landscape ";
 }
 else {
     $htmlDocParam .= " --portrait ";
 }
 
-if ($colors == "colored") { 
-    $html2psParam .= "U"; 
+if ($colors == "colored") {
+    $html2psParam .= "U";
     $htmlDocParam .= " --color ";
 }
 else {
     $htmlDocParam .= " --gray ";
 }
 
-if ($scale != "1.0") { 
-    $html2psParam2 = "-s $scale"; 
+if ($scale != "1.0") {
+    $html2psParam2 = "-s $scale";
 }
 
 if ($format == "a3") {
@@ -87,7 +87,7 @@ if ($param == "" ||
 
 Header("Content-type: application/postscript");
 $id = uniqid("");
- 
+
 
 if ( $HTMLDOC != "") {
     // Write the content type to the client...
@@ -108,6 +108,6 @@ elseif ( $LYNX != "" && $HTML2PS != "" ) {
 }
 
 else {
-    outError("Cannot output PostScript. Neither htmldoc nor lynx+html2ps are installed on the server","01",&$Template);
+    outError("Cannot output PostScript. Neither htmldoc nor lynx+html2ps are installed on the server","01",$Template);
 }
 ?>

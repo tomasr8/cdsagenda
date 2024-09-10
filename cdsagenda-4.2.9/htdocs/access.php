@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -41,10 +41,13 @@ $Template = new Template( $PathTemplate );
 
 // Template set-up
 $Template->set_file(array( "error"=>"error.ihtml" ));
+$userid = $_SESSION['userid'];
+$ida = $_GET['ida'];
+$AN = $_GET['AN'];
 
 if (($authentication && !canModifyAgenda($userid,$ida)) && $AN == "")
 {
-	outError("Please enter a valid password...","01", &$Template );
+	outError("Please enter a valid password...","01", $Template );
 	exit;
 }
 else
@@ -74,8 +77,8 @@ else
         $numRows = $res->numRows();
         if ($numRows != "1") {
             // Then try with the agenda protection
-            $sql = "SELECT 	id 
-                    FROM 	AGENDA 
+            $sql = "SELECT 	id
+                    FROM 	AGENDA
                     WHERE 	an='$AN' and id='$ida'";
             $res = $db->query($sql);
             if (DB::isError($res)) {
@@ -83,7 +86,7 @@ else
             }
             $numRows = $res->numRows();
             if ($numRows != "1") {
-                outError("Sorry, wrong password","01", &$Template );
+                outError("Sorry, wrong password","01", $Template );
                 exit;
             }
         }

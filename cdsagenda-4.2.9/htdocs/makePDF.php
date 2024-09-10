@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 
 require_once 'AgeDB.php';
@@ -34,7 +34,7 @@ require_once 'config/config.php';
 require_once 'platform/template/template.inc';
 
 $Template = new Template( $PathTemplate );
-$Template->set_file(array( "error"=> "error.ihtml" ));	
+$Template->set_file(array( "error"=> "error.ihtml" ));
 
 $html2psParam = "-un";
 $html2psParam2 = "";
@@ -51,25 +51,25 @@ if ( $scale == "" ) {
 }
 $format = strtolower($format);
 
-if ($orientation == "landscape") { 
-    $html2psParam .= "L"; 
+if ($orientation == "landscape") {
+    $html2psParam .= "L";
     $htmlDocParam .= " --landscape ";
 }
 else {
     $htmlDocParam .= " --portrait ";
 }
-    
 
-if ($colors == "colored") { 
-    $html2psParam .= "U"; 
+
+if ($colors == "colored") {
+    $html2psParam .= "U";
     $htmlDocParam .= " --color ";
 }
 else {
     $htmlDocParam .= " --gray ";
 }
 
-if ($scale != "1.0") { 
-    $html2psParam2 = "-s $scale"; 
+if ($scale != "1.0") {
+    $html2psParam2 = "-s $scale";
 }
 
 if ($format == "a3") {
@@ -119,6 +119,6 @@ elseif ( $LYNX != "" && $HTML2PS != "" && $PS2PDF != "" ) {
 }
 
 else {
-    outError("Cannot output PDF. Neither htmldoc nor lynx+html2ps+ps2pdf are installed on the server","01",&$Template);
+    outError("Cannot output PDF. Neither htmldoc nor lynx+html2ps+ps2pdf are installed on the server","01",$Template);
 }
 ?>

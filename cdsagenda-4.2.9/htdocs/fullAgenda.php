@@ -26,7 +26,7 @@
 //
 // Commentary:
 //
-// 
+//
 //
 require_once 'AgeDB.php';
 require_once 'AgeLog.php';
@@ -37,12 +37,13 @@ require_once 'platform/system/commonfunctions.inc';
 require_once "platform/system/archive.inc";
 
 $thisScriptName = "fullAgenda.php";
+$ida = $_GET["ida"];
 
 $Template = new Template($PathTemplate);
 $Template->set_file(array("error" => "error.ihtml",
                           "mainpage"  => "fullAgenda.ihtml",
                           "JSMenuTools" => "JSMenuTools.ihtml",
-						  "AGEfooter" => "AGEfooter_template.inc"));	
+						  "AGEfooter" => "AGEfooter_template.inc"));
 
 $Template->set_var("display_supportEmail", $support_email);
 $Template->set_var("display_runningAT", $runningAT);
@@ -61,7 +62,7 @@ if (DB::isError($res)) {
 }
 
 if ($res->numRows() == 0) {
-    outError( "$ida: Agenda does not exist", "01", &$Template );
+    outError( "$ida: Agenda does not exist", "01", $Template );
 	exit;
 }
 
@@ -113,10 +114,10 @@ if ($confidentiality == "cern-only") {
 	$allowed = false;
 	// Now checks using an array from config/config.php
 	for ( $indX = 0; $indX < count( $restrictAddress ); $indX++ ) {
-		if ( ereg( $restrictAddress[ $indX ], $REMOTE_ADDR )) {
-			$allowed = true;
-			continue;
-		}
+		if ( preg_match( "/{$restrictAddress[$indX]}/", $REMOTE_ADDR ) ) {
+            $allowed = true;
+            continue;
+        }
 	}
 	if ( !$allowed ) {
 		Header("WWW-Authenticate: Basic realm=\"agenda\"");
@@ -165,26 +166,26 @@ if ($header != "none") {
     // stylesheet description
     $stylesheetdesc = $stylesheets[$stylesheet];
     if ($stylesheetdesc == "") {
-        $stylesheetdesc = "special"; 
+        $stylesheetdesc = "special";
     }
 	// display level indicator
-	if ($dl == "session") { 
-		$leveltext = "sessions&nbsp;only"; 
+	if ($dl == "session") {
+		$leveltext = "sessions&nbsp;only";
 	}
-	else { 
-		$leveltext = "full&nbsp;display"; 
+	else {
+		$leveltext = "full&nbsp;display";
 	}
 	// day focus indicator
-	if ($dd == "" || $dd == "0000-00-00") { 
-		$focustext = "all&nbsp;days"; 
+	if ($dd == "" || $dd == "0000-00-00") {
+		$focustext = "all&nbsp;days";
 	}
-	else { 
-		$focustext = "$dd"; 
+	else {
+		$focustext = "$dd";
 	}
 	$makePDFparam = "${AGE_WWW}/fullAgenda.php?ida%3D$ida%26printable=1%26header%3Dnone%26stylesheet%3Dtools/printable";
 
     // Prepare menu creation
-    $topbarStr = 
+    $topbarStr =
         "<table border=0 cellspacing=1 cellpadding=0 width=\"100%\">
 <tr>";
     include 'menus/topbar.php';
@@ -199,7 +200,7 @@ if ($header != "none") {
     $topbarStr .= CreateMenuBar($menuArray);
     $topbarStr .= " </tr> </table>\n\n";
     $Template->set_var("display_topmenubar", $topbarStr);
-    
+
     // Create footer
     $Template->set_var("AGEfooter_shortURL", ($shortAgendaURL==""?"":"$shortAgendaURL$ida - "));
     $Template->set_var("AGEfooter_msg1", $AGE_FOOTER_MSG1);
@@ -227,7 +228,7 @@ else {
 // If active store the stats about event hits
 if ( $EVENTHITSTATSActive ) {
 	// Add this hit to the stats
-	addHit( $ida );        
+	addHit( $ida );
 }
 
 if ($header != "none") {
@@ -267,7 +268,7 @@ $Template->set_var("display_core", $coreadd . $core);
 $Template->pparse("final-page", "mainpage");
 
 
-    
+
 function addHit( $eventID )
 {
 	// Add the check for the current user
@@ -278,7 +279,7 @@ function addHit( $eventID )
 	$result = $db->query($sql);
 	if (DB::isError($result)) {
 		die ($result->getMessage());
-	}                          
+	}
 }
 
 function createCore() {
@@ -296,69 +297,69 @@ function createCore() {
     // Set special parameters
     if ($dl == "") { $dl = "talk"; }
     if ($dd == "") { $dd = "0000-00-00"; }
-    
+
     $param = new parameter;
     $endtime1 = time();
-    
+
     $log = &AgeLog::getLog();
-    
+
     // create XML output
     //////////////////////////////////////////////////////
     include 'XMLoutput.php';
-    
+
     $agenda = new agenda($ida);
     $xml = $agenda->displayXML();
     $fp = fopen("$AGE/tmp/processXML_$pid.xml","w+");
     fwrite($fp,$xml);
     fclose($fp);
-    
+
     $help = "$AGE/stylesheets/$stylesheet.xsl";
-    
+
     $htmltext = `$XTXSL $AGE/tmp/processXML_$pid.xml $help 2>> $AGE/tmp/errors_$pid`;
-    
+
     if ( DEBUGGING ) {
         $log->logDebug( __FILE__, __LINE__, " $XTXSL $AGE/tmp/processXML_$pid.xml $help 2>> $AGE/tmp/errors_$pid " );
     }
-    
+
     // modify the html output
     //////////////////////////////////////////////////////
-    
+
     // insert the full image path into this stylesheet (PostScript + PDF creation)
-    $htmltext = str_replace("<img src=\"images/","<img src=\"${AGE_WWW}/images/",$htmltext);    
+    $htmltext = str_replace("<img src=\"images/","<img src=\"${AGE_WWW}/images/",$htmltext);
     // agenda modification
     $htmltext = str_replace("[modifyagenda]","",$htmltext);
     $htmltext = str_replace("[/modifyagenda]","",$htmltext);
     // session modification
-    $htmltext = ereg_replace("\[modifysession ids=\"(s[0-9]*)\"\]","",$htmltext);
+    $htmltext = preg_replace("/\[modifysession ids=\"(s[0-9]*)\"\]/", "", $htmltext);
     $htmltext = str_replace("[/modifysession]","",$htmltext);
     // talk modification
-    $htmltext = ereg_replace("\[modifytalk ids=\"(s[0-9]*)\" idt=\"(t[0-9]*)\"\]","",$htmltext);
+    $htmltext = preg_replace("/\[modifytalk ids=\"(s[0-9]*)\" idt=\"(t[0-9]*)\"\]/", "", $htmltext);
     $htmltext = str_replace("[/modifytalk]","",$htmltext);
     // subtalk modification
-    $htmltext = ereg_replace("\[modifysubtalk ids=\"(s[0-9]*)\" idt=\"(t[0-9]*)\"\]","",$htmltext);
+    $htmltext = preg_replace("/\[modifysubtalk ids=\"(s[0-9]*)\" idt=\"(t[0-9]*)\"\]/", "", $htmltext);
     $htmltext = str_replace("[/modifysubtalk]","",$htmltext);
     // lecture modification
-    $htmltext = ereg_replace("\[modifylecture\]","",$htmltext);
+    $htmltext = preg_replace("/\[modifylecture\]/", "", $htmltext);
     $htmltext = str_replace("[/modifylecture]","",$htmltext);
 
     $endtime2 = time();
     $time1 = $endtime1 - $starttime;
     $time2 = $endtime2 - $endtime1;
-    
+
     $errors = join(" ",file("$AGE/tmp/errors_$pid"));
-    
-    if (ereg(".xsl",$errors)) {
-        outError( "<b>An error has occured during the XML processing (in the XSL stylesheet):</b><br><i>An email has been sent to the support team, the problem will be corrected as soon as possible</i>", "01", &$Template );
+
+    if (preg_match("/\.xsl/", $errors)) {
+        outError( "<b>An error has occured during the XML processing (in the XSL stylesheet):</b><br><i>An email has been sent to the support team, the problem will be corrected as soon as possible</i>", "01", $Template );
         mail ($support_email,"error in agenda $ida display","$errors");
         exit;
     }
-    else if (ereg(".xml",$errors)) {
-        outError( "<b>An error has occured during the XML processing (probably in the XML output)</b><br><i>An email has been sent to the support team, the problem will be corrected as soon as possible</i>", "01", &$Template );
+    else if (preg_match("/\.xml/", $errors)) {
+        outError( "<b>An error has occured during the XML processing (probably in the XML output)</b><br><i>An email has been sent to the support team, the problem will be corrected as soon as possible</i>", "01", $Template );
         mail ($support_email,"error in agenda $ida display","$errors");
         exit;
     }
     else if (filesize("$AGE/tmp/errors_$pid") != 0) {
-        outError( "<b>An error has occured during the Agenda display:</b><br>An email has been automatically sent to the support team.", "01", &$Template );
+        outError( "<b>An error has occured during the Agenda display:</b><br>An email has been automatically sent to the support team.", "01", $Template );
         mail ($support_email,"error in agenda $ida display","$errors");
         exit;
     }

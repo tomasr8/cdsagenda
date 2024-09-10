@@ -83,7 +83,7 @@ function sess_read($key) {
 
 ## sess_write():
 function sess_write($key, $val) {
-	global $db, $SESS_LIFE;
+    global $db, $SESS_LIFE;
 
 	$expiry = time() + $SESS_LIFE;
 	$value = addslashes($val);
@@ -96,12 +96,13 @@ function sess_write($key, $val) {
         return true;
     }
 
-	if (get_class($qid) == "db_error") {
+	if (get_class($qid) == "DB_Error") {
 		$qry = "UPDATE auth_session SET session_expiry = $expiry, session_vars = '$value' WHERE session_key = '$key'";
 		$qid = $db->query($qry);
+        return true;
 	}
 
-	return $qid;
+	return false;
 }
 
 ## sess_destroy():
@@ -179,14 +180,14 @@ function getEmail($userid) {
     $query = "SELECT email FROM user WHERE id='$userid'";
     $res = $db->query($query);
     if ($row = $res->fetchRow()) {
-	   if ($row[email]) {
+	   if ($row["email"]) {
           // If the user name is already an email address
-          if (ereg("@",$row[email])) {
-             $userid_email = $row[email];
+          if (preg_match("/@/", $row["email"])) {
+             $userid_email = $row["email"];
           }
           // Try to guess the email address from the LDAP directory
           elseif ($useLDAP) {
-            $userid_email = getLDAPemail($row[email]);
+            $userid_email = getLDAPemail($row["email"]);
           }
        }
     }
@@ -216,8 +217,8 @@ function getID($username) {
               WHERE email='$username'";
     $res = $db->query($query);
     if ($row = $res->fetchRow()) {
-        if ($row[id]) {
-            $userid = $row[id];
+        if ($row["id"]) {
+            $userid = $row["id"];
         }
     }
     return($userid);
@@ -253,8 +254,8 @@ function login(&$userid,&$userid_email,$username,$password)
         $query = "SELECT id,password FROM user WHERE email='$username'";
         $res = $db->query($query);
         if ($row = $res->fetchRow()) {
-            $duserid_id=$row[id];
-            $duserid_pw=$row[password];
+            $duserid_id=$row["id"];
+            $duserid_pw=$row["password"];
             if ($duserid_pw) { // pw needed
                 if ($duserid_pw == "IMAP") {
                     if ($useIMAP) {
@@ -289,10 +290,9 @@ function login(&$userid,&$userid_email,$username,$password)
     return $error;
 }
 
-function logout(&$userid,&$userid_email)
+function logout($userid,$userid_email)
 {
-    $userid = createGuestUser();
-    $userid_email=getEmail($userid);
+    $_SESSION["userid"] = createGuestUser();
 }
 
 function register(&$userid,&$userid_email,$username,$password)
@@ -373,7 +373,7 @@ function isSuperuser($userid)
     global $superuser_email;
 
     $userid_email = getEmail($userid);
-    if ($superuser_email != "" && eregi($superuser_email,$userid_email)) {
+    if ($superuser_email != "" && preg_match("/".preg_quote($superuser_email, "/")."/i", $userid_email)) {
         return true;
     }
     return false;
@@ -388,7 +388,7 @@ function getAuthID($authName)
             WHERE name='$authName'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
-        return $row[id];
+        return $row["id"];
     }
     else {
         return false;
@@ -405,7 +405,7 @@ function getAuthItemType($authName)
             WHERE name='$authName'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
-        return $row[itemType];
+        return $row["itemType"];
     }
     else {
         return false;
@@ -737,7 +737,7 @@ function canModifyAgenda($userid,$ida)
             WHERE id='$ida'";
     $res = $db->query($sql);
     $row = $res->fetchRow();
-    $fid = $row[fid];
+    $fid = $row["fid"];
 
     // try with a simple authorization
     if (authorize($userid,"CAN MODIFY AGENDA",$ida)){
@@ -754,7 +754,7 @@ function canModifyAgenda($userid,$ida)
                 WHERE id='$ida'";
         $res = $db->query($sql);
         $row = $res->fetchRow();
-        $fid = $row[fid];
+        $fid = $row["fid"];
         return canManageCategory($userid,$fid);
     }
 }
@@ -969,7 +969,7 @@ function getGroupType($groupID)
 {
     global $db;
     $sql = "SELECT special
-            FROM groups
+            FROM `groups`
             where id='$groupID'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -991,10 +991,10 @@ function listAllGroups()
     global $db;
     $result = array();
     $sql = "SELECT id,name
-            FROM groups";
+            FROM `groups`";
     $res = $db->query($sql);
     while ($row = $res->fetchRow()) {
-        $result[$row[id]] = $row[name];
+        $result[$row["id"]] = $row["name"];
     }
     return $result;
 }
@@ -1004,7 +1004,7 @@ function addGroup($name,$description,$special)
 {
     global $db;
     $sql = "SELECT id
-            FROM groups
+            FROM `groups`
             WHERE name='$name'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
@@ -1031,7 +1031,7 @@ function deleteGroup($groupname)
             WHERE name='$groupname'";
     $res = $db->query($sql);
     if ($row = $res->fetchRow()) {
-        $groupid = $row[id];
+        $groupid = $row["id"];
 
         // delete group
         $sql = "DELETE
@@ -1104,7 +1104,7 @@ function listAllUsers()
             WHERE email!=''";
     $res = $db->query($sql);
     while ($row = $res->fetchRow()) {
-        $result[$row[id]] = getEmail($row[id]);
+        $result[$row["id"]] = getEmail($row["id"]);
     }
     return $result;
 }

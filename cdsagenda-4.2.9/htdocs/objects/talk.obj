@@ -62,7 +62,7 @@ class talk {
 	var $email;
 
 	//constructor
-	function talk($ida,$ids,$idt) {
+	function __construct($ida,$ids,$idt) {
 		global $ARCHIVE,$SETLINK,$PS2ASCII,$HTML2TEXT,$stylesheet,$mapServerACTIVE,$mapServerAddress,$directDisplaySingleFiles;
 		$nbfiles = 0;
 		$nbsubtalks = 0;
@@ -123,7 +123,7 @@ class talk {
 			$this->category = formatfield($row['category']);
 			$this->broadcasturl = formatfield( $row['broadcasturl']);
 			if ( $repnoChangeBlankWith != "" )
-				$this->repno = ereg_replace(" ", $repnoChangeBlankWith, formatfield($row['repno']));			
+				$this->repno = ereg_replace(" ", $repnoChangeBlankWith, formatfield($row['repno']));
 			else
 				$this->repno = formatfield($row['repno']);
 			$this->affiliation = formatfield( $row['affiliation']);
@@ -183,7 +183,7 @@ class talk {
                 else {
                     $linkname = $text;
                 }
-                
+
                 $this->files[$nbfiles] = new xmlfile("$linkname","$SETLINK?base=agenda&amp;categ=$ida&amp;id=$ida$ids$idt/$category" );
                 $nbfiles ++;
                 next($categories);
@@ -220,7 +220,7 @@ class talk {
                         }
                         $this->minutes = $mintext;
                     }
-                    next($minutesfiles); 
+                    next($minutesfiles);
                 }
             }
 
