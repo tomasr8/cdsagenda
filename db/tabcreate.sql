@@ -20,7 +20,7 @@
 
 -- <changed>
 CREATE DATABASE IF NOT EXISTS cdsagenda;
-GRANT ALL PRIVILEGES ON cdsagenda.* TO 'cdsagenda'@'%';
+-- GRANT ALL PRIVILEGES ON cdsagenda.* TO 'cdsagenda'@'%';
 USE cdsagenda;
 
 --
