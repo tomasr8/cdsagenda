@@ -33,24 +33,27 @@ include_once( "config/config.php" );
 require_once( "platform/template/template.inc" );
 require_once( "platform/authentication/sessinit.inc" );
 
-if ($action == "cancel") {
+$userid = $_SESSION["userid"];
+$userid_email = getEmail($userid);
+
+if ($_POST["action"] == "cancel") {
     Header("Location: $nextpage?$nextquery");
 }
 
-if ($action == "logout") {
+if ($_POST["action"] == "logout") {
     logout($userid,$userid_email);
     Header("Location: $nextpage?$nextquery");
 }
 
-if ($action == "register") {
-    $msg = register($userid,$userid_email,$logtext,$passtext);
+if ($_POST["action"] == "register") {
+    $msg = register($userid,$userid_email,$_POST["logtext"],$_POST["passtext"]);
     if ($msg == "") {
         Header("Location: $nextpage?$nextquery");
     }
 }
 
-if ($action == "login") {
-    $msg = login($userid,$userid_email,$logtext,$passtext);
+if ($_POST["action"] == "login") {
+    $msg = login($userid,$userid_email,$_POST["logtext"],$_POST["passtext"]);
     if ($msg == "") {
         Header("Location: $nextpage?$nextquery");
     }
