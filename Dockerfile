@@ -2,6 +2,7 @@ FROM alpine:3.20
 
 RUN apk update && apk add --no-cache \
     bash wget make \
+    openjdk21-jdk \
     mysql-client \
     php php-mysqli php-xml php-session \
     apache2 php-apache2
@@ -16,9 +17,6 @@ RUN pear install DB
 # Copy the CDS Agenda source code
 COPY ./cdsagenda-4.2.9 /cdsagenda
 WORKDIR /cdsagenda
-
-# Copy fake java needed by configure
-COPY java /usr/bin/java
 
 # Remove the default index.html
 RUN rm -f /var/www/localhost/htdocs/index.html
@@ -44,9 +42,6 @@ RUN ./configure \
 
 # Install into /var/www/localhost/htdocs
 RUN make install
-
-# Expose php info at $HOST/info.php
-COPY info.php /var/www/localhost/htdocs/info.php
 
 # Configure php
 COPY configure_php.sh /configure_php.sh
