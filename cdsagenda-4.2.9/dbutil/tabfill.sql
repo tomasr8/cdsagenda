@@ -18,6 +18,9 @@
 -- along with CDS Agenda Software; if not, write to the Free Software
 -- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
+-- TODO maybe should not be hardcoded
+use cdsagenda;
+
 # existing categories
 INSERT INTO CATEGORY VALUES (1,'transparencies','transparencies','',0);
 INSERT INTO CATEGORY VALUES (2,'video','video','',0);

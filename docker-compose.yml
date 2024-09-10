@@ -8,6 +8,12 @@ services:
       - type: bind
         source: ./db/tabcreate.sql
         target: /docker-entrypoint-initdb.d/000-tabcreate.sql
+      - type: bind
+        source: ./db/usercreate.sql
+        target: /docker-entrypoint-initdb.d/001-usercreate.sql
+      - type: bind
+        source: ./cdsagenda-4.2.9/dbutil/tabfill.sql
+        target: /docker-entrypoint-initdb.d/002-tabfill.sql
 
   adminer:
     image: adminer
