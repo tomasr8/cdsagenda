@@ -12,7 +12,11 @@
 
 <div id="Layer1" style="position:absolute; z-index:1; width:336px; height:186px; left:230px; top:150px;"> 
   <form name="form1" method="post">
-  
+  <font color=red>
+    Do not enter your CERN password, or any other valuable password here!
+    This website is horribly insecure and passwords are stored in plaintext among other things.
+    In fact, you should not register/login here at all.
+  </font>
   <input type=hidden name=nextpage value="{userLog_action}">
   <input type=hidden name=nextquery value="{userLog_query}">
   <font color=red size=-1>
@@ -31,14 +35,14 @@
           <div align="right">Pass:</div>
         </td>
         <td> 
-          <input type="password" name="passtext">
+          <input type="password" name="passtext" disabled>
         </td>
       </tr>
       <tr> 
         <td colspan="2" height="35" valign="top"> 
           <div align="center"> 
             <input type="submit" name="action" value="login">
-            <input type="submit" name="action" value="register">
+            <input type="submit" name="action" value="register" disabled>
             <input type="submit" name="action" value="cancel">
           </div>
         </td>

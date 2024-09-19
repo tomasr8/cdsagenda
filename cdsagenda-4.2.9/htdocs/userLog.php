@@ -69,6 +69,5 @@ $Template->set_var("userLog_action", $nextpage );
 $Template->set_var("userLog_query", $nextquery );
 $Template->set_var("userLog_logtext", $logtext );
 
-echo "<font color=red>Do not use your CERN password! This website is horribly insecure and passwords are stored in plaintext among other things.</font>";
 $Template->pparse( "final-page", "mainpage" );
 ?>
